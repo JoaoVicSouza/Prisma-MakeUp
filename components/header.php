@@ -7,8 +7,11 @@ $pasta_atual   = basename(dirname($_SERVER['PHP_SELF']));
 $isCRUD        = ($pasta_atual === 'CRUD');
 $prefix_up     = $isCRUD ? '../../' : '../';
 if($arquivo_atual == "index.php"){ $isIndex = true; }else{ $isIndex = false; }
+if($arquivo_atual !== "admin.php" && $arquivo_atual !== "produtos.php" && $arquivo_atual !== "cursos.php" && $arquivo_atual !== "mod.php"){
+    $headerFix = true;
+}else{ $headerFix = false; }
 ?>
-<header id="main-header" class="<?php if($arquivo_atual !== "admin.php" && $arquivo_atual !== "produtos.php"){ echo "fixed-top w-100 z-3";}?>"
+<header id="main-header" class="<?php if($headerNotFix){ echo "fixed-top w-100 z-3";}?>"
         style="transition: background-color 0.4s ease, backdrop-filter 0.4s ease;">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid ms-0">
