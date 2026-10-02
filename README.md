@@ -1,5 +1,5 @@
 # Prisma-MakeUp
-
+Estado: Em desenvolvimento
 ## Contextualização
 - Essa aplicação foi feita para o trabalho integrado da parte técnica no 3° ano do IFSULDEMINAS - Campus Passos. O trabalho consiste
 em criar uma empresa do zero, incluindo planejamento empreendedor, sistema e site.
