@@ -7,7 +7,7 @@ em criar uma empresa do zero, incluindo planejamento empreendedor, sistema e sit
 
 ## O que faz 
 
-### site
+### Site
 - Apresentar a equipe e a empresa
 - Catalogo de produtos autorais e venda desses produtos
 - Plataforma de cursos
