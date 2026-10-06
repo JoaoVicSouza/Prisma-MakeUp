@@ -22,6 +22,7 @@ $kpis = [
     ['icon' => 'users',        'val' => count($usuarios), 'label' => 'Clientes'],
     ['icon' => 'box',          'val' => count($produtos), 'label' => 'Produtos'],
     ['icon' => 'shopping-cart','val' => count($pedidos),  'label' => 'Pedidos'],
+    ['icon' => 'play-circle',   'val' => count($cursos),   'label' => 'Tutoriais']
 ];
 ?>
 <!DOCTYPE html>
@@ -105,7 +106,7 @@ $kpis = [
               <div class="card-head">
                 <span class="card-title">Vendas da Semana</span>
               </div>
-              <div class="mini-chart">
+              <div class="mini-chart p-1">
                 Sem dados suficientes para gerar o gráfico.
               </div>
             </div>
@@ -131,7 +132,7 @@ $kpis = [
             <button class="btn-primary-custom" onclick="window.location.href='cadProd.php'"><i
                 data-feather="plus"></i> Novo Produto</button>
           </div>
-          <div class="card-admin" style="padding:0; overflow:hidden;">
+          <div class="card-admin" style="padding:0; overflow-x: auto; -webkit-overflow-scrolling: touch;">
             <table class="data-table" id="prodTable">
               <thead>
                 <tr>
@@ -172,7 +173,7 @@ $kpis = [
                 oninput="filterTable('orderTable',this.value)" />
             </div>
           </div>
-          <div class="card-admin" style="padding:0; overflow:hidden;">
+          <div class="card-admin" style="padding:0; overflow-x: auto; -webkit-overflow-scrolling: touch;">
             <table class="data-table" id="orderTable">
               <thead>
                 <tr>
@@ -204,7 +205,7 @@ $kpis = [
                 oninput="filterTable('userTable',this.value)" />
             </div>
           </div>
-          <div class="card-admin" style="padding:0; overflow:hidden;">
+          <div class="card-admin" style="padding:0; overflow-x: auto; -webkit-overflow-scrolling: touch;">
             <table class="data-table" id="userTable">
               <thead>
                 <tr>
@@ -244,7 +245,7 @@ $kpis = [
             <button class="btn-primary-custom" onclick="window.location.href='cadCurso.php'"><i
                 data-feather="upload-cloud"></i> Adicionar Mídia</button>
           </div>
-          <div class="card-admin" style="padding:0; overflow:hidden;">
+          <div class="card-admin" style="padding:0; overflow-x: auto; -webkit-overflow-scrolling: touch;">
             <table class="data-table" id="cursoTable">
               <thead>
                 <tr>

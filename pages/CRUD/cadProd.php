@@ -22,9 +22,16 @@
             min-height: 100vh;
             background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
             display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem 0;
+            margin-top: 80px;
         }
 
         .form-card {
@@ -78,20 +85,20 @@
 
 <body>
     <?php
-        $mensagem = '';
-        $tipo = '';
-        if (isset($_GET['sucesso']) && $_GET['sucesso'] === 'cadastro') {
-            $mensagem = 'Produto cadastrado com sucesso!';
-            $tipo = 'success';
-        } elseif (isset($_GET['erro'])) {
-            $mensagens_erro = [
-                'produto_existente' => 'Já existe um produto com esse nome.',
-                'servidor'          => 'Erro interno. Tente novamente.',
-            ];
-            $mensagem = $mensagens_erro[$_GET['erro']] ?? 'Ocorreu um erro.';
-            $tipo = 'danger';
-        }
-        if ($mensagem):
+    $mensagem = '';
+    $tipo = '';
+    if (isset($_GET['sucesso']) && $_GET['sucesso'] === 'cadastro') {
+        $mensagem = 'Produto cadastrado com sucesso!';
+        $tipo = 'success';
+    } elseif (isset($_GET['erro'])) {
+        $mensagens_erro = [
+            'produto_existente' => 'Já existe um produto com esse nome.',
+            'servidor'          => 'Erro interno. Tente novamente.',
+        ];
+        $mensagem = $mensagens_erro[$_GET['erro']] ?? 'Ocorreu um erro.';
+        $tipo = 'danger';
+    }
+    if ($mensagem):
     ?>
         <div class="alert alert-<?= $tipo ?> alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index:9999; min-width:300px;" role="alert">
             <?= $mensagem ?>
@@ -99,15 +106,19 @@
         </div>
     <?php endif; ?>
 
-        <?php include '../../components/header.php' ?>
+    <?php include '../../components/header.php' ?>
 
     <main class="container">
-        <div class="form-card mx-auto">
+        <div class="form-card mx-auto position-relative">
+            <a href="admin.php" class="position-absolute text-secondary text-decoration-none"
+                style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;">
+                <i class="bi bi-arrow-left"></i>
+            </a>
             <div class="mb-4 text-center">
                 <h1 class="fs-4 fw-bold mb-1">Cadastrar novo produto</h1>
                 <p class="text-secondary mb-0">Preencha as informações do produto</p>
             </div>
-
+                
             <form method="post" id="productForm" action="../scriptsPHP/addProd.php">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome do produto</label>
@@ -197,12 +208,13 @@
     </main>
 
     <?php include '../../components/footer.php' ?>
-
+    
+    <script src="../../scripts/scriptGeral.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script>
         const priceInput = document.getElementById('price');
-        priceInput.addEventListener('input', function () {
+        priceInput.addEventListener('input', function() {
             let value = priceInput.value.replace(/[^0-9,]/g, '');
             const parts = value.split(',');
             if (parts.length > 2) value = parts[0] + ',' + parts.slice(1).join('');
@@ -211,7 +223,7 @@
 
         const description = document.getElementById('description');
         const charCount = document.getElementById('charCount');
-        description.addEventListener('input', function () {
+        description.addEventListener('input', function() {
             charCount.textContent = description.value.length;
         });
     </script>

@@ -7,11 +7,11 @@ $pasta_atual   = basename(dirname($_SERVER['PHP_SELF']));
 $isCRUD        = ($pasta_atual === 'CRUD');
 $prefix_up     = $isCRUD ? '../../' : '../';
 if($arquivo_atual == "index.php"){ $isIndex = true; }else{ $isIndex = false; }
-if($arquivo_atual !== "admin.php" && $arquivo_atual !== "produtos.php" && $arquivo_atual !== "cursos.php" && $arquivo_atual !== "mod.php"){
+if($arquivo_atual !== "admin.php" && $arquivo_atual !== "produtos.php" && $arquivo_atual !== "cursos.php" && $arquivo_atual !== "mod.php" && $arquivo_atual !== "cadCurso.php" && $arquivo_atual !== "cadProd.php"){
     $headerFix = true;
 }else{ $headerFix = false; }
 ?>
-<header id="main-header" class="<?php if($headerNotFix){ echo "fixed-top w-100 z-3";}?>"
+<header id="main-header" class="<?php if($headerFix){ echo "fixed-top w-100 z-3";}?>"
         style="transition: background-color 0.4s ease, backdrop-filter 0.4s ease;">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid ms-0">
@@ -39,7 +39,7 @@ if($arquivo_atual !== "admin.php" && $arquivo_atual !== "produtos.php" && $arqui
                         <li class="nav-item">
                             <a class="nav-link p-0 <?php if($arquivo_atual == "chat.php"){echo "text-green2";}?>" href="<?php if($isIndex){echo "./pages/";}else{ echo $prefix_up . "pages/";}?>chat.php">ARIANE</a>
                         </li>
-                        <?php if($_SESSION['admin'] == 1): ?>
+                        <?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1): ?>
                             <li class="nav-item">
                                 <a class="nav-link p-0 <?php if($arquivo_atual == "admin.php"){echo "text-green2";}?>" href="<?php if($isIndex){echo "./pages/CRUD/";}else{ echo $prefix_up . "pages/CRUD/";}?>admin.php">ADMIN</a>
                             </li>
