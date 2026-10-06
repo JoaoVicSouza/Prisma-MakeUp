@@ -98,6 +98,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     <?php endif; ?>
+
+        <?php include '../../components/header.php' ?>
+
     <main class="container">
         <div class="form-card mx-auto">
             <div class="mb-4 text-center">
@@ -192,6 +195,8 @@
             </form>
         </div>
     </main>
+
+    <?php include '../../components/footer.php' ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

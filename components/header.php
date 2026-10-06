@@ -36,6 +36,11 @@ if($arquivo_atual == "index.php"){ $isIndex = true; }else{ $isIndex = false; }
                         <li class="nav-item">
                             <a class="nav-link p-0 <?php if($arquivo_atual == "chat.php"){echo "text-green2";}?>" href="<?php if($isIndex){echo "./pages/";}else{ echo $prefix_up . "pages/";}?>chat.php">ARIANE</a>
                         </li>
+                        <?php if($_SESSION['admin'] == 1): ?>
+                            <li class="nav-item">
+                                <a class="nav-link p-0 <?php if($arquivo_atual == "admin.php"){echo "text-green2";}?>" href="<?php if($isIndex){echo "./pages/CRUD/";}else{ echo $prefix_up . "pages/CRUD/";}?>admin.php">ADMIN</a>
+                            </li>
+                        <?php endif ?>
                         <li class="nav-item fw-bold rounded-pill bg-purple2 p-2 px-3">
                             <a class="nav-link p-0 text-white" href="<?php if($isIndex){echo "./pages/";}else{ echo $prefix_up . "pages/";}?>login.php">
                                 <i class="bi bi-person me-1"></i>

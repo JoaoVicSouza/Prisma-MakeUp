@@ -23,6 +23,12 @@
             min-height: 100vh;
             background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
             display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem 0;
@@ -83,6 +89,9 @@
 </head>
 
 <body>
+
+    <?php include '../../components/header.php' ?>
+
     <main class="container">
         <div class="form-card mx-auto">
             <div class="mb-4 text-center">
@@ -168,20 +177,22 @@
         </div>
     </main>
 
+    <?php include '../../components/footer.php' ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script>
         const categorySelect = document.getElementById('category');
         const categoryOther = document.getElementById('categoryOther');
-        categorySelect.addEventListener('change', function () {
+        categorySelect.addEventListener('change', function() {
             const isOther = categorySelect.value === 'outra';
             categoryOther.classList.toggle('d-none', !isOther);
             if (!isOther) categoryOther.value = '';
         });
 
         const priceInput = document.getElementById('price');
-        priceInput.addEventListener('input', function () {
+        priceInput.addEventListener('input', function() {
             let value = priceInput.value.replace(/[^0-9,]/g, '');
             const parts = value.split(',');
             if (parts.length > 2) value = parts[0] + ',' + parts.slice(1).join('');
@@ -190,7 +201,7 @@
 
         const description = document.getElementById('description');
         const charCount = document.getElementById('charCount');
-        description.addEventListener('input', function () {
+        description.addEventListener('input', function() {
             charCount.textContent = description.value.length;
         });
     </script>

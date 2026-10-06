@@ -4,6 +4,7 @@ require 'conexao.php';
 $id    = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 $nome  = trim($_POST['nome'] ?? '');
 $email = trim($_POST['email'] ?? '');
+$IsAdmin = trim($_POST['email'] ?? '');
 
 if (!$id || $nome === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     header('Location: ../pages/CRUD/admin.php');
