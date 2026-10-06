@@ -43,7 +43,7 @@ $kpis = [
   <?php include '../../components/header.php'; 
     if($_SESSION['admin'] !== 1){
       header('Location: ../../index.php');
-      exit;  
+      exit;
     }
   ?>
 

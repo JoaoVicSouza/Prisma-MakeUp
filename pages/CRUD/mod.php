@@ -17,7 +17,7 @@ if ($tipo === 'produto') {
   $stmt->execute([':id' => $id]);
   $item = $stmt->fetch(PDO::FETCH_ASSOC);
 } elseif ($tipo === 'usuario') {
-  $stmt = $pdo->prepare("SELECT id, nome, email FROM usuarios WHERE id = :id");
+  $stmt = $pdo->prepare("SELECT id, nome, email, admin FROM usuarios WHERE id = :id");
   $stmt->execute([':id' => $id]);
   $item = $stmt->fetch(PDO::FETCH_ASSOC);
 } elseif ($tipo === 'curso') {
@@ -47,10 +47,7 @@ $titulos = ['produto' => 'Editar Produto', 'usuario' => 'Editar Usuário', 'curs
     body {
       min-height: 100vh;
       background: linear-gradient(135deg, #F4D6F8 0%, #D5F8F2 55%, #F8F3D6 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem 0;
+      padding: 0;
     }
 
     .form-card {
@@ -60,6 +57,7 @@ $titulos = ['produto' => 'Editar Produto', 'usuario' => 'Editar Usuário', 'curs
       border-radius: 1rem;
       box-shadow: 0 1rem 3rem rgba(0, 0, 0, .12);
       padding: 2rem;
+      margin: 2rem;
     }
 
     .form-control:focus,
@@ -168,7 +166,7 @@ $titulos = ['produto' => 'Editar Produto', 'usuario' => 'Editar Usuário', 'curs
           </div>
           <div class="form-check mb-3">
             <!-- O value="1" só é enviado no $_POST se o checkbox for marcado -->
-            <input class="form-check-input" type="checkbox" name="admin" id="admin" value="1" <?php echo ($_SESSION['admin'] == 1) ? 'checked' : ''; ?>>
+            <input class="form-check-input" type="checkbox" name="admin" id="admin" value="1" <?php echo ($item['admin'] == 1) ? 'checked' : ''; ?>>
             <label class="form-check-label" for="admin">
               Privilégios de Administrador
             </label>
