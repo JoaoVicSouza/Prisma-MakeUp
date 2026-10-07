@@ -51,7 +51,7 @@ $gruposProdutos = array_chunk($produtos, 4);
 
                                                 <div class="mt-auto">
                                                     <div class="fw-bold mb-2 preco-produto" style="color: darkmagenta"><?php echo $produto['preco']; ?></div>
-                                                    <button class="btn btn-sm w-100 fw-bold rounded-pill text-light btn-comprar" style="background-color: #DE97F2;">COMPRAR</button>
+                                                    <button class="btn btn-sm w-100 fw-bold rounded-pill text-light btn-comprar" style="background-color: #DE97F2;" onclick="window.location.href='produto.php'">COMPRAR</button>
                                                 </div>
                                             </div>
                                         </div>

@@ -50,6 +50,51 @@
             'aulas' => '15',
             'nota' => '4.7',
             'alunos' => '500'
+        ],
+        [
+            'titulo' => 'Maquiagem Artística e Colorimetria Avançada',
+            'thumb' => '../assets/cursos/capa-artistica.jpg',
+            'instrutor' => 'Lucas MakeUp',
+            'instrutor_foto' => '../assets/cursos/avatar4.jpg',
+            'aulas' => '15',
+            'nota' => '4.7',
+            'alunos' => '500'
+        ],
+        [
+            'titulo' => 'Maquiagem Artística e Colorimetria Avançada',
+            'thumb' => '../assets/cursos/capa-artistica.jpg',
+            'instrutor' => 'Lucas MakeUp',
+            'instrutor_foto' => '../assets/cursos/avatar4.jpg',
+            'aulas' => '15',
+            'nota' => '4.7',
+            'alunos' => '500'
+        ],
+        [
+            'titulo' => 'Maquiagem Artística e Colorimetria Avançada',
+            'thumb' => '../assets/cursos/capa-artistica.jpg',
+            'instrutor' => 'Lucas MakeUp',
+            'instrutor_foto' => '../assets/cursos/avatar4.jpg',
+            'aulas' => '15',
+            'nota' => '4.7',
+            'alunos' => '500'
+        ],
+        [
+            'titulo' => 'Maquiagem Artística e Colorimetria Avançada',
+            'thumb' => '../assets/cursos/capa-artistica.jpg',
+            'instrutor' => 'Lucas MakeUp',
+            'instrutor_foto' => '../assets/cursos/avatar4.jpg',
+            'aulas' => '15',
+            'nota' => '4.7',
+            'alunos' => '500'
+        ],
+        [
+            'titulo' => 'Maquiagem Artística e Colorimetria Avançada',
+            'thumb' => '../assets/cursos/capa-artistica.jpg',
+            'instrutor' => 'Lucas MakeUp',
+            'instrutor_foto' => '../assets/cursos/avatar4.jpg',
+            'aulas' => '15',
+            'nota' => '4.7',
+            'alunos' => '500'
         ]
     ];
     ?>

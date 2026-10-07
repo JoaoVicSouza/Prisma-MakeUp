@@ -47,7 +47,7 @@
 </head>
 
 <body>
-
+    
     <?php include '../components/header.php' ?>
     <?php include '../components/produtoSections/banner.php' ?>
     <?php include '../components/produtoSections/corretivo.php' ?>

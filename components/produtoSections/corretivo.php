@@ -29,9 +29,9 @@ $gruposProdutos = array_chunk($produtos, 4);
             <span class="subtitulo">adeus olheiras, olá pele perfeita</span>
         </div>
         <div class="linha-lateral flex-grow-1"></div>
-    </div>
+    </div>  
 
-    <div class="row align-items-center justify-content-center m-0">
+    <div class="row align-items-center justify-content-center m-0 offset-lg-1">
         <div class="col-12 col-xl-5 col-lg-10 col-md-10 col-sm-11 p-4 mx-lg-5 container-vitrine">
 
             <div id="carrosselCorretivos" class="carousel slide position-relative" data-bs-ride="carousel">
