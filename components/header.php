@@ -45,10 +45,17 @@ if($arquivo_atual !== "admin.php" && $arquivo_atual !== "produtos.php" && $arqui
                             </li>
                         <?php endif ?>
                         <li class="nav-item fw-bold rounded-pill bg-purple2 p-2 px-3">
+                        <?php if(isset($_SESSION['usuario_nome'])): ?>
+                            <a class="nav-link p-0 text-white" href="<?php if($isIndex){echo "./pages/";}else{ echo $prefix_up . "pages/";}?>perfil.php">
+                                <i class="bi bi-person me-1"></i>
+                                Olá, <?= htmlspecialchars(explode(' ', $_SESSION['usuario_nome'])[0]) ?>
+                            </a>
+                        <?php else: ?>
                             <a class="nav-link p-0 text-white" href="<?php if($isIndex){echo "./pages/";}else{ echo $prefix_up . "pages/";}?>login.php">
                                 <i class="bi bi-person me-1"></i>
-                                <?php echo isset($_SESSION['usuario_nome']) ? 'Olá, ' . htmlspecialchars(explode(' ', $_SESSION['usuario_nome'])[0]) : 'Login'; ?>
+                                Login
                             </a>
+                        <?php endif ?>
                         </li>
                         
                     </ul>

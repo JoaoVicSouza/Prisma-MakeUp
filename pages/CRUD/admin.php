@@ -327,7 +327,7 @@ $kpis = [
       }, 3500);
     }
 
-    function logout() { window.location.href = '../login.php'; }
+    function logout() { window.location.href = '../../scriptsPHP/sair.php'; }
 
     <?php if (isset($form_success) && $form_success): ?>
       showToast('check-circle', 'Produto registrado com sucesso.', 'ok');
