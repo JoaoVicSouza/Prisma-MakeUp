@@ -1,9 +1,9 @@
  body {
-     height: 100dvh;
+     min-height: 100vh;
      background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
+     background-attachment: fixed;
      display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+     flex-direction: column;
  }
 
  main{

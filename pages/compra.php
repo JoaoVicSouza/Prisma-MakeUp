@@ -53,17 +53,6 @@
             flex-shrink: 0;
         }
 
-        .qty-stepper .btn {
-            width: 32px;
-            height: 32px;
-            padding: 0;
-            line-height: 1;
-        }
-
-        .qty-input {
-            width: 48px;
-        }
-
         .remove-item {
             color: #adb5bd;
             padding: .25rem .5rem;
@@ -170,15 +159,8 @@
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mt-3">
-                                <div class="qty-stepper d-flex align-items-center">
-                                    <button class="btn btn-sm btn-outline-secondary qty-minus" type="button" aria-label="Diminuir quantidade">−</button>
-                                    <input type="number" class="form-control form-control-sm text-center qty-input mx-1" value="1" min="1" aria-label="Quantidade">
-                                    <button class="btn btn-sm btn-outline-secondary qty-plus" type="button" aria-label="Aumentar quantidade">+</button>
-                                </div>
-                                <div class="text-end" style="min-width: 90px;">
-                                    <p class="mb-0 fw-semibold line-total">R$ 89,90</p>
-                                </div>
+                            <div class="d-flex justify-content-end mt-2">
+                                <p class="mb-0 fw-semibold line-total">R$ 89,90</p>
                             </div>
                         </div>
                     </div>
@@ -241,17 +223,13 @@
                                 <input type="text" class="form-control" id="complement" name="complement"
                                     placeholder="Apto, bloco, referência...">
                             </div>
-                            <div class="col-md-6">
-                                <label for="neighborhood" class="form-label">Bairro</label>
-                                <input type="text" class="form-control" id="neighborhood" name="neighborhood"
-                                    placeholder="Seu bairro">
-                            </div>
-                            <div class="col-md-4">
+
+                            <div class="col-8">
                                 <label for="city" class="form-label">Cidade</label>
                                 <input type="text" class="form-control" id="city" name="city"
                                     placeholder="Sua cidade">
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-4">
                                 <label for="state" class="form-label">UF</label>
                                 <select class="form-select" id="state" name="state">
                                     <option value="" selected disabled></option>
@@ -334,10 +312,7 @@
 
             items.forEach(function (item) {
                 const price = parseFloat(item.dataset.price);
-                const qty = parseInt(item.querySelector('.qty-input').value, 10) || 1;
-                const lineTotal = price * qty;
-                item.querySelector('.line-total').textContent = brl(lineTotal);
-                subtotal += lineTotal;
+                subtotal += price;
             });
 
             subtotalEl.textContent = brl(subtotal);
@@ -349,31 +324,10 @@
         }
 
         cartContainer.addEventListener('click', function (e) {
-            const minusBtn = e.target.closest('.qty-minus');
-            const plusBtn = e.target.closest('.qty-plus');
             const removeBtn = e.target.closest('.remove-item');
 
-            if (minusBtn) {
-                const input = minusBtn.closest('.qty-stepper').querySelector('.qty-input');
-                input.value = Math.max(1, parseInt(input.value, 10) - 1);
-                recalcSummary();
-            }
-            if (plusBtn) {
-                const input = plusBtn.closest('.qty-stepper').querySelector('.qty-input');
-                input.value = parseInt(input.value, 10) + 1;
-                recalcSummary();
-            }
             if (removeBtn) {
                 removeBtn.closest('.cart-item').remove();
-                recalcSummary();
-            }
-        });
-
-        cartContainer.addEventListener('change', function (e) {
-            if (e.target.classList.contains('qty-input')) {
-                if (!e.target.value || parseInt(e.target.value, 10) < 1) {
-                    e.target.value = 1;
-                }
                 recalcSummary();
             }
         });
@@ -402,7 +356,6 @@
                         return;
                     }
                     document.getElementById('street').value = data.logradouro || '';
-                    document.getElementById('neighborhood').value = data.bairro || '';
                     document.getElementById('city').value = data.localidade || '';
                     document.getElementById('state').value = data.uf || '';
                     cepStatus.textContent = '';

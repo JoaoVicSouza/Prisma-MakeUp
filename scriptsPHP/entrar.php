@@ -19,6 +19,7 @@ $usuario = $checkEmail->fetch(PDO::FETCH_ASSOC);
 if (password_verify($senha, $usuario['senha'])) {
     $_SESSION['usuario_id']   = $usuario['id'];
     $_SESSION['usuario_nome'] = $usuario['nome'];
+    $_SESSION['usuario_email'] = $email;
     $_SESSION['admin'] = $usuario['admin'];
     header('Location: ../index.php');
     exit;
