@@ -1,9 +1,9 @@
 <?php 
 require 'conexao.php';
 
-$nome  = password_hash(trim($_POST['name']), PASSWORD_DEFAULT);
+$nome  = trim($_POST['name']);
 $email = trim($_POST['email']);
-$senha = trim($_POST['password']);
+$senha = password_hash(trim($_POST['password']), PASSWORD_DEFAULT);
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     header('Location: ../pages/login.php?erro=email_invalido');

@@ -23,9 +23,16 @@
             min-height: 100vh;
             background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
             display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem 0;
+            margin-top: 80px;
         }
 
         .form-card {
@@ -83,37 +90,30 @@
 </head>
 
 <body>
+
+    <?php include '../../components/header.php' ?>
+
     <main class="container">
-        <div class="form-card mx-auto">
+
+        <div class="form-card mx-auto position-relative">
+            <a href="admin.php" class="position-absolute text-secondary text-decoration-none"
+                style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;">
+                <i class="bi bi-arrow-left"></i>
+            </a>
             <div class="mb-4 text-center">
                 <h1 class="fs-4 fw-bold mb-1">Cadastrar novo curso de maquiagem</h1>
                 <p class="text-secondary mb-0">Preencha as informações do curso</p>
             </div>
 
             <form method="post" id="courseForm">
+                <!-- Nome -->
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome do curso</label>
                     <input type="text" class="form-control" id="name" name="name"
                         placeholder="Ex: Automaquiagem para o dia a dia">
                 </div>
 
-                <div class="mb-3">
-                    <label for="category" class="form-label">Categoria</label>
-                    <select class="form-select" id="category" name="category">
-                        <option value="" selected disabled>Selecione uma categoria</option>
-                        <option>Automaquiagem (dia a dia)</option>
-                        <option>Maquiagem social e festas</option>
-                        <option>Maquiagem para noivas</option>
-                        <option>Maquiagem artística</option>
-                        <option>Maquiagem profissional</option>
-                        <option>Sobrancelhas e olhos</option>
-                        <option>Skincare e preparação de pele</option>
-                        <option value="outra">Outra</option>
-                    </select>
-                    <input type="text" class="form-control mt-2 d-none" id="categoryOther" name="categoryOther"
-                        placeholder="Especifique a categoria">
-                </div>
-
+                <!-- Nível e Carga horária -->
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label for="level" class="form-label">Nível</label>
@@ -122,7 +122,6 @@
                             <option>Iniciante</option>
                             <option>Intermediário</option>
                             <option>Avançado</option>
-                            <option>Todos os níveis</option>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -135,6 +134,7 @@
                     </div>
                 </div>
 
+                <!-- Preço e Produto Relacionado -->
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label for="price" class="form-label">Preço</label>
@@ -145,19 +145,31 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="prerequisites" class="form-label">Pré-requisitos</label>
-                        <input type="text" class="form-control" id="prerequisites" name="prerequisites"
-                            placeholder="Ex: Nenhum">
+                        <label for="relatedProduct" class="form-label">Produto relacionado</label>
+                        <input type="text" class="form-control" id="relatedProduct" name="relatedProduct"
+                            placeholder="Ex: Kit de Pincéis Profissionais">
                     </div>
                 </div>
 
-                <div class="mb-1">
-                    <label for="description" class="form-label">Descrição</label>
-                    <textarea class="form-control" id="description" name="description" rows="4" maxlength="500"
-                        placeholder="Descreva o curso: técnicas abordadas (ex: esfumado, contorno, cílios postiços, design de sobrancelhas), produtos utilizados, objetivos da aula e para quem é indicado..."></textarea>
+                <!-- Público alvo -->
+                <div class="mb-3">
+                    <label for="targetAudience" class="form-label">Público alvo</label>
+                    <input type="text" class="form-control" id="targetAudience" name="targetAudience"
+                        placeholder="Ex: Maquiadores iniciantes, entusiastas...">
                 </div>
-                <div class="text-end mb-4">
-                    <span class="char-counter"><span id="charCount">0</span>/500</span>
+
+                <!-- Objetivo -->
+                <div class="mb-3">
+                    <label for="objective" class="form-label">Objetivo</label>
+                    <textarea class="form-control" id="objective" name="objective" rows="3"
+                        placeholder="Descreva o objetivo principal deste curso..."></textarea>
+                </div>
+
+                <!-- Conteúdo programático -->
+                <div class="mb-4">
+                    <label for="syllabus" class="form-label">Conteúdo programático</label>
+                    <textarea class="form-control" id="syllabus" name="syllabus" rows="4"
+                        placeholder="Liste os módulos, aulas e técnicas ensinadas..."></textarea>
                 </div>
 
                 <div class="d-flex gap-2">
@@ -168,30 +180,19 @@
         </div>
     </main>
 
+    <?php include '../../components/footer.php' ?>
+
+    <script src="../../scripts/scriptGeral.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script>
-        const categorySelect = document.getElementById('category');
-        const categoryOther = document.getElementById('categoryOther');
-        categorySelect.addEventListener('change', function () {
-            const isOther = categorySelect.value === 'outra';
-            categoryOther.classList.toggle('d-none', !isOther);
-            if (!isOther) categoryOther.value = '';
-        });
-
         const priceInput = document.getElementById('price');
-        priceInput.addEventListener('input', function () {
+        priceInput.addEventListener('input', function() {
             let value = priceInput.value.replace(/[^0-9,]/g, '');
             const parts = value.split(',');
             if (parts.length > 2) value = parts[0] + ',' + parts.slice(1).join('');
             priceInput.value = value;
-        });
-
-        const description = document.getElementById('description');
-        const charCount = document.getElementById('charCount');
-        description.addEventListener('input', function () {
-            charCount.textContent = description.value.length;
         });
     </script>
 </body>

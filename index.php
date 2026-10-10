@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles/styleIndex.css">
     <link rel="stylesheet" href="styles/styleGeral.css">
 </head>
-<body>
+<body class="">
     <?php include 'components/header.php';
      include 'components/mainIndex.php';
      include 'components/footer.php'; ?>

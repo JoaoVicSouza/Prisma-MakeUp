@@ -27,12 +27,12 @@
 }
 
 :root{
-    --primary: #F4D6F8;
-    --secundary: #F8F3D6;
-    --tertiary: #D5F8F2;
-    --primary2: #DE97F2;
-    --secundary2: #F2DE97;
-    --tertiary2: #63d0d9;
+    --primary: #ffc2f7;
+    --secundary: #FFFFFF;
+    --tertiary: #dbf8ff;
+    --primary2: #a60764;
+    --secundary2: #ffc038;
+    --tertiary2: #2776dd;
 }
 
 .bg-purple{
