@@ -1,310 +1,152 @@
+<?php
+require_once __DIR__ . '/../scriptsPHP/conexao.php';
+
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$stmt = $pdo->prepare(
+    'SELECT id, nome, categoria, descricao, preco, estoque, conteudo, validade,
+            indicacao, cuidados, informacoes, imagem
+     FROM produtos
+     WHERE id = :id'
+);
+$stmt->execute([':id' => $id ?: 0]);
+$produto = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finalizar compra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../styles/styleGeral.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
-        :root {
-            --primary: #F4D6F8;
-            --secundary: #F8F3D6;
-            --tertiary: #D5F8F2;
-            --primary2: #DE97F2;
-            --secundary2: #F2DE97;
-            --tertiary2: #63d0d9;
-        }
-
         body {
-            min-height: 100dvh;
             background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
+            background-attachment: fixed;
         }
 
-        main {
-            padding-top: 150px;
-            padding-bottom: 150px;
+        .produto-main {
+            margin-top: 7rem !important;
         }
 
-        .checkout-card {
+        .produto-card {
             width: 100%;
-            max-width: 960px;
             background: #fff;
             border-radius: 1rem;
             box-shadow: 0 1rem 3rem rgba(0, 0, 0, .12);
             padding: 2rem;
         }
 
-        .section-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+        .produto-imagem {
+            height: 500px;
+            border-radius: 1rem;
         }
 
-        .thumb {
-            width: 56px;
-            height: 56px;
-            border-radius: .65rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+        @media (max-width: 575.98px) {
+            .produto-card {
+                padding: 1.25rem;
+            }
 
-        .qty-stepper .btn {
-            width: 32px;
-            height: 32px;
-            padding: 0;
-            line-height: 1;
-        }
-
-        .qty-input {
-            width: 48px;
-        }
-
-        .remove-item {
-            color: #adb5bd;
-            padding: .25rem .5rem;
-        }
-
-        .remove-item:hover {
-            color: #dc3545;
-        }
-
-        .summary-box {
-            background-color: var(--tertiary);
-            border-radius: .75rem;
-            padding: 1.25rem;
-        }
-        .summary-box .total-row {
-            font-size: 1.15rem;
-            font-weight: 700;
-        }
-
-        /* Inputs */
-        .form-control:focus,
-        .form-select:focus {
-            border-color: var(--tertiary2);
-            box-shadow: 0 0 0 .25rem rgba(99, 208, 217, .25);
-        }
-
-        .payment-option {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: .5rem;
-            border: 1px solid #ced4da;
-            border-radius: .65rem;
-            padding: .75rem;
-            font-weight: 500;
-            color: #495057;
-            cursor: pointer;
-            transition: all .15s ease-in-out;
-        }
-
-        .btn-checkout {
-            background-color: var(--primary2);
-            border-color: var(--primary2);
-            color: #fff;
-        }
-
-        .btn-checkout:hover {
-            background-color: #c875ec;
-            border-color: #c875ec;
-            color: #fff;
-        }
-
-        .btn-checkout:disabled {
-            background-color: #e0c3ea;
-            border-color: #e0c3ea;
-        }
-
-        .cep-hint {
-            font-size: .8rem;
-            color: #6c757d;
+            .produto-imagem {
+                height: 360px;
+            }
         }
     </style>
+
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php include '../components/header.php' ?>
-    <main class="container d-flex align-items-center justify-content-center">
-        <div class="checkout-card mx-auto">
-            <h1 class="fs-4 fw-bold mb-4 text-center">Finalizar compra</h1>
 
-            <div class="row g-4">
+    <main class="container mt-5 mb-5 pt-4 produto-main">
+        <?php if (!$produto): ?>
+            <div class="alert alert-warning mt-5" role="alert">
+                Produto não encontrado.
+                <a href="produtos.php" class="alert-link">Voltar para os produtos</a>
+            </div>
+        <?php else: ?>
+        <div class="produto-card position-relative">
+        <div id="notificacaoCarrinho" class="alert alert-success d-none position-fixed bottom-0 end-0 m-3 shadow"
+            role="status" aria-live="polite" style="z-index: 1080;"></div>
+        <a href="produtos.php" class="position-absolute text-secondary text-decoration-none"
+            style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;"
+            aria-label="Voltar para os produtos">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+        <div class="row gx-lg-5 py-5 align-items-center">
 
-                <!-- CARRINHO + RESUMO -->
-                <div class="col-lg-7">
-                    <p class="section-title">Seu carrinho</p>
+            <div class="col-12 col-lg-6 mb-5 mb-lg-0">
+                <div class="produto-imagem w-100 d-flex justify-content-center align-items-center overflow-hidden">
+                    <?php if (!empty($produto['imagem'])): ?>
+                        <img src="../<?= htmlspecialchars($produto['imagem'], ENT_QUOTES, 'UTF-8') ?>"
+                            alt="<?= htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') ?>"
+                            class="w-100 h-100" style="object-fit: cover;">
+                    <?php else: ?>
+                        <span class="text-muted">Imagem indisponível</span>
+                    <?php endif; ?>
+                </div>
+            </div>
 
-                    <div id="cartItems">
-                        <div class="cart-item py-3 border-bottom" data-price="89.90">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="thumb" style="background-color: var(--primary);">
-                                    <i class="bi bi-bag fs-4" style="color: var(--primary2);"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <p class="mb-0 fw-semibold">Kit facial</p>
-                                    <p class="mb-0 text-secondary small">R$ 89,90 / unidade</p>
-                                </div>
-                                <button class="btn remove-item" type="button" aria-label="Remover item">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between mt-3">
-                                <div class="qty-stepper d-flex align-items-center">
-                                    <button class="btn btn-sm btn-outline-secondary qty-minus" type="button" aria-label="Diminuir quantidade">−</button>
-                                    <input type="number" class="form-control form-control-sm text-center qty-input mx-1" value="1" min="1" aria-label="Quantidade">
-                                    <button class="btn btn-sm btn-outline-secondary qty-plus" type="button" aria-label="Aumentar quantidade">+</button>
-                                </div>
-                                <div class="text-end" style="min-width: 90px;">
-                                    <p class="mb-0 fw-semibold line-total">R$ 89,90</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-12 col-lg-6">
+                <h1 class="fw-bold text-dark mb-2" style="font-size: 2.5rem;"><?= htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') ?></h1>
+                <p class="text-muted mb-4">Categoria: <?= htmlspecialchars($produto['categoria'], ENT_QUOTES, 'UTF-8') ?></p>
 
-                    <p id="emptyCartMsg" class="text-secondary text-center py-4 d-none">Seu carrinho está vazio.</p>
-
-                    <div class="summary-box mt-4">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Subtotal</span>
-                            <span id="subtotal">R$ 0,00</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Frete</span>
-                            <span>Grátis</span>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between total-row">
-                            <span>Total</span>
-                            <span id="total">R$ 0,00</span>
-                        </div>
-                    </div>
+                <div class="fw-bold mb-4 py-2" style="font-size: 2rem; color: darkmagenta;">
+                    R$ <?= number_format((float) $produto['preco'], 2, ',', '.') ?>
                 </div>
 
-                <div class="col-lg-5">
-                    <form method="post" id="checkoutForm">
-                        <p class="section-title">Dados do destinatário</p>
-                        <div class="row g-3 mb-3">
-                            <div class="col-12">
-                                <label for="fullName" class="form-label">Nome completo</label>
-                                <input type="text" class="form-control" id="fullName" name="fullName"
-                                    placeholder="Seu nome completo">
-                            </div>
-                            <div class="col-12">
-                                <label for="phone" class="form-label">Telefone</label>
-                                <input type="text" class="form-control" id="phone" name="phone"
-                                    placeholder="(00) 00000-0000">
-                            </div>
-                        </div>
+                <p class="mb-4 py-4" style="font-size: 20px; line-height: 1.6; color: #555;">
+                    <?= nl2br(htmlspecialchars($produto['descricao'] ?? '', ENT_QUOTES, 'UTF-8')) ?>
+                </p>
 
-                        <p class="section-title">Endereço de entrega</p>
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-5">
-                                <label for="cep" class="form-label">CEP</label>
-                                <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000"
-                                    maxlength="9" inputmode="numeric">
-                                <span class="cep-hint" id="cepStatus"></span>
-                            </div>
-                            <div class="col-md-7">
-                                <label for="street" class="form-label">Rua</label>
-                                <input type="text" class="form-control" id="street" name="street"
-                                    placeholder="Nome da rua">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="number" class="form-label">Número</label>
-                                <input type="text" class="form-control" id="number" name="number" placeholder="123">
-                            </div>
-                            <div class="col-md-8">
-                                <label for="complement" class="form-label">Complemento <span
-                                        class="text-secondary">(opcional)</span></label>
-                                <input type="text" class="form-control" id="complement" name="complement"
-                                    placeholder="Apto, bloco, referência...">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="neighborhood" class="form-label">Bairro</label>
-                                <input type="text" class="form-control" id="neighborhood" name="neighborhood"
-                                    placeholder="Seu bairro">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="city" class="form-label">Cidade</label>
-                                <input type="text" class="form-control" id="city" name="city"
-                                    placeholder="Sua cidade">
-                            </div>
-                            <div class="col-md-2">
-                                <label for="state" class="form-label">UF</label>
-                                <select class="form-select" id="state" name="state">
-                                    <option value="" selected disabled></option>
-                                    <option>AC</option>
-                                    <option>AL</option>
-                                    <option>AP</option>
-                                    <option>AM</option>
-                                    <option>BA</option>
-                                    <option>CE</option>
-                                    <option>DF</option>
-                                    <option>ES</option>
-                                    <option>GO</option>
-                                    <option>MA</option>
-                                    <option>MT</option>
-                                    <option>MS</option>
-                                    <option>MG</option>
-                                    <option>PA</option>
-                                    <option>PB</option>
-                                    <option>PR</option>
-                                    <option>PE</option>
-                                    <option>PI</option>
-                                    <option>RJ</option>
-                                    <option>RN</option>
-                                    <option>RS</option>
-                                    <option>RO</option>
-                                    <option>RR</option>
-                                    <option>SC</option>
-                                    <option>SP</option>
-                                    <option>SE</option>
-                                    <option>TO</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <p class="section-title">Forma de pagamento</p>
-                        <div class="row g-2 mb-1">
-                            <div class="col-6">
-                                <input type="radio" class="btn-check" name="payment" id="payPix" value="pix" checked>
-                                <label class="payment-option" for="payPix">
-                                    <i class="bi bi-qr-code"></i>
-                                    Pix
-                                </label>
-                            </div>
-                            <div class="col-6">
-                                <input type="radio" class="btn-check" name="payment" id="payBoleto" value="boleto">
-                                <label class="payment-option" for="payBoleto">
-                                    <i class="bi bi-bar-chart-steps"></i>
-                                    Boleto
-                                </label>
-                            </div>
-                        </div>
-
-                        <p class="payment-info" id="paymentInfoPix">Você receberá o QR Code do Pix após confirmar o
-                            pedido. Pagamento aprovado em poucos minutos.</p>
-                        <p class="payment-info d-none" id="paymentInfoBoleto">O boleto será gerado após confirmar o
-                            pedido, com vencimento em 3 dias úteis.</p>
-
-                        <button type="submit" class="btn btn-checkout w-100 mt-3" id="submitBtn">Finalizar
-                            compra</button>
-                    </form>
+                <div class="row g-2 mb-4">
+                    <div class="col-6">
+                        <button type="button" class="btn w-100 h-100 fw-bold rounded-pill text-light shadow-sm py-3"
+                            style="background-color: #DE97F2; transition: filter 0.2s;"
+                            <?= (int) $produto['estoque'] <= 0 ? 'disabled' : '' ?>
+                            data-acao-carrinho="adicionar"
+                            data-id="<?= (int) $produto['id'] ?>"
+                            data-nome="<?= htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') ?>"
+                            data-preco="<?= htmlspecialchars((string) $produto['preco'], ENT_QUOTES, 'UTF-8') ?>"
+                            data-imagem="<?= htmlspecialchars(!empty($produto['imagem']) ? '../' . $produto['imagem'] : '', ENT_QUOTES, 'UTF-8') ?>">
+                            <i class="bi bi-bag-plus-fill me-1"></i> ADICIONAR AO CARRINHO
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn w-100 h-100 fw-bold rounded-pill text-light shadow-sm py-3"
+                            style="background-color: #b64bd1; transition: filter 0.2s;"
+                            <?= (int) $produto['estoque'] <= 0 ? 'disabled' : '' ?>
+                            data-acao-carrinho="comprar"
+                            data-id="<?= (int) $produto['id'] ?>"
+                            data-nome="<?= htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') ?>"
+                            data-preco="<?= htmlspecialchars((string) $produto['preco'], ENT_QUOTES, 'UTF-8') ?>"
+                            data-imagem="<?= htmlspecialchars(!empty($produto['imagem']) ? '../' . $produto['imagem'] : '', ENT_QUOTES, 'UTF-8') ?>">
+                            <i class="bi bi-bag-check-fill me-1"></i> COMPRAR AGORA
+                        </button>
+                    </div>
                 </div>
-
             </div>
         </div>
+        <div class="border-top pt-4">
+            <h3 class="text-start">Detalhes do produto</h3>
+            <?php foreach (['conteudo' => 'Conteúdo', 'validade' => 'Validade', 'indicacao' => 'Indicação', 'cuidados' => 'Cuidados', 'informacoes' => 'Informações técnicas'] as $campo => $rotulo): ?>
+                <?php if (!empty($produto[$campo])): ?>
+                    <p><strong><?= $rotulo ?>:</strong> <?= nl2br(htmlspecialchars($produto[$campo], ENT_QUOTES, 'UTF-8')) ?></p>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+        </div>
+        <?php endif; ?>
     </main>
     <?php include '../components/footer.php' ?>
-    
+
+    <script src="../scripts/scrpitCarrinho.js"></script>
     <script src="../scripts/scriptGeral.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
 </body>
+
 </html>

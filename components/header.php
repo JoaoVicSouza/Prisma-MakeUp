@@ -11,6 +11,7 @@ if($arquivo_atual !== "admin.php" && $arquivo_atual !== "produtos.php" && $arqui
     $headerFix = true;
 }else{ $headerFix = false; }
 ?>
+
 <header id="main-header" class="<?php if($headerFix){ echo "fixed-top w-100 z-3";}?>"
         style="transition: background-color 0.4s ease, backdrop-filter 0.4s ease;">
         <nav class="navbar navbar-expand-lg">

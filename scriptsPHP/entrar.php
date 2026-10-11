@@ -8,7 +8,7 @@ $senha = trim($_POST['password']);
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     header('Location: ../pages/login.php?erro=email_invalido');
     exit;
-}
+}    
 
 $checkEmail = $pdo->prepare("SELECT id, senha, nome, admin FROM usuarios WHERE email = :email");
 $checkEmail->bindParam(':email', $email);

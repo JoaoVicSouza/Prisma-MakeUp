@@ -4,6 +4,61 @@
     justify-items: center; /* Centraliza os cards no espaço deles */
 }
 
+:root{
+    --card-height: 400px;
+    --card-row-gap: 1.5rem; /* gap entre linhas quando houver */
+}
+
+.container-vitrine .produtos-row {
+    justify-content: center;
+    align-content: center; /* centraliza verticalmente as linhas quando houver wrap */
+    min-height: calc(var(--card-height) * 2 + 2 * 1rem); /* reserva espaço para duas linhas de cards */
+}
+
+.card-produto-item {
+    height: 400px;
+    overflow: hidden;
+}
+
+.card-produto-item .card-body {
+    min-height: 0;
+}
+
+.card-produto-item .card-img-top,
+.card-produto-item .card-produto-imagem {
+    flex: 0 0 180px;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 13px 13px 0 0;
+}
+
+.card-produto-item .card-img-top,
+.card-produto-item .card-produto-imagem img {
+    display: block;
+    object-fit: cover;
+}
+
+.card-produto-item .card-produto-imagem img {
+    width: 100%;
+    height: 100%;
+}
+
+.card-produto-item .card-title,
+.card-produto-item .card-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-produto-item .card-title {
+    -webkit-line-clamp: 2;
+}
+
+.card-produto-item .card-text {
+    -webkit-line-clamp: 3;
+}
+
 /* 2. REGRA PARA A TELA PEQUENA (Menos de 1200px) */
 @media (max-width: 1024px) {
     

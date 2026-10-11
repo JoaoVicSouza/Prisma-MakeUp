@@ -24,7 +24,8 @@
                 'email_existente' => 'Este e-mail já está cadastrado.',
                 'servidor'        => 'Erro interno. Tente novamente.',
                 'credenciais' => 'Email ou senha inválidos.',
-                'email_invalido' => 'Digite um e-mail válido'
+                'email_invalido' => 'Digite um e-mail válido',
+                'login_necessario' => 'Faça login para finalizar sua compra.'
             ];
             $mensagem = $mensagens_erro[$_GET['erro']] ?? 'Ocorreu um erro.';
             $tipo = 'danger';

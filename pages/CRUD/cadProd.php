@@ -1,3 +1,7 @@
+<?php
+require_once '../../scriptsPHP/adminAuth.php';
+requireAdmin('../../index.php');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -94,6 +98,7 @@
         $mensagens_erro = [
             'produto_existente' => 'Já existe um produto com esse nome.',
             'servidor'          => 'Erro interno. Tente novamente.',
+            'imagem'            => 'Envie uma imagem JPG, PNG ou WEBP de até 5 MB.',
         ];
         $mensagem = $mensagens_erro[$_GET['erro']] ?? 'Ocorreu um erro.';
         $tipo = 'danger';
@@ -119,7 +124,7 @@
                 <p class="text-secondary mb-0">Preencha as informações do produto</p>
             </div>
                 
-            <form method="post" id="productForm" action="../scriptsPHP/addProd.php">
+            <form method="post" id="productForm" action="../scriptsPHP/addProd.php" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome do produto</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Ex: Camiseta Essential" required>
@@ -138,6 +143,13 @@
                         <option>Kits</option>
                         <option>Outra</option>
                     </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="imagem" class="form-label">Imagem do produto</label>
+                    <input type="file" class="form-control" id="imagem" name="imagem"
+                        accept="image/jpeg,image/png,image/webp" required>
+                    <div class="form-text">Formatos aceitos: JPG, PNG ou WEBP. Tamanho máximo: 5 MB.</div>
                 </div>
 
                 <div class="row g-3 mb-3">
