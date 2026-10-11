@@ -122,6 +122,9 @@ $email = $_SESSION['usuario_email'] ?? '';
 
             <!-- Ações -->
             <div class="d-flex flex-column gap-2">
+                <a href="pedidos.php" class="btn btn-perfil w-100">
+                    <i class="bi bi-box-seam me-2"></i>Meus pedidos
+                </a>
                 <a href="../pages/compra.php" class="btn btn-perfil w-100">
                     <i class="bi bi-cart me-2"></i>Ver carrinho
                 </a>

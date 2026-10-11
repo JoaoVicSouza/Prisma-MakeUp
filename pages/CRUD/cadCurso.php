@@ -1,3 +1,7 @@
+<?php
+require_once '../../scriptsPHP/adminAuth.php';
+requireAdmin('../../index.php');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 

@@ -1,10 +1,12 @@
 <?php
+require_once '../../scriptsPHP/adminAuth.php';
+requireAdmin('../../index.php');
 require '../../scriptsPHP/conexao.php';
 
 $tipo = $_GET['tipo'] ?? '';
 $id   = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-$tiposValidos = ['produto', 'usuario', 'curso'];
+$tiposValidos = ['produto', 'usuario', 'curso', 'pedido'];
 if (!in_array($tipo, $tiposValidos) || !$id) {
   header('Location: admin.php');
   exit;
@@ -13,7 +15,7 @@ if (!in_array($tipo, $tiposValidos) || !$id) {
 $item = null;
 
 if ($tipo === 'produto') {
-  $stmt = $pdo->prepare("SELECT id, nome, categoria, descricao, preco, estoque, conteudo, validade, indicacao, cuidados, informacoes FROM produtos WHERE id = :id");
+  $stmt = $pdo->prepare("SELECT id, nome, categoria, descricao, preco, estoque, conteudo, validade, indicacao, cuidados, informacoes, imagem FROM produtos WHERE id = :id");
   $stmt->execute([':id' => $id]);
   $item = $stmt->fetch(PDO::FETCH_ASSOC);
 } elseif ($tipo === 'usuario') {
@@ -24,6 +26,10 @@ if ($tipo === 'produto') {
   $stmt = $pdo->prepare("SELECT id, nome, categoria, nivel, carga_horaria, preco, prerequisitos, descricao FROM cursos WHERE id = :id");
   $stmt->execute([':id' => $id]);
   $item = $stmt->fetch(PDO::FETCH_ASSOC);
+} elseif ($tipo === 'pedido') {
+  $stmt = $pdo->prepare("SELECT id, nomeDest, telefoneDest, valorTotal, statusPag, statusPedido, endereco FROM pedidos WHERE id = :id");
+  $stmt->execute([':id' => $id]);
+  $item = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 if (!$item) {
@@ -31,7 +37,13 @@ if (!$item) {
   exit;
 }
 
-$titulos = ['produto' => 'Editar Produto', 'usuario' => 'Editar Usuário', 'curso' => 'Editar Curso'];
+$titulos = [
+  'produto' => 'Editar Produto',
+  'usuario' => 'Editar Usuário',
+  'curso' => 'Editar Curso',
+  'pedido' => 'Editar Pedido',
+];
+$endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -109,8 +121,18 @@ $titulos = ['produto' => 'Editar Produto', 'usuario' => 'Editar Usuário', 'curs
         <p class="text-secondary mb-0">Altere os campos desejados e salve</p>
       </div>
 
+      <?php if (isset($_GET['erro']) && $_GET['erro'] === 'imagem'): ?>
+        <div class="alert alert-danger" role="alert">
+          Envie uma imagem JPG, PNG ou WEBP de até 5 MB.
+        </div>
+      <?php elseif (isset($_GET['erro']) && $_GET['erro'] === 'servidor'): ?>
+        <div class="alert alert-danger" role="alert">
+          Não foi possível salvar as alterações. Tente novamente.
+        </div>
+      <?php endif; ?>
+
       <?php if ($tipo === 'produto'): ?>
-        <form method="post" action="../../scriptsPHP/editProd.php">
+        <form method="post" action="../../scriptsPHP/editProd.php" enctype="multipart/form-data">
           <input type="hidden" name="id" value="<?= $item['id'] ?>">
           <div class="mb-3">
             <label class="form-label">Nome do produto</label>
@@ -123,6 +145,21 @@ $titulos = ['produto' => 'Editar Produto', 'usuario' => 'Editar Usuário', 'curs
                 <option <?= $item['categoria'] === $cat ? 'selected' : '' ?>><?= $cat ?></option>
               <?php endforeach; ?>
             </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="imagem">Imagem do produto</label>
+            <?php if (!empty($item['imagem'])): ?>
+              <div class="mb-2">
+                <img src="../../<?= htmlspecialchars($item['imagem'], ENT_QUOTES, 'UTF-8') ?>"
+                  alt="Imagem atual de <?= htmlspecialchars($item['nome'], ENT_QUOTES, 'UTF-8') ?>"
+                  class="img-thumbnail" style="max-width: 180px; max-height: 180px; object-fit: contain;">
+              </div>
+            <?php else: ?>
+              <p class="form-text">Este produto ainda não tem uma imagem cadastrada.</p>
+            <?php endif; ?>
+            <input type="file" class="form-control" id="imagem" name="imagem"
+              accept="image/jpeg,image/png,image/webp">
+            <div class="form-text">Opcional. Envie JPG, PNG ou WEBP de até 5 MB para substituir a imagem atual.</div>
           </div>
           <div class="row g-3 mb-3">
             <div class="col-6">
@@ -240,6 +277,52 @@ $titulos = ['produto' => 'Editar Produto', 'usuario' => 'Editar Usuário', 'curs
           <div class="mb-3">
             <label class="form-label">Descrição</label>
             <textarea class="form-control" name="descricao" rows="4"><?= htmlspecialchars($item['descricao'] ?? '') ?></textarea>
+          </div>
+          <div class="d-flex gap-2">
+            <a href="admin.php" class="btn btn-cancel flex-shrink-0">Cancelar</a>
+            <button type="submit" class="btn btn-save w-100">Salvar alterações</button>
+          </div>
+        </form>
+      <?php elseif ($tipo === 'pedido'): ?>
+        <div class="mb-4">
+          <p class="mb-1"><strong>Pedido:</strong> #<?= (int) $item['id'] ?></p>
+          <p class="mb-1"><strong>Cliente:</strong> <?= htmlspecialchars($item['nomeDest'], ENT_QUOTES, 'UTF-8') ?></p>
+          <p class="mb-1"><strong>Telefone:</strong> <?= htmlspecialchars($item['telefoneDest'], ENT_QUOTES, 'UTF-8') ?></p>
+          <p class="mb-1"><strong>Total:</strong> R$ <?= number_format(((int) $item['valorTotal']) / 100, 2, ',', '.') ?></p>
+          <?php if (is_array($endereco)): ?>
+            <p class="mb-0"><strong>Endereço:</strong>
+              <?= htmlspecialchars(implode(', ', array_filter([
+                $endereco['rua'] ?? '',
+                $endereco['numero'] ?? '',
+                $endereco['complemento'] ?? '',
+                $endereco['cidade'] ?? '',
+                $endereco['estado'] ?? '',
+                $endereco['cep'] ?? '',
+              ])), ENT_QUOTES, 'UTF-8') ?>
+            </p>
+          <?php endif; ?>
+        </div>
+        <form method="post" action="../../scriptsPHP/editPedido.php">
+          <input type="hidden" name="id" value="<?= (int) $item['id'] ?>">
+          <div class="mb-3">
+            <label class="form-label" for="statusPedido">Status do pedido</label>
+            <select class="form-select" id="statusPedido" name="statusPedido" required>
+              <?php foreach (['Pendente', 'Processando', 'Enviado', 'Entregue', 'Cancelado'] as $status): ?>
+                <option value="<?= $status ?>" <?= $item['statusPedido'] === $status ? 'selected' : '' ?>>
+                  <?= $status ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="statusPag">Status do pagamento</label>
+            <select class="form-select" id="statusPag" name="statusPag" required>
+              <?php foreach (['Pendente', 'Pago', 'Recusado', 'Reembolsado', 'Cancelado'] as $status): ?>
+                <option value="<?= $status ?>" <?= $item['statusPag'] === $status ? 'selected' : '' ?>>
+                  <?= $status ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
           </div>
           <div class="d-flex gap-2">
             <a href="admin.php" class="btn btn-cancel flex-shrink-0">Cancelar</a>

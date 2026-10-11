@@ -1,4 +1,6 @@
-<?php 
+<?php
+require_once '../../scriptsPHP/adminAuth.php';
+requireAdmin('../../index.php');
 require '../../scriptsPHP/conexao.php';
 
 $stmt = $pdo->query("SELECT id, nome, email FROM usuarios");
@@ -14,9 +16,39 @@ try {
     $cursos = [];
 }
 
-// $stmt = $pdo->query("SELECT id, cliente, total, status FROM pedidos");
-// $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$pedidos = [];
+$stmt = $pdo->query(
+    "SELECT id, nomeDest AS cliente, valorTotal AS total, statusPag, statusPedido AS status, dataHora
+     FROM pedidos ORDER BY dataHora DESC, id DESC"
+);
+$pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$atividadeRecente = array_slice($pedidos, 0, 5);
+
+$stmt = $pdo->query(
+    "SELECT DATE(dataHora) AS dia, SUM(valorTotal) AS total
+     FROM pedidos
+     WHERE statusPag = 'Pago'
+       AND dataHora >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+       AND dataHora < DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+     GROUP BY DATE(dataHora)"
+);
+$totaisPorDia = [];
+foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $venda) {
+    $totaisPorDia[$venda['dia']] = (int) $venda['total'];
+}
+
+$diasSemana = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+$hoje = new DateTimeImmutable('today');
+$vendasSemana = [];
+for ($diasAtras = 6; $diasAtras >= 0; $diasAtras--) {
+    $data = $hoje->modify("-{$diasAtras} days");
+    $dia = $data->format('Y-m-d');
+    $vendasSemana[] = [
+        'label' => ucfirst($diasSemana[(int) $data->format('w')]),
+        'data' => $dia,
+        'total' => $totaisPorDia[$dia] ?? 0,
+    ];
+}
+$maiorVendaSemana = max(array_column($vendasSemana, 'total'));
 
 $kpis = [
     ['icon' => 'users',        'val' => count($usuarios), 'label' => 'Clientes'],
@@ -41,12 +73,7 @@ $kpis = [
 
 <body>
 
-  <?php include '../../components/header.php'; 
-    if($_SESSION['admin'] !== 1){
-      header('Location: ../../index.php');
-      exit;
-    }
-  ?>
+  <?php include '../../components/header.php'; ?>
 
   <div class="admin-wrapper">
     <aside class="sidebar">
@@ -63,8 +90,7 @@ $kpis = [
         <div class="nav-section">
           <p class="nav-section-label">Comércio</p>
           <button class="nav-item" onclick="goTo('produtos',this)"><i data-feather="box"></i> Produtos</button>
-          <button class="nav-item" onclick="goTo('pedidos',this)"><i data-feather="shopping-cart"></i> Pedidos <span
-              class="nav-badge" id="pendingBadge">0</span></button>
+          <button class="nav-item" onclick="goTo('pedidos',this)"><i data-feather="shopping-cart"></i> Pedidos</button>
         </div>
         <div class="nav-section">
           <p class="nav-section-label">Plataforma</p>
@@ -104,18 +130,46 @@ $kpis = [
           <div class="dash-grid">
             <div class="card-admin">
               <div class="card-head">
-                <span class="card-title">Vendas da Semana</span>
+                <span class="card-title">Vendas confirmadas — últimos 7 dias</span>
               </div>
-              <div class="mini-chart p-1">
-                Sem dados suficientes para gerar o gráfico.
+              <div class="mini-chart sales-chart" role="img" aria-label="Vendas pagas por dia nos últimos sete dias">
+                <?php foreach ($vendasSemana as $venda):
+                  $altura = $maiorVendaSemana > 0 ? ($venda['total'] / $maiorVendaSemana) * 100 : 0;
+                ?>
+                  <div class="sales-day" title="<?= htmlspecialchars($venda['label'] . ': R$ ' . number_format($venda['total'] / 100, 2, ',', '.'), ENT_QUOTES, 'UTF-8') ?>">
+                    <span class="sales-value">R$ <?= number_format($venda['total'] / 100, 2, ',', '.') ?></span>
+                    <div class="sales-bar-wrap">
+                      <span class="sales-bar" style="height: <?= $altura ?>%"></span>
+                    </div>
+                    <span class="sales-label"><?= htmlspecialchars($venda['label'], ENT_QUOTES, 'UTF-8') ?></span>
+                  </div>
+                <?php endforeach; ?>
               </div>
             </div>
             <div class="card-admin">
               <div class="card-head">
-                <span class="card-title">Atividade Recente</span>
+                <span class="card-title">Pedidos recentes</span>
               </div>
-              <div style="font-size: 0.9rem; color: #7a688a;">
-                O log de atividades está vazio.
+              <div class="recent-activity">
+                <?php if (empty($atividadeRecente)): ?>
+                  <p class="activity-empty">Nenhum pedido registrado ainda.</p>
+                <?php else: foreach ($atividadeRecente as $atividade):
+                  $timestamp = strtotime((string) $atividade['dataHora']);
+                ?>
+                  <a class="activity-item" href="mod.php?tipo=pedido&id=<?= (int) $atividade['id'] ?>">
+                    <span class="activity-icon"><i data-feather="shopping-bag"></i></span>
+                    <span class="activity-details">
+                      <strong>Pedido #<?= (int) $atividade['id'] ?></strong>
+                      <span><?= htmlspecialchars($atividade['cliente'], ENT_QUOTES, 'UTF-8') ?></span>
+                      <small>
+                        <?= htmlspecialchars($atividade['status'], ENT_QUOTES, 'UTF-8') ?>
+                        <?php if ($timestamp !== false): ?>
+                          · <?= date('d/m H:i', $timestamp) ?>
+                        <?php endif; ?>
+                      </small>
+                    </span>
+                  </a>
+                <?php endforeach; endif; ?>
               </div>
             </div>
           </div>
@@ -190,6 +244,25 @@ $kpis = [
                     <td colspan="5" style="text-align:center; color:#7a688a; padding: 30px;">Não há registros de pedidos.
                     </td>
                   </tr>
+                <?php else: ?>
+                  <?php foreach ($pedidos as $pedido): ?>
+                    <tr>
+                      <td>#<?= (int) $pedido['id'] ?></td>
+                      <td><?= htmlspecialchars($pedido['cliente'], ENT_QUOTES, 'UTF-8') ?></td>
+                      <td>R$ <?= number_format(((int) $pedido['total']) / 100, 2, ',', '.') ?></td>
+                      <td>
+                        <?= htmlspecialchars($pedido['status'], ENT_QUOTES, 'UTF-8') ?>
+                        <small class="d-block text-secondary">
+                          Pagamento: <?= htmlspecialchars($pedido['statusPag'], ENT_QUOTES, 'UTF-8') ?>
+                        </small>
+                      </td>
+                      <td>
+                        <a class="action-btn" href="mod.php?tipo=pedido&id=<?= (int) $pedido['id'] ?>" title="Editar pedido">
+                          <i data-feather="edit-2"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
                 <?php endif; ?>
               </tbody>
             </table>

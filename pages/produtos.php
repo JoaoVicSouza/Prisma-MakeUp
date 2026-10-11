@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,11 +55,11 @@
     
     <?php include '../components/header.php' ?>
     <?php include '../components/produtoSections/banner.php' ?>
-    <?php include '../components/produtoSections/corretivo.php' ?>
-    <?php include '../components/produtoSections/batom-gloss.php' ?>
-    <?php include '../components/produtoSections/rimel.php' ?>
-    <?php include '../components/produtoSections/po-facial.php' ?>
-    <?php include '../components/produtoSections/blush.php' ?>
+    <?php include '../components/produtoSections/pele.php' ?>
+    <?php include '../components/produtoSections/olhos.php' ?>
+    <?php include '../components/produtoSections/sobrancelhas.php' ?>
+    <?php include '../components/produtoSections/labios.php' ?>
+    <?php include '../components/produtoSections/kits.php' ?>
     <?php include '../components/footer.php' ?>
 
 
