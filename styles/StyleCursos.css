@@ -1,0 +1,99 @@
+html { scroll-behavior: smooth; }
+.secao { scroll-margin-top: 90px; }
+
+/* ---------- SIDEBAR ---------- */
+.sidebar-prisma {
+    top: 2rem;
+    z-index: 1040;
+    background: transparent;
+    padding-right: 1.5rem;
+}
+
+.sidebar-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 1.25rem 1rem;
+    box-shadow: 0 10px 30px rgba(222, 151, 242, 0.22);
+    border: 1px solid #f4d6f8;
+}
+
+.sidebar-topo {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .9rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(135deg, #DE97F2 0%, #8b008b 100%);
+}
+.sidebar-topo > i { font-size: 1.5rem; }
+.sidebar-topo strong { display: block; font-size: 1.05rem; line-height: 1.1; }
+.sidebar-label {
+    display: block;
+    font-size: .65rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: .85;
+}
+
+.sidebar-lista { gap: .35rem; list-style: none; padding: 0; margin: 0; }
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 14px;
+    color: #4a3a50;
+    font-weight: 600;
+    font-size: .95rem;
+    text-decoration: none;
+    transition: background .2s, color .2s, transform .2s;
+}
+
+.sidebar-icone {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: #f9ebfc;
+    color: #b44bd0;
+    transition: background .2s, color .2s;
+}
+
+.sidebar-link:hover {
+    background: #fbf1fd;
+    color: darkmagenta;
+    transform: translateX(4px);
+}
+.sidebar-link:hover .sidebar-icone {
+    background: #DE97F2;
+    color: #fff;
+}
+
+.sidebar-link.active {
+    background: linear-gradient(135deg, #DE97F2, #b44bd0);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(180, 75, 208, 0.35);
+}
+.sidebar-link.active .sidebar-icone {
+    background: rgba(255, 255, 255, .25);
+    color: #fff;
+}
+
+/* ---------- MOBILE (gaveta) ---------- */
+@media (max-width: 991.98px) {
+    .sidebar-prisma {
+        background: #fdf7fe;
+        padding-right: 0;
+        width: 290px;
+    }
+    .sidebar-prisma .offcanvas-header {
+        border-bottom: 1px solid #f4d6f8;
+    }
+    .sidebar-prisma .offcanvas-title { color: darkmagenta; }
+    .sidebar-card { box-shadow: none; border: 0; background: transparent; }
+}
