@@ -1,3 +1,9 @@
+html {
+    scroll-behavior: smooth;
+}
+.secao{
+    scroll-margin-top: 100px;
+}
 .titulo-curso {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -94,5 +100,12 @@
         flex: 0 0 100%;
         max-width: 100%;
     }
+}
+
+.offcanvas-body{
+    position: absolute !important; 
+    top: 0;
+    left: 0; /* ou right: 0, dependendo da sua configuração */
+    transform: none;
 }
 
