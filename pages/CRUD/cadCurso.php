@@ -1,6 +1,10 @@
 <?php
 require_once '../../scriptsPHP/adminAuth.php';
 requireAdmin('../../index.php');
+require '../../scriptsPHP/conexao.php';
+
+$stmtProdutos = $pdo->query('SELECT id, nome FROM produtos ORDER BY nome');
+$produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -109,71 +113,82 @@ requireAdmin('../../index.php');
                 <p class="text-secondary mb-0">Preencha as informações do curso</p>
             </div>
 
-            <form method="post" id="courseForm">
+            <?php if (isset($_GET['erro'])): ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php if ($_GET['erro'] === 'dados'): ?>
+                        Confira os campos do curso.
+                    <?php else: ?>
+                        Não foi possível cadastrar o curso. Tente novamente.
+                    <?php endif; ?>
+                </div>
+            <?php elseif (isset($_GET['sucesso'])): ?>
+                <div class="alert alert-success" role="status">Curso cadastrado com sucesso.</div>
+            <?php endif; ?>
+
+            <form method="post" id="courseForm" action="../../scriptsPHP/addCurso.php">
                 <!-- Nome -->
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome do curso</label>
                     <input type="text" class="form-control" id="name" name="name"
-                        placeholder="Ex: Automaquiagem para o dia a dia">
+                        maxlength="150" placeholder="Ex: Automaquiagem para o dia a dia" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="produto_id" class="form-label">Nome do produto relacionado</label>
+                    <?php if (empty($produtos)): ?>
+                        <div class="alert alert-warning mb-0" role="alert">
+                            Cadastre um produto antes de criar o curso.
+                        </div>
+                    <?php else: ?>
+                        <select class="form-select" id="produto_id" name="produto_id" required>
+                            <option value="" selected disabled>Selecione o produto</option>
+                            <?php foreach ($produtos as $produto): ?>
+                                <option value="<?= (int) $produto['id'] ?>">
+                                    <?= htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Nível e Carga horária -->
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label for="level" class="form-label">Nível</label>
-                        <select class="form-select" id="level" name="level">
+                        <select class="form-select" id="level" name="level" required>
                             <option value="" selected disabled>Selecione o nível</option>
                             <option>Iniciante</option>
                             <option>Intermediário</option>
                             <option>Avançado</option>
+                            <option>Todos os níveis</option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="workload" class="form-label">Carga horária</label>
+                        <label for="cargaH" class="form-label">Carga horária</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" id="workload" name="workload" placeholder="0"
-                                min="0" step="1">
+                            <input type="number" class="form-control" id="cargaH" name="cargaH" placeholder="0"
+                                min="0" step="1" required>
                             <span class="input-group-text">horas</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Preço e Produto Relacionado -->
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label for="price" class="form-label">Preço</label>
-                        <div class="input-group">
-                            <span class="input-group-text">R$</span>
-                            <input type="text" class="form-control" id="price" name="price" placeholder="0,00"
-                                inputmode="decimal">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="relatedProduct" class="form-label">Produto relacionado</label>
-                        <input type="text" class="form-control" id="relatedProduct" name="relatedProduct"
-                            placeholder="Ex: Kit de Pincéis Profissionais">
-                    </div>
-                </div>
-
-                <!-- Público alvo -->
                 <div class="mb-3">
-                    <label for="targetAudience" class="form-label">Público alvo</label>
-                    <input type="text" class="form-control" id="targetAudience" name="targetAudience"
-                        placeholder="Ex: Maquiadores iniciantes, entusiastas...">
+                    <label for="objetivo" class="form-label">Objetivo</label>
+                    <input type="text" class="form-control" id="objetivo" name="objetivo" maxlength="255"
+                        placeholder="Objetivo principal do curso">
                 </div>
 
-                <!-- Objetivo -->
                 <div class="mb-3">
-                    <label for="objective" class="form-label">Objetivo</label>
-                    <textarea class="form-control" id="objective" name="objective" rows="3"
-                        placeholder="Descreva o objetivo principal deste curso..."></textarea>
+                    <label for="conteudo" class="form-label">Conteúdo</label>
+                    <textarea class="form-control" id="conteudo" name="conteudo" rows="4" maxlength="300"
+                        placeholder="Descreva o conteúdo do curso"></textarea>
                 </div>
 
-                <!-- Conteúdo programático -->
                 <div class="mb-4">
-                    <label for="syllabus" class="form-label">Conteúdo programático</label>
-                    <textarea class="form-control" id="syllabus" name="syllabus" rows="4"
-                        placeholder="Liste os módulos, aulas e técnicas ensinadas..."></textarea>
+                    <label for="PublicoAlvo" class="form-label">Público-alvo</label>
+                    <input type="text" class="form-control" id="PublicoAlvo" name="PublicoAlvo" maxlength="100"
+                        placeholder="Para quem o curso é indicado">
                 </div>
 
                 <div class="d-flex gap-2">
@@ -190,15 +205,6 @@ requireAdmin('../../index.php');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-    <script>
-        const priceInput = document.getElementById('price');
-        priceInput.addEventListener('input', function() {
-            let value = priceInput.value.replace(/[^0-9,]/g, '');
-            const parts = value.split(',');
-            if (parts.length > 2) value = parts[0] + ',' + parts.slice(1).join('');
-            priceInput.value = value;
-        });
-    </script>
 </body>
 
 </html>

@@ -9,22 +9,24 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $pdo->query("SELECT id, nome, categoria, preco, estoque FROM produtos");
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-try {
-    $stmt  = $pdo->query("SELECT id, nome, categoria, nivel, preco FROM cursos");
-    $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    $cursos = [];
-}
+$stmt = $pdo->query("SELECT c.id, c.nome, c.nivel, c.cargaH,
+                            p.nome AS produto_nome
+                     FROM cursos AS c
+                     LEFT JOIN produtos AS p ON p.id = c.id_produto
+                     ORDER BY c.id");
+$cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 
 $stmt = $pdo->query(
-    "SELECT id, nomeDest AS cliente, valorTotal AS total, statusPag, statusPedido AS status, dataHora
+  "SELECT id, nomeDest AS cliente, valorTotal AS total, statusPag, statusPedido AS status, dataHora
      FROM pedidos ORDER BY dataHora DESC, id DESC"
 );
 $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $atividadeRecente = array_slice($pedidos, 0, 5);
 
 $stmt = $pdo->query(
-    "SELECT DATE(dataHora) AS dia, SUM(valorTotal) AS total
+  "SELECT DATE(dataHora) AS dia, SUM(valorTotal) AS total
      FROM pedidos
      WHERE statusPag = 'Pago'
        AND dataHora >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
@@ -33,28 +35,28 @@ $stmt = $pdo->query(
 );
 $totaisPorDia = [];
 foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $venda) {
-    $totaisPorDia[$venda['dia']] = (int) $venda['total'];
+  $totaisPorDia[$venda['dia']] = (int) $venda['total'];
 }
 
 $diasSemana = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
 $hoje = new DateTimeImmutable('today');
 $vendasSemana = [];
 for ($diasAtras = 6; $diasAtras >= 0; $diasAtras--) {
-    $data = $hoje->modify("-{$diasAtras} days");
-    $dia = $data->format('Y-m-d');
-    $vendasSemana[] = [
-        'label' => ucfirst($diasSemana[(int) $data->format('w')]),
-        'data' => $dia,
-        'total' => $totaisPorDia[$dia] ?? 0,
-    ];
+  $data = $hoje->modify("-{$diasAtras} days");
+  $dia = $data->format('Y-m-d');
+  $vendasSemana[] = [
+    'label' => ucfirst($diasSemana[(int) $data->format('w')]),
+    'data' => $dia,
+    'total' => $totaisPorDia[$dia] ?? 0,
+  ];
 }
 $maiorVendaSemana = max(array_column($vendasSemana, 'total'));
 
 $kpis = [
-    ['icon' => 'users',        'val' => count($usuarios), 'label' => 'Clientes'],
-    ['icon' => 'box',          'val' => count($produtos), 'label' => 'Produtos'],
-    ['icon' => 'shopping-cart','val' => count($pedidos),  'label' => 'Pedidos'],
-    ['icon' => 'play-circle',   'val' => count($cursos),   'label' => 'Tutoriais']
+  ['icon' => 'users',        'val' => count($usuarios), 'label' => 'Clientes'],
+  ['icon' => 'box',          'val' => count($produtos), 'label' => 'Produtos'],
+  ['icon' => 'shopping-cart', 'val' => count($pedidos),  'label' => 'Pedidos'],
+  ['icon' => 'play-circle',   'val' => count($cursos),   'label' => 'Tutoriais']
 ];
 ?>
 <!DOCTYPE html>
@@ -153,23 +155,24 @@ $kpis = [
               <div class="recent-activity">
                 <?php if (empty($atividadeRecente)): ?>
                   <p class="activity-empty">Nenhum pedido registrado ainda.</p>
-                <?php else: foreach ($atividadeRecente as $atividade):
-                  $timestamp = strtotime((string) $atividade['dataHora']);
-                ?>
-                  <a class="activity-item" href="mod.php?tipo=pedido&id=<?= (int) $atividade['id'] ?>">
-                    <span class="activity-icon"><i data-feather="shopping-bag"></i></span>
-                    <span class="activity-details">
-                      <strong>Pedido #<?= (int) $atividade['id'] ?></strong>
-                      <span><?= htmlspecialchars($atividade['cliente'], ENT_QUOTES, 'UTF-8') ?></span>
-                      <small>
-                        <?= htmlspecialchars($atividade['status'], ENT_QUOTES, 'UTF-8') ?>
-                        <?php if ($timestamp !== false): ?>
-                          · <?= date('d/m H:i', $timestamp) ?>
-                        <?php endif; ?>
-                      </small>
-                    </span>
-                  </a>
-                <?php endforeach; endif; ?>
+                  <?php else: foreach ($atividadeRecente as $atividade):
+                    $timestamp = strtotime((string) $atividade['dataHora']);
+                  ?>
+                    <a class="activity-item" href="mod.php?tipo=pedido&id=<?= (int) $atividade['id'] ?>">
+                      <span class="activity-icon"><i data-feather="shopping-bag"></i></span>
+                      <span class="activity-details">
+                        <strong>Pedido #<?= (int) $atividade['id'] ?></strong>
+                        <span><?= htmlspecialchars($atividade['cliente'], ENT_QUOTES, 'UTF-8') ?></span>
+                        <small>
+                          <?= htmlspecialchars($atividade['status'], ENT_QUOTES, 'UTF-8') ?>
+                          <?php if ($timestamp !== false): ?>
+                            · <?= date('d/m H:i', $timestamp) ?>
+                          <?php endif; ?>
+                        </small>
+                      </span>
+                    </a>
+                <?php endforeach;
+                endif; ?>
               </div>
             </div>
           </div>
@@ -186,12 +189,12 @@ $kpis = [
             <button class="btn-primary-custom" onclick="window.location.href='cadProd.php'"><i
                 data-feather="plus"></i> Novo Produto</button>
           </div>
-          <div class="card-admin" style="padding:0; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+          <div class="card-admin admin-table-scroll">
             <table class="data-table" id="prodTable">
               <thead>
                 <tr>
                   <th>Nome</th>
-                  <th>Categoria</th>
+                  <th>Nome do produto relacionado</th>
                   <th>Preço</th>
                   <th>Estoque</th>
                   <th>Ações</th>
@@ -202,17 +205,18 @@ $kpis = [
                   <tr>
                     <td colspan="5" style="text-align:center; color:#7a688a; padding: 30px;">Nenhum produto cadastrado na base.</td>
                   </tr>
-                <?php else: foreach ($produtos as $p): ?>
-                  <tr>
-                    <td><?= htmlspecialchars($p['nome']) ?></td>
-                    <td><?= htmlspecialchars($p['categoria']) ?></td>
-                    <td>R$ <?= htmlspecialchars($p['preco']) ?></td>
-                    <td><?= htmlspecialchars($p['estoque']) ?></td>
-                    <td>
-                      <a class="action-btn" href="mod.php?tipo=produto&id=<?= $p['id'] ?>" title="Editar"><i data-feather="edit-2"></i></a>
-                    </td>
-                  </tr>
-                <?php endforeach; endif; ?>
+                  <?php else: foreach ($produtos as $p): ?>
+                    <tr>
+                      <td><?= htmlspecialchars($p['nome']) ?></td>
+                      <td><?= htmlspecialchars($p['categoria']) ?></td>
+                      <td>R$ <?= htmlspecialchars($p['preco']) ?></td>
+                      <td><?= htmlspecialchars($p['estoque']) ?></td>
+                      <td>
+                        <a class="action-btn" href="mod.php?tipo=produto&id=<?= $p['id'] ?>" title="Editar"><i data-feather="edit-2"></i></a>
+                      </td>
+                    </tr>
+                <?php endforeach;
+                endif; ?>
               </tbody>
             </table>
           </div>
@@ -227,7 +231,7 @@ $kpis = [
                 oninput="filterTable('orderTable',this.value)" />
             </div>
           </div>
-          <div class="card-admin" style="padding:0; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+          <div class="card-admin admin-table-scroll">
             <table class="data-table" id="orderTable">
               <thead>
                 <tr>
@@ -278,7 +282,7 @@ $kpis = [
                 oninput="filterTable('userTable',this.value)" />
             </div>
           </div>
-          <div class="card-admin" style="padding:0; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+          <div class="card-admin admin-table-scroll">
             <table class="data-table" id="userTable">
               <thead>
                 <tr>
@@ -293,15 +297,16 @@ $kpis = [
                     <td colspan="3" style="text-align:center; color:#7a688a; padding: 30px;">Nenhuma conta de cliente
                       registrada.</td>
                   </tr>
-                <?php else: foreach ($usuarios as $u): ?>
-                  <tr>
-                    <td><?= htmlspecialchars($u['nome']) ?></td>
-                    <td><?= htmlspecialchars($u['email']) ?></td>
-                    <td>
-                      <a class="action-btn" href="mod.php?tipo=usuario&id=<?= $u['id'] ?>" title="Editar"><i data-feather="edit-2"></i></a>
-                    </td>
-                  </tr>
-                <?php endforeach; endif; ?>
+                  <?php else: foreach ($usuarios as $u): ?>
+                    <tr>
+                      <td><?= htmlspecialchars($u['nome']) ?></td>
+                      <td><?= htmlspecialchars($u['email']) ?></td>
+                      <td>
+                        <a class="action-btn" href="mod.php?tipo=usuario&id=<?= $u['id'] ?>" title="Editar"><i data-feather="edit-2"></i></a>
+                      </td>
+                    </tr>
+                <?php endforeach;
+                endif; ?>
               </tbody>
             </table>
           </div>
@@ -318,14 +323,14 @@ $kpis = [
             <button class="btn-primary-custom" onclick="window.location.href='cadCurso.php'"><i
                 data-feather="upload-cloud"></i> Adicionar Mídia</button>
           </div>
-          <div class="card-admin" style="padding:0; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+          <div class="card-admin admin-table-scroll">
             <table class="data-table" id="cursoTable">
               <thead>
                 <tr>
                   <th>Nome</th>
-                  <th>Categoria</th>
+                  <th>Produto relacionado</th>
                   <th>Nível</th>
-                  <th>Preço</th>
+                  <th>Carga horária</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -334,17 +339,18 @@ $kpis = [
                   <tr>
                     <td colspan="5" style="text-align:center; color:#7a688a; padding: 30px;">A biblioteca de tutoriais está vazia no momento.</td>
                   </tr>
-                <?php else: foreach ($cursos as $c): ?>
-                  <tr>
-                    <td><?= htmlspecialchars($c['nome']) ?></td>
-                    <td><?= htmlspecialchars($c['categoria']) ?></td>
-                    <td><?= htmlspecialchars($c['nivel'] ?? '—') ?></td>
-                    <td>R$ <?= htmlspecialchars($c['preco'] ?? '—') ?></td>
-                    <td>
-                      <a class="action-btn" href="mod.php?tipo=curso&id=<?= $c['id'] ?>" title="Editar"><i data-feather="edit-2"></i></a>
-                    </td>
-                  </tr>
-                <?php endforeach; endif; ?>
+                  <?php else: foreach ($cursos as $c): ?>
+                    <tr>
+                      <td><?= htmlspecialchars($c['nome'], ENT_QUOTES, 'UTF-8') ?></td>
+                      <td><?= htmlspecialchars($c['produto_nome'] ?? '—', ENT_QUOTES, 'UTF-8') ?></td>
+                      <td><?= htmlspecialchars($c['nivel'] ?? '—', ENT_QUOTES, 'UTF-8') ?></td>
+                      <td><?= (int) $c['cargaH'] ?> h</td>
+                      <td>
+                        <a class="action-btn" href="mod.php?tipo=curso&id=<?= (int) $c['id'] ?>" title="Editar"><i data-feather="edit-2"></i></a>
+                      </td>
+                    </tr>
+                <?php endforeach;
+                endif; ?>
               </tbody>
             </table>
           </div>
@@ -400,7 +406,9 @@ $kpis = [
       }, 3500);
     }
 
-    function logout() { window.location.href = '../../scriptsPHP/sair.php'; }
+    function logout() {
+      window.location.href = '../../scriptsPHP/sair.php';
+    }
 
     <?php if (isset($form_success) && $form_success): ?>
       showToast('check-circle', 'Produto registrado com sucesso.', 'ok');

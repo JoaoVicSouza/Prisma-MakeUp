@@ -11,6 +11,8 @@ const perguntas = [
 let perguntaAtual = 0;
 let respostas = [];
 let fotoSelecionada = false;
+let imagemSelecionada = null;
+let recomendarProdutos = false;
 
 function mostrarControles() {
     const controles = document.getElementById('controles');
@@ -32,7 +34,7 @@ function mostrarControles() {
             break;
         case 1:
             controles.innerHTML = `
-                <input id="descricao" name="descricao" type="file" accept="image/*" class="form-control" required>
+                <input id="descricao" name="descricao" type="file" accept="image/jpeg,image/png,image/webp" class="form-control" required>
                 <div class="d-flex justify-content-evenly mt-2">
                     <button type="submit" class="btn btn-primary" onClick="fotoEnviada()">Enviar foto</button>
                     <button type="button" class="btn btn-secondary btn-pular">Pular</button>
@@ -129,6 +131,14 @@ document.getElementById('resposta').addEventListener('submit', async function (e
         ? (campo.files[0]?.name || '')
         : campo.value.trim());
 
+    if (perguntaAtual === 6) {
+        recomendarProdutos = botaoSelecionado === 'Sim';
+    }
+
+    if (campo?.type === 'file' && campo.files[0]) {
+        imagemSelecionada = campo.files[0];
+    }
+
     adicionarMensagem(resposta, 'enviada');
     respostas.push({
         pergunta: perguntas[perguntaAtual],
@@ -155,6 +165,10 @@ async function enviarParaIa() {
     dados.append('descricao', respostas.map(item =>
         `${item.pergunta}\nResposta: ${item.resposta}`
     ).join('\n\n'));
+    dados.append('recomendar_produtos', recomendarProdutos ? 'sim' : 'nao');
+    if (imagemSelecionada) {
+        dados.append('foto', imagemSelecionada, imagemSelecionada.name);
+    }
 
     controles.innerHTML = '<p class="text-muted"><span class="loading-icon" aria-hidden="true"><i class="bi bi-arrow-repeat"></i></span> Preparando sua recomendação...</p>';
     rolarParaBaixo();
@@ -241,10 +255,12 @@ function jsonParaMensagens(data) {
         });
     });
 
-    mensagens.push({
-        tipo: 'produtos',
-        produtos: data.produtos_recomendados
-    });
+    if (data.produtos_recomendados.length > 0) {
+        mensagens.push({
+            tipo: 'produtos',
+            produtos: data.produtos_recomendados
+        });
+    }
 
     mensagens.push({
         tipo: 'dica',
@@ -257,21 +273,35 @@ function jsonParaMensagens(data) {
 // monta o HTML interno de cada bolha, de acordo com o tipo da mensagem
 function criarConteudoMensagem(msg) {
     if (msg.tipo === 'intro') {
-        return `<strong>${msg.lookName}</strong><p class="mb-0 mt-1">${msg.texto}</p>`;
+        return `<strong>${escaparHtml(msg.lookName)}</strong><p class="mb-0 mt-1">${escaparHtml(msg.texto)}</p>`;
     }
     if (msg.tipo === 'etapa') {
-        return `<strong>${msg.numero}. ${msg.titulo}</strong><p class="mb-0 mt-1">${msg.texto}</p>`;
+        return `<strong>${msg.numero}. ${escaparHtml(msg.titulo)}</strong><p class="mb-0 mt-1">${escaparHtml(msg.texto)}</p>`;
     }
     if (msg.tipo === 'produtos') {
-        const itens = msg.produtos.map(p =>
-            `<div class="mt-2"><strong>${p.nome_do_produto}</strong><br><span class="text-muted" style="font-size:0.85rem;">${p.motivo}</span></div>`
-        ).join('');
+        const itens = msg.produtos.map(p => {
+            const produtoId = Number(p.produto_id);
+            const linkProduto = Number.isInteger(produtoId) && produtoId > 0
+                ? `<a class="btn btn-sm btn-outline-primary mt-2" href="produto.php?id=${produtoId}">Ver produto</a>`
+                : '';
+            return `<div class="mt-2"><strong>${escaparHtml(p.nome_do_produto)}</strong><br><span class="text-muted" style="font-size:0.85rem;">${escaparHtml(p.motivo)}</span><br>${linkProduto}</div>`;
+        }).join('');
         return `<strong>Produtos para este look</strong>${itens}`;
     }
     if (msg.tipo === 'dica') {
-        return `<span class="text-muted">💡 ${msg.texto}</span>`;
+        return `<span class="text-muted">💡 ${escaparHtml(msg.texto)}</span>`;
     }
     return '';
+}
+
+function escaparHtml(valor) {
+    return String(valor ?? '').replace(/[&<>"']/g, caractere => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[caractere]);
 }
 
 // bolha temporária de "digitando..." exibida entre uma mensagem e outra

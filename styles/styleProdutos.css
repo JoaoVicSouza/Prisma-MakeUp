@@ -15,6 +15,33 @@
     min-height: calc(var(--card-height) * 2 + 2 * 1rem); /* reserva espaço para duas linhas de cards */
 }
 
+.banner-lateral {
+    filter:
+        drop-shadow(0 0 10px rgba(222, 151, 242, 0.7))
+        drop-shadow(0 0 24px rgba(182, 75, 209, 0.45));
+    animation: brilho-banner-lateral 3s ease-in-out infinite alternate;
+}
+
+@keyframes brilho-banner-lateral {
+    from {
+        filter:
+            drop-shadow(0 0 8px rgba(222, 151, 242, 0.55))
+            drop-shadow(0 0 18px rgba(182, 75, 209, 0.3));
+    }
+
+    to {
+        filter:
+            drop-shadow(0 0 14px rgba(222, 151, 242, 0.85))
+            drop-shadow(0 0 32px rgba(182, 75, 209, 0.55));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .banner-lateral {
+        animation: none;
+    }
+}
+
 .card-produto-item {
     height: 400px;
     overflow: hidden;

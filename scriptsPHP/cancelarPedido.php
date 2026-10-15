@@ -72,7 +72,7 @@ try {
     $stmtItens->execute([':pedido_id' => $pedidoId]);
     $itens = $stmtItens->fetchAll(PDO::FETCH_ASSOC);
     if ($itens === []) {
-        throw new RuntimeException('O pedido não possui itens para devolver ao estoque.');
+        throw new RuntimeException('O pedido não possui itens de produto para cancelar.');
     }
 
     $stmtEstoque = $pdo->prepare(

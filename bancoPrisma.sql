@@ -23,7 +23,17 @@ USE `prisma`;
 DROP TABLE IF EXISTS `cursos`;
 CREATE TABLE IF NOT EXISTS `cursos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `nome` varchar(150) NOT NULL,
+  `nivel` varchar(50) NOT NULL,
+  `cargaH` int NOT NULL,
+  `preco` int NOT NULL,
+  `objetivo` varchar(255) DEFAULT NULL,
+  `conteudo` varchar(300) DEFAULT NULL,
+  `PublicoAlvo` varchar(100) DEFAULT NULL,
+  `id_produto` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_cursos_produtos` (`id_produto`),
+  CONSTRAINT `FK_cursos_produtos` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela prisma.cursos: ~0 rows (aproximadamente)
@@ -90,13 +100,12 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `nome` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `senha` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `endereco` json DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Copiando dados para a tabela prisma.usuarios: ~0 rows (aproximadamente)
-INSERT IGNORE INTO `usuarios` (`id`, `nome`, `email`, `senha`, `endereco`) VALUES
-	(9, 'João Victor Souza Soares', 'soaresjoaovictor252@gmail.com', 'joao', NULL);
+INSERT IGNORE INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
+	(9, 'João Victor Souza Soares', 'soaresjoaovictor252@gmail.com', 'joao');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
