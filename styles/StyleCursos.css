@@ -1,6 +1,74 @@
 html { scroll-behavior: smooth; }
 .secao { scroll-margin-top: 90px; }
 
+/* ---------- CARDS DE CURSOS ---------- */
+.curso-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+}
+
+.curso-card-conteudo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .85rem;
+    padding: 1.15rem;
+}
+
+.curso-card-conteudo .btn {
+    margin-top: auto;
+}
+
+.curso-card-titulo {
+    margin: 0;
+    color: #292929;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.curso-card-detalhes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .65rem;
+}
+
+.curso-card-carga {
+    color: #655b68;
+    font-size: .9rem;
+}
+
+.curso-dificuldade {
+    display: inline-flex;
+    align-items: center;
+    padding: .35rem .75rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+}
+
+.curso-dificuldade--facil {
+    color: #17653a;
+    background: #d9f4e4;
+}
+
+.curso-dificuldade--medio {
+    color: #805b00;
+    background: #fff0bd;
+}
+
+.curso-dificuldade--dificil {
+    color: #a22d37;
+    background: #fde0e2;
+}
+
 /* ---------- SIDEBAR ---------- */
 .sidebar-prisma {
     top: 2rem;

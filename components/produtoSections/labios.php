@@ -62,7 +62,7 @@ $temCarrossel = count($produtos) > 4;
     <div class="row align-items-center justify-content-center m-0">
         <!-- 1º FOTO BANNER (Esquerda) -->
         <div class="imagem-produto col-12 col-lg-4 text-center text-lg-end mb-4 mb-lg-0">
-            <img src="../assets/maquiagens/batom1.jpg" alt="Banner da Loja" class="banner-lateral img-fluid rounded shadow d-none d-lg-block" style="max-width: 90%; height: 650px; object-fit: cover;">
+            <img src="../assets/meninas/naju3.jpg" alt="Banner da Loja" class="banner-lateral img-fluid rounded shadow d-none d-lg-block" style="max-width: 90%; height: 650px; object-fit: cover;">
         </div>
 
         <!-- 2º VITRINE COM CARROSSEL (Direita) -->

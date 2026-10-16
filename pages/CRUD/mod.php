@@ -12,6 +12,7 @@ if (!in_array($tipo, $tiposValidos) || !$id) {
   exit;
 }
 
+$produtos = $pdo->query('SELECT id, nome FROM produtos ORDER BY nome')->fetchAll(PDO::FETCH_ASSOC);
 $item = null;
 
 if ($tipo === 'produto') {
@@ -23,7 +24,11 @@ if ($tipo === 'produto') {
   $stmt->execute([':id' => $id]);
   $item = $stmt->fetch(PDO::FETCH_ASSOC);
 } elseif ($tipo === 'curso') {
-  $stmt = $pdo->prepare("SELECT id, nome, categoria, nivel, carga_horaria, preco, prerequisitos, descricao FROM cursos WHERE id = :id");
+  $stmt = $pdo->prepare("SELECT c.id, c.nome, c.id_produto, c.nivel, c.cargaH,
+    c.objetivo, c.conteudo, c.PublicoAlvo, p.nome AS produto_nome
+    FROM cursos AS c
+    LEFT JOIN produtos AS p ON p.id = c.id_produto
+    WHERE c.id = :id");
   $stmt->execute([':id' => $id]);
   $item = $stmt->fetch(PDO::FETCH_ASSOC);
 } elseif ($tipo === 'pedido') {
@@ -121,9 +126,9 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
         <p class="text-secondary mb-0">Altere os campos desejados e salve</p>
       </div>
 
-      <?php if (isset($_GET['erro']) && $_GET['erro'] === 'imagem'): ?>
+      <?php if (isset($_GET['erro']) && $_GET['erro'] === 'dados'): ?>
         <div class="alert alert-danger" role="alert">
-          Envie uma imagem JPG, PNG ou WEBP de até 5 MB.
+          Confira os campos e os limites de caracteres informados.
         </div>
       <?php elseif (isset($_GET['erro']) && $_GET['erro'] === 'servidor'): ?>
         <div class="alert alert-danger" role="alert">
@@ -234,13 +239,16 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
           <input type="hidden" name="id" value="<?= $item['id'] ?>">
           <div class="mb-3">
             <label class="form-label">Nome do curso</label>
-            <input type="text" class="form-control" name="nome" value="<?= htmlspecialchars($item['nome']) ?>" required>
+            <input type="text" class="form-control" name="nome" maxlength="150" value="<?= htmlspecialchars($item['nome'], ENT_QUOTES, 'UTF-8') ?>" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Categoria</label>
-            <select class="form-select" name="categoria">
-              <?php foreach (['Automaquiagem (dia a dia)', 'Maquiagem social e festas', 'Maquiagem para noivas', 'Maquiagem artística', 'Maquiagem profissional', 'Sobrancelhas e olhos', 'Skincare e preparação de pele', 'Outra'] as $cat): ?>
-                <option <?= ($item['categoria'] ?? '') === $cat ? 'selected' : '' ?>><?= $cat ?></option>
+            <label class="form-label">Nome do produto relacionado</label>
+            <select class="form-select" name="produto_id" required>
+              <option value="" disabled <?= empty($item['id_produto'] ?? $item['produto_nome'] ?? '') ? 'selected' : '' ?>>Selecione o produto</option>
+              <?php foreach ($produtos as $produto): ?>
+                <option value="<?= (int) $produto['id'] ?>" <?= ((int) ($item['id_produto'] ?? 0)) === (int) $produto['id'] ? 'selected' : '' ?>>
+                  <?= htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') ?>
+                </option>
               <?php endforeach; ?>
             </select>
           </div>
@@ -256,27 +264,22 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
             <div class="col-6">
               <label class="form-label">Carga horária</label>
               <div class="input-group">
-                <input type="number" class="form-control" name="carga_horaria" value="<?= htmlspecialchars($item['carga_horaria'] ?? '') ?>" min="0">
+                <input type="number" class="form-control" name="cargaH" value="<?= htmlspecialchars((string) ($item['cargaH'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" min="0" step="1" required>
                 <span class="input-group-text" style="background:#D5F8F2;color:#2f6f68;font-weight:600;">h</span>
               </div>
             </div>
           </div>
-          <div class="row g-3 mb-3">
-            <div class="col-6">
-              <label class="form-label">Preço</label>
-              <div class="input-group">
-                <span class="input-group-text" style="background:#D5F8F2;color:#2f6f68;font-weight:600;">R$</span>
-                <input type="text" class="form-control" name="preco" value="<?= htmlspecialchars($item['preco'] ?? '') ?>">
-              </div>
-            </div>
-            <div class="col-6">
-              <label class="form-label">Pré-requisitos</label>
-              <input type="text" class="form-control" name="prerequisitos" value="<?= htmlspecialchars($item['prerequisitos'] ?? '') ?>">
-            </div>
+          <div class="mb-3">
+            <label class="form-label">Objetivo</label>
+            <input type="text" class="form-control" name="objetivo" maxlength="255" value="<?= htmlspecialchars($item['objetivo'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
           </div>
           <div class="mb-3">
-            <label class="form-label">Descrição</label>
-            <textarea class="form-control" name="descricao" rows="4"><?= htmlspecialchars($item['descricao'] ?? '') ?></textarea>
+            <label class="form-label">Conteúdo</label>
+            <textarea class="form-control" name="conteudo" rows="4" maxlength="300"><?= htmlspecialchars($item['conteudo'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Público-alvo</label>
+            <input type="text" class="form-control" name="PublicoAlvo" maxlength="100" value="<?= htmlspecialchars($item['PublicoAlvo'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
           </div>
           <div class="d-flex gap-2">
             <a href="admin.php" class="btn btn-cancel flex-shrink-0">Cancelar</a>

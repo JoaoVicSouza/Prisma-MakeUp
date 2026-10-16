@@ -25,7 +25,7 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script src="../scripts/scriptGeral.js"></script>
-    <script src="../scripts/scriptChat.js"></script>
+    <script src="../scripts/scriptChat.js?v=<?= filemtime(__DIR__ . '/../scripts/scriptChat.js') ?>"></script>
 </body>
 
 </html>

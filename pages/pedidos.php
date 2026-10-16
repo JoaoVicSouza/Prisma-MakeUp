@@ -42,12 +42,14 @@ try {
 
     if ($pedidos !== []) {
         $stmtItens = $pdo->prepare(
-            'SELECT i.pedido_id, i.quantidade, i.precoUnidade, p.nome AS produto_nome
+            'SELECT i.pedido_id, i.quantidade, i.precoUnidade,
+                    COALESCE(p.nome, \'Produto indisponível\') AS item_nome,
+                    \'Produto\' AS item_tipo
              FROM itenspedidos i
              INNER JOIN pedidos pe ON pe.id = i.pedido_id
              LEFT JOIN produtos p ON p.id = i.produto_id
              WHERE pe.usuario_id = :usuario_id
-             ORDER BY i.pedido_id DESC, p.nome ASC'
+             ORDER BY i.pedido_id DESC, item_nome ASC'
         );
         $stmtItens->execute([':usuario_id' => $usuarioId]);
 
@@ -188,11 +190,12 @@ function classeStatus(string $status, array $classesStatus): string
                                     <ul class="list-group list-group-flush">
                                         <?php foreach ($itensPorPedido[$pedidoId] as $item): ?>
                                             <?php
-                                            $nomeProduto = $item['produto_nome'] ?? 'Produto indisponível';
+                                            $nomeProduto = $item['item_nome'];
                                             $precoUnitario = (float) $item['precoUnidade'];
                                             ?>
                                             <li class="list-group-item px-0 d-flex justify-content-between gap-3">
                                                 <span>
+                                                    <span class="badge text-bg-light me-1"><?= escapar((string) $item['item_tipo']) ?></span>
                                                     <?= escapar((string) $nomeProduto) ?>
                                                     <span class="text-secondary">× <?= (int) $item['quantidade'] ?></span>
                                                 </span>
