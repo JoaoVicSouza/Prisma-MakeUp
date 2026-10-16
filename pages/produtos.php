@@ -43,6 +43,22 @@
             /* Cinza padrão */
             font-size: 0.85rem;
         }
+       @media (max-width: 1200px) {
+    
+    /* A foto grande some */
+        .imagem-produto {
+            display: none !important;
+        }
+
+        
+        /* Opcional: Se a tela ficar muito pequena (celular), colocamos 1 por linha para não espremer */
+
+        }
+        @media (max-width: 550px) {
+            .container-vitrine {
+                grid-template-columns: 1fr !important;
+            }
+        }    
     </style>
 </head>
 
