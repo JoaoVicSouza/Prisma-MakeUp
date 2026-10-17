@@ -1,6 +1,5 @@
  body {
      min-height: 100vh;
-     background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
      background-attachment: fixed;
      display: flex;
      flex-direction: column;
@@ -31,49 +30,49 @@
  }
 
  .nav-pills .nav-link.active {
-     background-color: var(--primary2);
+     background-color: var(--rosaChoque);
      color: #fff;
  }
 
  .form-control:focus {
-     border-color: var(--tertiary2);
-     box-shadow: 0 0 0 .25rem rgba(99, 208, 217, .25);
+     border-color: var(--rosaChoque);
+     box-shadow: 0 0 0 .25rem rgba(255, 1, 152, .2);
  }
 
  /* Buttons */
  .btn-login {
-     background-color: var(--primary2);
-     border-color: var(--primary2);
+     background-color: var(--rosaChoque);
+     border-color: var(--rosaChoque);
      color: #fff;
  }
 
  .btn-login:hover {
-     background-color: #c875ec;
-     border-color: #c875ec;
+     background-color: #cc0179;
+     border-color: #cc0179;
      color: #fff;
  }
 
  .btn-signup {
-     background-color: var(--secundary2);
-     border-color: var(--secundary2);
-     color: #5c4a00;
+     background-color: var(--rosaChoque);
+     border-color: var(--rosaChoque);
+     color: #fff;
  }
 
  .btn-signup:hover {
-     background-color: #e9cd6e;
-     border-color: #e9cd6e;
-     color: #5c4a00;
+     background-color: #cc0179;
+     border-color: #cc0179;
+     color: #fff;
  }
 
  .link-forgot {
-     color: var(--tertiary2);
+     color: var(--rosaChoque);
      text-decoration: none;
      font-size: .9rem;
  }
 
  .link-forgot:hover {
      text-decoration: underline;
-     color: #4cb6c0;
+     color: #cc0179;
  }
 
  .toggle-password {
@@ -84,11 +83,11 @@
 
  .input-group:focus-within .form-control,
  .input-group:focus-within .toggle-password {
-     border-color: var(--tertiary2);
+     border-color: var(--rosaChoque);
  }
 
  .input-group:focus-within .form-control {
-     box-shadow: 0 0 0 .25rem rgba(99, 208, 217, .25);
+     box-shadow: 0 0 0 .25rem rgba(255, 1, 152, .2);
  }
 
  .toggle-password:hover {
@@ -97,6 +96,6 @@
  }
 
  .toggle-password:focus {
-     box-shadow: 0 0 0 .25rem rgba(99, 208, 217, .25);
+     box-shadow: 0 0 0 .25rem rgba(255, 1, 152, .2);
      z-index: 3;
  }

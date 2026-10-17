@@ -71,7 +71,7 @@
         }
     </style>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 bg-bege">
     <?php include __DIR__ . '/../components/header.php'; ?>
 
     <main class="container-fluid px-lg-5 my-1 pt-2 flex-grow-1">

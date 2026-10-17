@@ -41,7 +41,6 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
 
         body {
             min-height: 100dvh;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
         }
 
         main {
@@ -154,7 +153,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
     </style>
 </head>
 
-<body>
+<body class="bg-bege">
     <?php include '../components/header.php' ?>
     <main class="container d-flex align-items-center justify-content-center">
         <div class="checkout-card mx-auto">
