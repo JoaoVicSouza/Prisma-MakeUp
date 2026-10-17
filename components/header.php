@@ -7,7 +7,7 @@ $pasta_atual   = basename(dirname($_SERVER['PHP_SELF']));
 $isCRUD        = ($pasta_atual === 'CRUD');
 $prefix_up     = $isCRUD ? '../../' : '../';
 if($arquivo_atual == "index.php"){ $isIndex = true; }else{ $isIndex = false; }
-if($arquivo_atual !== "admin.php" && $arquivo_atual !== "produtos.php" && $arquivo_atual !== "cursos.php" && $arquivo_atual !== "mod.php" && $arquivo_atual !== "cadCurso.php" && $arquivo_atual !== "cadProd.php"){
+if($arquivo_atual !== "admin.php" && $arquivo_atual !== "cursos.php" && $arquivo_atual !== "mod.php" && $arquivo_atual !== "cadCurso.php" && $arquivo_atual !== "cadProd.php"){
     $headerFix = true;
 }else{ $headerFix = false; }
 ?>

@@ -1,6 +1,6 @@
 <main>
-    <div>
-        <img src="../assets/banner.jpg" alt="" class="img-fluid mb-2" style="width: 100%; height: 50%;">
+    <div class="produtos-banner">
+        <img src="../assets/meninas/kayke2.JPG" alt="Pessoa aplicando maquiagem nos olhos" class="produtos-banner-imagem mb-2">
     </div>
     <div>
         <p class="text-center mb-5 text-muted "> Role para baixo! <br>

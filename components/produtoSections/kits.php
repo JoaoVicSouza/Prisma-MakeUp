@@ -94,7 +94,7 @@ $temCarrossel = count($produtos) > 4;
         </div>
 
         <div class="col-12 col-lg-4 col-md-0 col-sm-0 text-center text-lg-end mb-4 mb-lg-0 ms-lg-5 image">
-            <img src="../assets/maquiagens/blush2.jpg" alt="Banner da Loja" class="imagem-produto banner-lateral img-fluid rounded shadow d-none d-lg-block" style="max-width: 90%; height: 650px; object-fit: fill;">
+            <img src="../assets/maquiagens/kit.jpg" alt="Banner da Loja" class="imagem-produto banner-lateral img-fluid rounded shadow d-none d-lg-block" style="max-width: 90%; height: 650px; object-fit: fill;">
         </div>
     </div>
 </main>
