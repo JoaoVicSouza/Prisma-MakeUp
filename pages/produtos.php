@@ -51,7 +51,7 @@ if (session_status() === PHP_SESSION_NONE) {
     </style>
 </head>
 
-<body>
+<body class="bg-bege">
     
     <?php include '../components/header.php' ?>
     <?php include '../components/produtoSections/banner.php' ?>

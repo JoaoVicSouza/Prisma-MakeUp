@@ -220,16 +220,13 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 }
 
 .cardValores {
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease-in;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     border: 1px solid rgba(222, 151, 242, 0.3) !important;
     border-radius: 1.5rem;
     box-shadow: 0 10px 30px rgba(222, 151, 242, 0.08);
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
 }
 
 .cardValores:hover {
-    background-color: var(--primary2);
     transform: translateY(-8px);
     box-shadow: 0 15px 40px rgba(222, 151, 242, 0.35);
 }
@@ -249,7 +246,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 }
 
 .cardValores:hover h3 span {
-    color: var(--tertiary2);
+    color: var(--rosaChoque);
 }
 
 .sticky-image-wrapper {

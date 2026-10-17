@@ -24,7 +24,6 @@ $produto = $stmt->fetch(PDO::FETCH_ASSOC);
     <title>Prisma-MakeUp - Produto</title>
     <style>
         body {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
             background-attachment: fixed;
         }
 
@@ -58,7 +57,7 @@ $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 bg-bege">
     <?php include '../components/header.php' ?>
 
     <main class="container mt-5 mb-5 pt-4 produto-main">

@@ -8,9 +8,9 @@ const arquivosNotHeader = ["login.php", "chat.php", "admin.php", "compra.php", "
             if (!isScrolling) {
                 window.requestAnimationFrame(function () {
                     if (window.scrollY >= window.innerHeight - 70 || arquivosNotHeader.includes(nomeDoArquivo)) {
-                        header.classList.add('bg-purple-transparent', 'border-bottom', 'border-1', 'border-purple2');
+                        header.classList.add('bg-rosa-transparent', 'border-bottom', 'border-1', 'border-rosaChoque');
                     } else {
-                        header.classList.remove('bg-purple-transparent', 'border-bottom', 'border-1', 'border-purple2');
+                        header.classList.remove('bg-rosa-transparent', 'border-bottom', 'border-1', 'border-rosaChoque');
                     }
                     isScrolling = false;
                 });
@@ -22,6 +22,6 @@ const arquivosNotHeader = ["login.php", "chat.php", "admin.php", "compra.php", "
 
 document.addEventListener('DOMContentLoaded', function () {
     if (arquivosNotHeader.includes(nomeDoArquivo) || window.scrollY >= window.innerHeight - 70) {
-        header.classList.add('bg-purple-transparent', 'border-bottom', 'border-1', 'border-purple2');
+        header.classList.add('bg-rosa-transparent', 'border-bottom', 'border-1', 'border-rosaChoque');
     }
 });

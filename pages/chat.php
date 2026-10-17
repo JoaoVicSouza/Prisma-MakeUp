@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../styles/styleChat.css">
 </head>
 
-<body>
+<body class="bg-bege">
     <?php include '../components/header.php'; ?>
 
 

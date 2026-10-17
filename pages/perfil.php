@@ -72,7 +72,7 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-bege">
 <?php
 session_start();
 
