@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -15,55 +15,59 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="../styles/styleGeral.css">
     <link rel="stylesheet" href="../styles/styleProdutos.css">
     <style>
-        /* Estilo para a caixa geral não ficar grudada nos cantos do monitor */
         .container-titulo-linhas {
             width: 71.8dvw;
-            /* Controla o tamanho máximo das linhas */
             margin: 0 auto;
-            /* Centraliza na tela */
         }
 
-        /* A mágica da linha */
         .linha-lateral {
             height: 1px;
-            /* Espessura da linha */
-            background-color: #63d0d9;
-            /* Cor da linha (azul escuro igual da foto) */
+            background-color: var(--verde);
         }
 
-        /* Estilo do título principal */
         .titulo-principal {
-            color: #63d0d9;
-            /* Azul escuro */
+            color: var(--roxo);
             font-weight: 500;
-            /* Deixa a fonte média */
             letter-spacing: 2px;
-            /* Espaço elegante entre as letras */
             text-transform: uppercase;
         }
 
-        /* Estilo do subtítulo */
         .subtitulo {
-            color: #DE97F2;
-            /* Cinza padrão */
+            color: var(--roxo);
             font-size: 0.85rem;
+        }
+
+        .produtos-banner-imagem {
+            width: 100%;
+            height: clamp(320px, 90vh, 680px);
+            object-fit: cover;
+            display: block;
+        }
+
+        .produtos-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .55), rgba(0, 0, 0, .05) 60%);
+        }
+
+        .produtos-banner-texto {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 8%;
+            z-index: 1;
+            padding: 0 20px;
         }
     </style>
 </head>
 
 <body class="bg-bege">
-    
+
     <?php include '../components/header.php' ?>
     <?php include '../components/produtoSections/banner.php' ?>
-    <?php include '../components/produtoSections/pele.php' ?>
-    <?php include '../components/produtoSections/olhos.php' ?>
-    <?php include '../components/produtoSections/sobrancelhas.php' ?>
-    <?php include '../components/produtoSections/labios.php' ?>
-    <?php include '../components/produtoSections/kits.php' ?>
+    <?php include '../components/produtoSections/vitrineCategorias.php' ?>
     <?php include '../components/footer.php' ?>
-
-
-
 
     <script src="../scripts/scriptGeral.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

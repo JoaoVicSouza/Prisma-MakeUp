@@ -2,7 +2,7 @@
     <div class="container m-0 ">
 
         <div class="text-center">
-            <h2 class="section-title mb-4">Vamos começar?</h2>
+            <h2 class="section-title mb-4 text-roxo">Vamos começar?</h2>
             <p class="text-secondary mb-5 fs-5">Encontre os melhores produtos ou mergulhe em nossos conteúdos e
                 dicas.</p>
 

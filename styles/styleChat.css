@@ -1,7 +1,7 @@
 body{
     padding-top: 20dvh;
     min-height: 100dvh;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
+    background: var(--bege);
     display: flex;
     flex-direction: column;
 }
@@ -22,36 +22,44 @@ body{
 
 #controles .btn-primary{
     --bs-btn-color: #fff;
-    --bs-btn-bg: var(--primary2);
-    --bs-btn-border-color: var(--primary2);
+    --bs-btn-bg: var(--rosaChoque);
+    --bs-btn-border-color: var(--rosaChoque);
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #c875ec;
-    --bs-btn-hover-border-color: #c875ec;
+    --bs-btn-hover-bg: var(--roxo);
+    --bs-btn-hover-border-color: var(--roxo);
 }
 
 #controles .btn-secondary{
-    --bs-btn-color: #5c4a00;
-    --bs-btn-bg: var(--secundary2);
-    --bs-btn-border-color: var(--secundary2);
-    --bs-btn-hover-color: #5c4a00;
-    --bs-btn-hover-bg: #e9cd6e;
-    --bs-btn-hover-border-color: #e9cd6e;
+    --bs-btn-color: #000;
+    --bs-btn-bg: var(--laranja);
+    --bs-btn-border-color: var(--laranja);
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: color-mix(in srgb, var(--laranja) 75%, black);
+    --bs-btn-hover-border-color: color-mix(in srgb, var(--laranja) 75%, black);
 }
 
 #controles .btn-outline-success{
-    --bs-btn-color: #258b94;
-    --bs-btn-border-color: var(--tertiary2);
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: var(--tertiary2);
-    --bs-btn-hover-border-color: var(--tertiary2);
+    --bs-btn-color: var(--azul);
+    --bs-btn-border-color: var(--azul);
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: var(--azul);
+    --bs-btn-hover-border-color: var(--azul);
 }
 
 #controles .btn-outline-secondary{
-    --bs-btn-color: #8b5a9c;
-    --bs-btn-border-color: var(--primary2);
+    --bs-btn-color: var(--roxo);
+    --bs-btn-border-color: var(--roxo);
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: var(--roxo);
+    --bs-btn-hover-border-color: var(--roxo);
+}
+
+#chat-container .btn-outline-primary{
+    --bs-btn-color: var(--rosaChoque);
+    --bs-btn-border-color: var(--rosaChoque);
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: var(--primary2);
-    --bs-btn-hover-border-color: var(--primary2);
+    --bs-btn-hover-bg: var(--rosaChoque);
+    --bs-btn-hover-border-color: var(--rosaChoque);
 }
 
 .loading-icon{

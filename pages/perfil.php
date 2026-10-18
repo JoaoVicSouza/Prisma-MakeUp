@@ -14,25 +14,21 @@
         .avatar-wrap {
             width: 80px; height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary2), var(--tertiary2));
+            background: linear-gradient(135deg, var(--rosaChoque), var(--rosa));
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 1rem;
-            box-shadow: 0 6px 20px rgba(222, 151, 242, 0.35);
+            box-shadow: 0 6px 20px color-mix(in srgb, var(--roxo) 35%, transparent);
         }
         .avatar-wrap i { font-size: 2.2rem; color: #fff; }
 
         .profile-name {
             font-size: 1.3rem;
             font-weight: 700;
-            color: #3f214f;
-        }
-        .profile-email {
-            font-size: 0.9rem;
-            color: #7a688a;
+            color: var(--azul);
         }
 
         .divider {
-            border-top: 1px solid rgba(222, 151, 242, 0.25);
+            border-top: 1px solid color-mix(in srgb, var(--roxo) 25%, transparent);
             margin: 1.25rem 0;
         }
 
@@ -41,34 +37,34 @@
             align-items: center;
             gap: 10px;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(222, 151, 242, 0.15);
+            border-bottom: 1px solid color-mix(in srgb, var(--roxo) 15%, transparent);
             font-size: 0.95rem;
-            color: #3f214f;
+            color: var(--roxo);
         }
         .info-row:last-child { border-bottom: none; }
-        .info-row i { color: var(--primary2); font-size: 1.1rem; width: 20px; }
-        .info-label { color: #7a688a; font-size: 0.8rem; display: block; }
+        .info-row i { color: var(--rosaChoque); font-size: 1.1rem; width: 20px; }
+        .info-label { color: var(--rosaChoque); font-size: 0.8rem; display: block; }
 
         .btn-perfil {
-            background-color: var(--primary2);
-            border-color: var(--primary2);
+            background-color: var(--roxo);
+            border-color: var(--roxo);
             color: #fff;
             font-weight: 600;
         }
         .btn-perfil:hover {
-            background-color: #c875ec;
-            border-color: #c875ec;
+            background-color: var(--rosaChoque);
+            border-color: var(--rosaChoque);
             color: #fff;
         }
         .btn-sair {
             background-color: transparent;
-            border-color: #ccc;
-            color: #7a688a;
+            border-color: var(--roxo);
+            color: var(--roxo);
             font-weight: 600;
         }
         .btn-sair:hover {
-            background-color: #f8f0fc;
-            color: #3f214f;
+            background-color: var(--rosa);
+            color: var(--roxo);
         }
     </style>
 </head>
@@ -87,7 +83,7 @@ $email = $_SESSION['usuario_email'] ?? '';
 
     <?php include '../components/header.php'; ?>
 
-    <main class="container-fluid d-flex justify-content: center align-items-center">
+    <main class="container-fluid d-flex justify-content-center align-items-center">
         <div class="auth-card">
 
             <div class="text-center mb-3">

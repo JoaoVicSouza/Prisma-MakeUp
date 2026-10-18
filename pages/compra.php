@@ -27,18 +27,9 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finalizar compra</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../styles/styleGeral.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/styleGeral.css">
     <style>
-        :root {
-            --primary: #F4D6F8;
-            --secundary: #F8F3D6;
-            --tertiary: #D5F8F2;
-            --primary2: #DE97F2;
-            --secundary2: #F2DE97;
-            --tertiary2: #63d0d9;
-        }
-
         body {
             min-height: 100dvh;
         }
@@ -83,7 +74,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
         }
 
         .summary-box {
-            background-color: var(--tertiary);
+            background-color: var(--azul);
             border-radius: .75rem;
             padding: 1.25rem;
         }
@@ -95,8 +86,8 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
         /* Inputs */
         .form-control:focus,
         .form-select:focus {
-            border-color: var(--tertiary2);
-            box-shadow: 0 0 0 .25rem rgba(99, 208, 217, .25);
+            border-color: var(--azul);
+            box-shadow: 0 0 0 .25rem color-mix(in srgb, var(--azul) 25%, transparent);
         }
 
         .payment-option {
@@ -114,36 +105,36 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
         }
 
         .btn-check:checked+.payment-option {
-            border-color: var(--primary2);
-            background-color: rgba(222, 151, 242, .1);
-            color: var(--primary2);
+            border-color: var(--roxo);
+            background-color: color-mix(in srgb, var(--roxo) 10%, transparent);
+            color: var(--roxo);
             font-weight: 600;
         }
 
         .payment-info {
             font-size: .85rem;
             color: #6c757d;
-            background-color: var(--primary);
+            background-color: var(--rosa);
             border-radius: .5rem;
             padding: .65rem .9rem;
             margin-top: .75rem;
         }
 
         .btn-checkout {
-            background-color: var(--primary2);
-            border-color: var(--primary2);
+            background-color: var(--roxo);
+            border-color: var(--roxo);
             color: #fff;
         }
 
         .btn-checkout:hover {
-            background-color: #c875ec;
-            border-color: #c875ec;
+            background-color: var(--rosaChoque);
+            border-color: var(--rosaChoque);
             color: #fff;
         }
 
         .btn-checkout:disabled {
-            background-color: #e0c3ea;
-            border-color: #e0c3ea;
+            background-color: var(--rosa);
+            border-color: var(--rosa);
         }
 
         .cep-hint {

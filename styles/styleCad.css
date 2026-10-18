@@ -23,13 +23,17 @@
      padding: 2rem;
  }
 
- .nav-pills .nav-link {
+ .auth-card .nav-pills .nav-link:not(.active) {
      color: #555;
      border-radius: .65rem;
      font-weight: 500;
  }
 
- .nav-pills .nav-link.active {
+ .auth-card .nav-pills .nav-link:not(.active):hover {
+     color: #555;
+ }
+
+ .auth-card .nav-pills .nav-link.active {
      background-color: var(--rosaChoque);
      color: #fff;
  }
@@ -47,8 +51,8 @@
  }
 
  .btn-login:hover {
-     background-color: #cc0179;
-     border-color: #cc0179;
+     background-color: var(--roxo);
+     border-color: var(--roxo);
      color: #fff;
  }
 
@@ -59,8 +63,8 @@
  }
 
  .btn-signup:hover {
-     background-color: #cc0179;
-     border-color: #cc0179;
+     background-color: var(--roxo);
+     border-color: var(--roxo);
      color: #fff;
  }
 
@@ -72,7 +76,7 @@
 
  .link-forgot:hover {
      text-decoration: underline;
-     color: #cc0179;
+     color: var(--roxo);
  }
 
  .toggle-password {
@@ -81,8 +85,7 @@
      background-color: #fff;
  }
 
- .input-group:focus-within .form-control,
- .input-group:focus-within .toggle-password {
+ .input-group:focus-within .form-control {
      border-color: var(--rosaChoque);
  }
 
@@ -93,9 +96,4 @@
  .toggle-password:hover {
      background-color: #f8f9fa;
      color: #495057;
- }
-
- .toggle-password:focus {
-     box-shadow: 0 0 0 .25rem rgba(255, 1, 152, .2);
-     z-index: 3;
  }

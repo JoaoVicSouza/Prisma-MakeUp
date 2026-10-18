@@ -114,12 +114,12 @@ function renderizarCarrinho() {
             const nome = escaparHTML(item.nome);
             const imagem = item.imagem
                 ? `<img src="${escaparHTML(item.imagem)}" alt="${nome}" class="w-100 h-100 rounded" style="object-fit: cover;">`
-                : '<i class="bi bi-bag fs-4" style="color: var(--primary2);"></i>';
+                : '<i class="bi bi-bag fs-4" style="color: var(--roxo);"></i>';
 
             return `
                 <div class="cart-item py-3 border-bottom">
                     <div class="d-flex align-items-center gap-3">
-                        <div class="thumb overflow-hidden" style="background-color: var(--primary);">
+                        <div class="thumb overflow-hidden" style="background-color: var(--bege);">
                             ${imagem}
                         </div>
                         <div class="flex-grow-1">

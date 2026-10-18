@@ -1,12 +1,12 @@
 <section class="cards bg-roxo w-100 py-5">
     <!-- Adicionado 'position-relative' para o posicionamento absoluto dos botões laterais -->
     <div class="px-5 d-flex flex-column align-items-center justify-content-center position-relative">
-        <h2 class="section-title">Nossa Equipe</h2>
+        <h2 class="section-title text-verde">Nossa Equipe</h2>
 
         <!-- Botão Lateral Esquerdo (Oculto no mobile via d-none d-md-block) -->
         <button class="nav-btn bg-rosaChoque position-absolute start-0 top-50 translate-middle-y d-none d-md-block border-0 rounded-circle fs-3" 
                 onclick="voltar()" 
-                style="margin-left: 20px; z-index: 10; width: 50px; height: 50px;">
+                style="margin-left: 20px; z-index: 1; width: 50px; height: 50px;">
             ‹
         </button>
 
@@ -77,7 +77,7 @@
         <!-- Botão Lateral Direito (Oculto no mobile via d-none d-md-block) -->
         <button class="nav-btn bg-rosaChoque position-absolute end-0 top-50 translate-middle-y d-none d-md-block border-0 rounded-circle fs-3" 
                 onclick="avancar()" 
-                style="margin-right: 20px; z-index: 10; width: 50px; height: 50px;">
+                style="margin-right: 20px; z-index: 1; width: 50px; height: 50px;">
             ›
         </button>
 

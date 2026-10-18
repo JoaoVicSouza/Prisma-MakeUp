@@ -2,7 +2,7 @@
             <div class="row gx-lg-5">
                 <div class="col-lg-4 d-none d-lg-block">
                     <div class="sticky-image-wrapper">
-                        <img src="assets/meninas/todasVerticalCor.JPG" class="sobre-img" alt="Sobre a Prisma MakeUp">
+                        <img src="assets/meninas/lucas2edit.png" class="sobre-img" alt="Sobre a Prisma MakeUp">
                     </div>
                 </div>
                 <div class="col-lg-7 offset-lg-1">
