@@ -19,12 +19,11 @@ $produto = $stmt->fetch(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../styles/styleGeral.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/styleGeral.css">
     <title>Prisma-MakeUp - Produto</title>
     <style>
         body {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
             background-attachment: fixed;
         }
 
@@ -58,7 +57,7 @@ $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 bg-bege">
     <?php include '../components/header.php' ?>
 
     <main class="container mt-5 mb-5 pt-4 produto-main">
@@ -94,7 +93,7 @@ $produto = $stmt->fetch(PDO::FETCH_ASSOC);
                 <h1 class="fw-bold text-dark mb-2" style="font-size: 2.5rem;"><?= htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') ?></h1>
                 <p class="text-muted mb-4">Categoria: <?= htmlspecialchars($produto['categoria'], ENT_QUOTES, 'UTF-8') ?></p>
 
-                <div class="fw-bold mb-4 py-2" style="font-size: 2rem; color: darkmagenta;">
+                <div class="fw-bold mb-4 py-2 text-rosaChoque" style="font-size: 2rem;">
                     R$ <?= number_format((float) $produto['preco'], 2, ',', '.') ?>
                 </div>
 
@@ -104,8 +103,8 @@ $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 <div class="row g-2 mb-4">
                     <div class="col-6">
-                        <button type="button" class="btn w-100 h-100 fw-bold rounded-pill text-light shadow-sm py-3"
-                            style="background-color: #DE97F2; transition: filter 0.2s;"
+                        <button type="button" class="btn w-100 h-100 fw-bold rounded-pill text-dark shadow-sm py-3 bg-azul"
+                            style="transition: filter 0.2s;"
                             <?= (int) $produto['estoque'] <= 0 ? 'disabled' : '' ?>
                             data-acao-carrinho="adicionar"
                             data-id="<?= (int) $produto['id'] ?>"
@@ -116,8 +115,8 @@ $produto = $stmt->fetch(PDO::FETCH_ASSOC);
                         </button>
                     </div>
                     <div class="col-6">
-                        <button type="button" class="btn w-100 h-100 fw-bold rounded-pill text-light shadow-sm py-3"
-                            style="background-color: #b64bd1; transition: filter 0.2s;"
+                        <button type="button" class="btn w-100 h-100 fw-bold rounded-pill text-white shadow-sm py-3 bg-rosaChoque"
+                            style="transition: filter 0.2s;"
                             <?= (int) $produto['estoque'] <= 0 ? 'disabled' : '' ?>
                             data-acao-carrinho="comprar"
                             data-id="<?= (int) $produto['id'] ?>"

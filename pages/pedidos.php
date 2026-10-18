@@ -95,7 +95,7 @@ function classeStatus(string $status, array $classesStatus): string
     <style>
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #F4D6F8 0%, #D5F8F2 55%, #F8F3D6 100%);
+            background: var(--bege);
         }
         main { padding-top: 130px; padding-bottom: 100px; }
         .orders-panel {
@@ -104,8 +104,8 @@ function classeStatus(string $status, array $classesStatus): string
             border-radius: 1rem;
             box-shadow: 0 1rem 3rem rgba(0, 0, 0, .12);
         }
-        .order-card { border: 1px solid rgba(222, 151, 242, .35); }
-        .order-total { color: #6b357c; }
+        .order-card { border: 1px solid color-mix(in srgb, var(--roxo) 35%, transparent); }
+        .order-total { color: var(--roxo); }
     </style>
 </head>
 <body>

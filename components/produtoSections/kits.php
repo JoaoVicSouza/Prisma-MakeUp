@@ -22,7 +22,7 @@ $temCarrossel = count($produtos) > 4;
 </style>
 
 <main class="overflow-hidden">
-    <div class="container-titulo-linhas d-flex align-   items-center mt-5">
+    <div class="container-titulo-linhas d-flex align-items-center mt-5">
         <div class="linha-lateral flex-grow-1"></div>
         <div class="text-center px-4">
             <h2 class="titulo-principal m-0">Kits</h2>
@@ -47,11 +47,11 @@ $temCarrossel = count($produtos) > 4;
                             <div class="row produtos-row">
                                 <?php foreach ($grupo as $produto): ?>
                                     <div class="col-6 col-produto mt-3 mb-4">
-                                        <div class="card card-produto-item h-100 w-100 shadow-sm border-0" style="background-color: #F4D6F8; border-radius: 13px">
+                                        <div class="card card-produto-item h-100 w-100 shadow-sm border-0" style="background-color: var(--bege); border-radius: 13px">
                                             <?php if (!empty($produto['imagem'])): ?>
                                                 <img src="../<?= htmlspecialchars($produto['imagem'], ENT_QUOTES, 'UTF-8') ?>" class="card-img-top" alt="<?= htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') ?>">
                                             <?php else: ?>
-                                                <div class="card-img-top bg-light" aria-hidden="true"></div>
+                                                <div class="card-img-top bg-bege" aria-hidden="true"></div>
                                             <?php endif; ?>
 
                                             <div class="card-body d-flex flex-column p-3">
@@ -59,8 +59,8 @@ $temCarrossel = count($produtos) > 4;
                                                 <p class="card-text text-muted small"><?= htmlspecialchars($produto['descricao'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
 
                                                 <div class="mt-auto">
-                                                    <div class="fw-bold mb-2 preco-produto" style="color: darkmagenta">R$ <?= number_format((float) $produto['preco'], 2, ',', '.') ?></div>
-                                                    <a class="btn btn-sm w-100 fw-bold rounded-pill text-light btn-comprar" style="background-color: #DE97F2;" href="produto.php?id=<?= urlencode((string) $produto['id']) ?>">COMPRAR</a>
+                                                    <div class="fw-bold mb-2 preco-produto" style="color: var(--roxo)">R$ <?= number_format((float) $produto['preco'], 2, ',', '.') ?></div>
+                                                    <a class="btn btn-sm w-100 fw-bold rounded-pill text-dark btn-comprar bg-roxo" href="produto.php?id=<?= urlencode((string) $produto['id']) ?>">COMPRAR</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,11 +81,11 @@ $temCarrossel = count($produtos) > 4;
 
                 <?php if ($temCarrossel): ?>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carrosselKits" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon bg-secondary rounded-circle p-2" aria-hidden="true" style="background-size: 50%;"></span>
+                    <span class="carousel-control-prev-icon bg-roxo rounded-circle p-2" aria-hidden="true" style="background-size: 50%;"></span>
                     <span class="visually-hidden">Anterior</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#carrosselKits" data-bs-slide="next">
-                    <span class="carousel-control-next-icon bg-secondary rounded-circle p-2" aria-hidden="true" style="background-size: 50%;"></span>
+                    <span class="carousel-control-next-icon bg-roxo rounded-circle p-2" aria-hidden="true" style="background-size: 50%;"></span>
                     <span class="visually-hidden">Próximo</span>
                 </button>
                 <?php endif; ?>
@@ -93,8 +93,8 @@ $temCarrossel = count($produtos) > 4;
 
         </div>
 
-        <div class="col-12 col-lg-4 col-md-0 col-sm-0 text-center text-lg-end mb-4 mb-lg-0 ms-lg-5 image">
-            <img src="../assets/maquiagens/blush2.jpg" alt="Banner da Loja" class="imagem-produto banner-lateral img-fluid rounded shadow d-none d-lg-block" style="max-width: 90%; height: 650px; object-fit: fill;">
+        <div class="col-12 col-lg-4 text-center text-lg-end mb-4 mb-lg-0 ms-lg-5 image">
+            <img src="../assets/maquiagens/kit.jpg" alt="Banner da Loja" class="imagem-produto banner-lateral img-fluid rounded shadow d-none d-lg-block" style="max-width: 90%; height: 650px; object-fit: fill;">
         </div>
     </div>
 </main>

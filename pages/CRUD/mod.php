@@ -63,7 +63,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
   <style>
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #F4D6F8 0%, #D5F8F2 55%, #F8F3D6 100%);
+      background: var(--bege);
       padding: 0;
       display: flex;
       flex-direction: column;
@@ -74,7 +74,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem 0;
+      padding: 6rem 0 2rem;
     }
 
     .form-card {
@@ -89,19 +89,19 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
 
     .form-control:focus,
     .form-select:focus {
-      border-color: #63d0d9;
-      box-shadow: 0 0 0 .25rem rgba(99, 208, 217, .25);
+      border-color: var(--azul);
+      box-shadow: 0 0 0 .25rem color-mix(in srgb, var(--azul) 25%, transparent);
     }
 
     .btn-save {
-      background-color: #DE97F2;
-      border-color: #DE97F2;
+      background-color: var(--roxo);
+      border-color: var(--roxo);
       color: #fff;
     }
 
     .btn-save:hover {
-      background-color: #c875ec;
-      border-color: #c875ec;
+      background-color: var(--rosaChoque);
+      border-color: var(--rosaChoque);
       color: #fff;
     }
 
@@ -170,7 +170,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
             <div class="col-6">
               <label class="form-label">Preço</label>
               <div class="input-group">
-                <span class="input-group-text" style="background:#D5F8F2;color:#2f6f68;font-weight:600;">R$</span>
+                <span class="input-group-text" style="background:var(--azul);color:#000;font-weight:600;">R$</span>
                 <input type="text" class="form-control" name="preco" value="<?= htmlspecialchars($item['preco']) ?>" required>
               </div>
             </div>
@@ -265,7 +265,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
               <label class="form-label">Carga horária</label>
               <div class="input-group">
                 <input type="number" class="form-control" name="cargaH" value="<?= htmlspecialchars((string) ($item['cargaH'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" min="0" step="1" required>
-                <span class="input-group-text" style="background:#D5F8F2;color:#2f6f68;font-weight:600;">h</span>
+                <span class="input-group-text" style="background:var(--azul);color:#000;font-weight:600;">h</span>
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 :root {
-    --text-dark: #3f214f;
-    --bg-page: #fffef7;
+    --text-dark: var(--roxo);
+    --bg-page: var(--bege);
     --surface: #ffffff;
     --border: #ddd;
     --success: #276749;
@@ -12,15 +12,14 @@ body {
     color: var(--text-dark);
 }
 
-#main-header {
-    background-color: #f4d6f8;
-    border-bottom: 1px solid var(--border);
+.admin-footer-brand {
+    color: #000;
 }
 
 .admin-wrapper {
     display: flex;
     min-height: 75vh;
-    margin: 40px auto;
+    margin: 110px auto 40px;
     max-width: 1350px;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -29,7 +28,7 @@ body {
 /* ── SIDEBAR ── */
 .sidebar {
     width: 260px;
-    background: #f7f0f8;
+    background: var(--bege);
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -43,7 +42,7 @@ body {
 .sidebar-logo a {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--text-dark);
+    color: var(--rosaChoque);
     text-decoration: none;
 }
 
@@ -60,7 +59,7 @@ body {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: #e8d5f0;
+    background: var(--rosa);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,11 +113,11 @@ body {
 }
 
 .sidebar-nav .nav-item:hover {
-    background: #eee0f2;
+    background: color-mix(in srgb, var(--rosa) 55%, white);
 }
 
 .sidebar-nav .nav-item.active {
-    background: #e8d5f0;
+    background: var(--rosa);
     font-weight: 700;
 }
 
@@ -232,7 +231,8 @@ body {
     width: 40px;
     height: 40px;
     border-radius: var(--radius);
-    background: #e8d5f0;
+    background: transparent;
+    color: var(--rosaChoque);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -306,7 +306,7 @@ body {
 .sales-bar {
     width: 70%;
     min-height: 0;
-    background: #b879d1;
+    background: var(--rosaChoque);
     border-radius: 4px 4px 0 0;
 }
 
@@ -338,8 +338,13 @@ body {
 }
 
 .activity-icon {
-    color: #7a4b91;
+    color: var(--rosaChoque);
     padding-top: 2px;
+}
+
+.activity-details strong,
+#orderTable tbody td:first-child {
+    color: var(--rosaChoque);
 }
 
 .activity-details {
@@ -385,7 +390,7 @@ body {
 }
 
 .btn-primary-custom {
-    background: #5a2678;
+    background: var(--roxo);
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -400,7 +405,7 @@ body {
 }
 
 .btn-primary-custom:hover {
-    background: #451b5c;
+    background: var(--rosaChoque);
 }
 
 .data-table {
@@ -436,7 +441,7 @@ body {
 }
 
 .data-table tr:hover td {
-    background: #faf5fb;
+    background: var(--bege);
 }
 
 .action-btns {
@@ -499,7 +504,7 @@ body {
 @media (max-width: 992px) {
     .admin-wrapper {
         flex-direction: column;
-        margin: 0;
+        margin: 100px 0 0;
         border: none;
     }
 
@@ -565,6 +570,11 @@ body {
 
     .search-box input {
         width: 100%;
+    }
+
+    .search-box i,
+    .search-box svg {
+        display: none;
     }
 
     .btn-primary-custom {

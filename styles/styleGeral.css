@@ -27,82 +27,177 @@
 }
 
 :root{
-    --primary: #ffc2f7;
-    --secundary: #FFFFFF;
-    --tertiary: #dbf8ff;
-    --primary2: #a60764;
-    --secundary2: #ffc038;
-    --tertiary2: #2776dd;
+    --rosaChoque: #FF0198;
+    --rosa: #FFB1CB;
+    --azul: #73CBE1;
+    --roxo: #9578D2;
+    --laranja: #FBCB81;
+    --verde: #CFE14D;
+    --bege: #F8EFEF;
 }
 
-.bg-purple{
-    background-color: var(--primary);
+.bg-bege{
+    background-color: var(--bege);
 }
 
-.bg-purple-transparent {
-    background-color: #f4d6f888; 
+.bg-rosaChoque{
+    background-color: var(--rosaChoque);
+}
+
+.bg-rosa{
+    background-color: var(--rosa);
+}
+
+.bg-azul{
+    background-color: var(--azul);
+}
+
+.bg-roxo{
+    background-color: var(--roxo);
+}
+
+.bg-laranja{
+    background-color: var(--laranja);
+}
+
+.bg-verde{
+    background-color: var(--verde);
+}
+
+.btn.bg-rosaChoque{
+    --button-palette-bg: var(--rosaChoque);
+}
+
+.btn.bg-rosa{
+    --button-palette-bg: var(--rosa);
+}
+
+.btn.bg-azul{
+    --button-palette-bg: var(--azul);
+}
+
+.btn.bg-roxo{
+    --button-palette-bg: var(--roxo);
+}
+
+.btn.bg-laranja{
+    --button-palette-bg: var(--laranja);
+}
+
+.btn.bg-verde{
+    --button-palette-bg: var(--verde);
+}
+
+.btn.bg-rosaChoque:hover,
+.btn.bg-rosaChoque:focus-visible,
+.btn.bg-rosaChoque:active,
+.btn.bg-rosa:hover,
+.btn.bg-rosa:focus-visible,
+.btn.bg-rosa:active,
+.btn.bg-azul:hover,
+.btn.bg-azul:focus-visible,
+.btn.bg-azul:active,
+.btn.bg-roxo:hover,
+.btn.bg-roxo:focus-visible,
+.btn.bg-roxo:active,
+.btn.bg-laranja:hover,
+.btn.bg-laranja:focus-visible,
+.btn.bg-laranja:active,
+.btn.bg-verde:hover,
+.btn.bg-verde:focus-visible,
+.btn.bg-verde:active{
+    background-color: var(--button-palette-bg) !important;
+    border-color: var(--button-palette-bg) !important;
+}
+
+.cardValores.bg-laranja {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease !important;
+}
+
+.cardValores.bg-laranja:hover {
+    background-color: color-mix(in srgb, var(--laranja) 70%, white) !important;
+}
+
+.cardValores.bg-rosa {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease !important;
+}
+
+.cardValores.bg-rosa:hover {
+    background-color: color-mix(in srgb, var(--rosa) 70%, white) !important;
+}
+
+.cardValores.bg-azul {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease !important;
+}
+
+.cardValores.bg-azul:hover {
+    background-color: color-mix(in srgb, var(--azul) 70%, white) !important;
+}
+
+.bg-rosa-transparent {
+    background-color: color-mix(in srgb, var(--rosa) 53%, transparent);
     backdrop-filter: blur(8px);
 }
 
-.bg-yellow{
-    background-color: var(--secundary);
+.text-rosaChoque{
+    color: var(--rosaChoque);
 }
 
-.bg-green{
-    background-color: var(--tertiary);
+.text-rosa{
+    color: var(--rosa);
 }
 
-.bg-purple2{
-    background-color: var(--primary2);
+.text-azul{
+    color: var(--azul);
 }
 
-.bg-yellow2{
-    background-color: var(--secundary2);
+.text-roxo{
+    color: var(--roxo);
 }
 
-.bg-green2{
-    background-color: var(--tertiary2);
+.text-laranja{
+    color: var(--laranja);
 }
 
-.text-purple{
-    color: var(--primary);
+.text-verde{
+    color: var(--verde);
 }
 
-.text-yellow{
-    color: var(--secundary);
+.border-rosaChoque {
+    border-color: var(--rosaChoque) !important;
 }
 
-.text-green{
-    color: var(--tertiary);
+.border-rosa {
+    border-color: var(--rosa) !important;
 }
 
-.text-purple2{
-    color: var(--primary2);
+.border-azul {
+    border-color: var(--azul) !important;
 }
 
-.text-yellow2{
-    color: var(--secundary2);
+.border-roxo {
+    border-color: var(--roxo) !important;
 }
 
-.text-green2{
-    color: var(--tertiary2);
+.border-laranja {
+    border-color: var(--laranja) !important;
 }
 
-.border-yellow {
-    border-color: var(--secundary) !important;
-}
-
-.border-green {
-    border-color: var(--tertiary) !important;
-}
-
-.border-purple2 {
-    border-color: var(--primary2) !important;
+.border-verde {
+    border-color: var(--verde) !important;
 }
 
 body{
-    background-color: #fffef7;
+    background-color: var(--bege);
     font-family: 'Bainsley', sans-serif;
+}
+
+#main-header {
+    z-index: 11000 !important;
+}
+
+#main-header:not(.fixed-top) {
+    position: relative;
 }
 
 ul li.rounded-pill {
@@ -120,5 +215,5 @@ nav ul li a {
 }
 
 nav ul li a:hover:not(.text-white) {
-    color: var(--tertiary2) !important;
+    color: var(--roxo) !important;
 }

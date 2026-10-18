@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const linksMenu = document.querySelectorAll('.prisma-nav-link');
+    const wave = document.querySelector('.cursos-wave');
+    const conteudoCursos = document.querySelector('.cursos-page');
+    let frameAgendado = false;
 
     linksMenu.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -32,4 +35,24 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
+
+    function posicionarOnda() {
+        if (!wave || !conteudoCursos) return;
+
+        wave.classList.toggle(
+            'cursos-wave--at-end',
+            conteudoCursos.getBoundingClientRect().bottom <= window.innerHeight
+        );
+        frameAgendado = false;
+    }
+
+    function agendarPosicionamentoOnda() {
+        if (frameAgendado) return;
+        frameAgendado = true;
+        window.requestAnimationFrame(posicionarOnda);
+    }
+
+    posicionarOnda();
+    window.addEventListener('scroll', agendarPosicionamentoOnda, { passive: true });
+    window.addEventListener('resize', agendarPosicionamentoOnda);
 });

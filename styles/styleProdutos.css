@@ -4,6 +4,14 @@
     justify-items: center; /* Centraliza os cards no espaço deles */
 }
 
+.produtos-banner-imagem {
+    display: block;
+    width: 100%;
+    height: 94dvh;
+    object-fit: cover;
+    object-position: center;
+}
+
 :root{
     --card-height: 400px;
     --card-row-gap: 1.5rem; /* gap entre linhas quando houver */
@@ -17,22 +25,22 @@
 
 .banner-lateral {
     filter:
-        drop-shadow(0 0 10px rgba(222, 151, 242, 0.7))
-        drop-shadow(0 0 24px rgba(182, 75, 209, 0.45));
+        drop-shadow(0 0 10px color-mix(in srgb, var(--roxo) 70%, transparent))
+        drop-shadow(0 0 24px color-mix(in srgb, var(--roxo) 45%, transparent));
     animation: brilho-banner-lateral 3s ease-in-out infinite alternate;
 }
 
 @keyframes brilho-banner-lateral {
     from {
         filter:
-            drop-shadow(0 0 8px rgba(222, 151, 242, 0.55))
-            drop-shadow(0 0 18px rgba(182, 75, 209, 0.3));
+            drop-shadow(0 0 8px color-mix(in srgb, var(--roxo) 55%, transparent))
+            drop-shadow(0 0 18px color-mix(in srgb, var(--roxo) 30%, transparent));
     }
 
     to {
         filter:
-            drop-shadow(0 0 14px rgba(222, 151, 242, 0.85))
-            drop-shadow(0 0 32px rgba(182, 75, 209, 0.55));
+            drop-shadow(0 0 14px color-mix(in srgb, var(--roxo) 85%, transparent))
+            drop-shadow(0 0 32px color-mix(in srgb, var(--roxo) 55%, transparent));
     }
 }
 
@@ -84,6 +92,46 @@
 
 .card-produto-item .card-text {
     -webkit-line-clamp: 3;
+}
+
+.container-vitrine .carousel .carousel-control-prev,
+.container-vitrine .carousel .carousel-control-next {
+    top: 50%;
+    bottom: auto;
+    width: 48px;
+    height: 48px;
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    background-color: rgba(255, 1, 152, 0.85);
+    opacity: 1;
+    transform: translateY(-50%);
+}
+
+.container-vitrine .carousel .carousel-control-prev {
+    left: -35px;
+}
+
+.container-vitrine .carousel .carousel-control-next {
+    right: -35px;
+}
+
+.container-vitrine .carousel .carousel-control-prev-icon,
+.container-vitrine .carousel .carousel-control-next-icon {
+    width: 24px;
+    height: 24px;
+    padding: 0 !important;
+    background-color: transparent !important;
+    background-size: 100%;
+}
+
+@media (max-width: 767.98px) {
+    .container-vitrine .carousel .carousel-control-prev {
+        left: 0;
+    }
+
+    .container-vitrine .carousel .carousel-control-next {
+        right: 0;
+    }
 }
 
 /* 2. REGRA PARA A TELA PEQUENA (Menos de 1200px) */

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../styles/styleGeral.css">
     <link rel="stylesheet" href="../styles/styleCad.css">
 </head>
-<body>
+<body class="bg-bege">
     <?php include '../components/header.php'; ?>
     <main class="container-fluid d-flex justify-content-center align-items-center">
     <?php

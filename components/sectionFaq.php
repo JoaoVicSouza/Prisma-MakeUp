@@ -1,8 +1,8 @@
 <section class="container">
-    <h2 class="section-title mt-5">Dúvidas Frequentes</h2>
+    <h2 class="section-title mt-5 text-rosaChoque">Dúvidas Frequentes</h2>
     <div class="containerContent d-flex justify-content-center">
         <div class="secItem d-none d-lg-block">
-            <img src="assets/meninas/naju2.JPG" class="img-fluid d-none d-lg-block">
+            <img src="assets/meninas/naju5edit.png" class="img-fluid d-none d-lg-block">
         </div>
         <div class="secItem">
             <div class="accordion w-100" id="faqAccordion">

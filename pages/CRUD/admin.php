@@ -108,7 +108,7 @@ $kpis = [
     <!-- MAIN -->
     <div class="main">
       <div class="topbar">
-        <div class="topbar-left">
+        <div>
           <p class="page-title" id="pageTitle">Dashboard</p>
         </div>
         <div class="topbar-right">
@@ -203,7 +203,7 @@ $kpis = [
               <tbody id="prodBody">
                 <?php if (empty($produtos)): ?>
                   <tr>
-                    <td colspan="5" style="text-align:center; color:#7a688a; padding: 30px;">Nenhum produto cadastrado na base.</td>
+                    <td colspan="5" style="text-align:center; color:var(--roxo); padding: 30px;">Nenhum produto cadastrado na base.</td>
                   </tr>
                   <?php else: foreach ($produtos as $p): ?>
                     <tr>
@@ -245,7 +245,7 @@ $kpis = [
               <tbody id="orderBody">
                 <?php if (empty($pedidos)): ?>
                   <tr>
-                    <td colspan="5" style="text-align:center; color:#7a688a; padding: 30px;">Não há registros de pedidos.
+                    <td colspan="5" style="text-align:center; color:var(--roxo); padding: 30px;">Não há registros de pedidos.
                     </td>
                   </tr>
                 <?php else: ?>
@@ -294,7 +294,7 @@ $kpis = [
               <tbody id="userBody">
                 <?php if (empty($usuarios)): ?>
                   <tr>
-                    <td colspan="3" style="text-align:center; color:#7a688a; padding: 30px;">Nenhuma conta de cliente
+                    <td colspan="3" style="text-align:center; color:var(--roxo); padding: 30px;">Nenhuma conta de cliente
                       registrada.</td>
                   </tr>
                   <?php else: foreach ($usuarios as $u): ?>
@@ -337,7 +337,7 @@ $kpis = [
               <tbody>
                 <?php if (empty($cursos)): ?>
                   <tr>
-                    <td colspan="5" style="text-align:center; color:#7a688a; padding: 30px;">A biblioteca de tutoriais está vazia no momento.</td>
+                    <td colspan="5" style="text-align:center; color:var(--roxo); padding: 30px;">A biblioteca de tutoriais está vazia no momento.</td>
                   </tr>
                   <?php else: foreach ($cursos as $c): ?>
                     <tr>
@@ -359,9 +359,9 @@ $kpis = [
     </div>
   </div>
 
-  <?php include '../../components/footer.php'; ?>
-
   <div class="toast-wrap" id="toastWrap"></div>
+  
+  <?php include '../../components/footer.php'; ?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../scripts/scriptGeral.js"></script>

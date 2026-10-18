@@ -1,5 +1,5 @@
 <?php if ($cursosLista): ?>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4 mt-4 my-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-4 my-5">
         <?php foreach ($cursosLista as $curso): ?>
             <?php
             $nivel = trim((string) ($curso['nivel'] ?? 'Todos os níveis'));

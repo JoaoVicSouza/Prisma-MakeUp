@@ -18,18 +18,9 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="../../styles/styleGeral.css">
     <style>
-        :root {
-            --primary: #F4D6F8;
-            --secundary: #F8F3D6;
-            --tertiary: #D5F8F2;
-            --primary2: #DE97F2;
-            --secundary2: #F2DE97;
-            --tertiary2: #63d0d9;
-        }
-
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 55%, var(--secundary) 100%);
+            background: var(--bege);
             display: flex;
             flex-direction: column;
         }
@@ -54,18 +45,18 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
 
         .form-control:focus,
         .form-select:focus {
-            border-color: var(--tertiary2);
-            box-shadow: 0 0 0 .25rem rgba(99, 208, 217, .25);
+            border-color: var(--azul);
+            box-shadow: 0 0 0 .25rem color-mix(in srgb, var(--azul) 25%, transparent);
         }
 
         .input-group:focus-within .form-control,
         .input-group:focus-within .input-group-text {
-            border-color: var(--tertiary2);
+            border-color: var(--azul);
         }
 
         .input-group-text {
-            background-color: var(--tertiary);
-            color: #2f6f68;
+            background-color: var(--azul);
+            color: #000;
             font-weight: 600;
         }
 
@@ -80,14 +71,14 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .btn-save {
-            background-color: var(--primary2);
-            border-color: var(--primary2);
+            background-color: var(--roxo);
+            border-color: var(--roxo);
             color: #fff;
         }
 
         .btn-save:hover {
-            background-color: #c875ec;
-            border-color: #c875ec;
+            background-color: var(--rosaChoque);
+            border-color: var(--rosaChoque);
             color: #fff;
         }
 
