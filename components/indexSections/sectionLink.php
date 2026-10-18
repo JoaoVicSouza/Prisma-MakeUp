@@ -1,4 +1,4 @@
-<section class="bg-bege w-100 py-5 px-3 mt-5 shadow-sm d-flex flex-column align-items-center">
+<section class="bg-bege w-100 py-5 px-3 shadow-sm d-flex flex-column align-items-center secLink">
     <div class="container m-0 ">
 
         <div class="text-center">
@@ -9,11 +9,11 @@
             <ul class="list-unstyled d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3 m-0">
                 <li>
                     <a class="fw-bold rounded-pill bg-rosaChoque text-white text-decoration-none px-4 py-3 shadow-sm d-inline-block"
-                        href="#"><i class="bi bi-box me-2"></i>VER PRODUTOS</a>
+                        href="pages/produtos.php"><i class="bi bi-box me-2"></i>VER PRODUTOS</a>
                 </li>
                 <li>
                     <a class="fw-bold rounded-pill border border-2 border-rosaChoque text-rosaChoque bg-white text-decoration-none px-4 py-3 shadow-sm d-inline-block"
-                        href="#"><i class="bi bi-book me-2"></i>APRENDER JÁ</a>
+                        href="pages/cursos.php"><i class="bi bi-book me-2"></i>APRENDER JÁ</a>
                 </li>
             </ul>
         </div>

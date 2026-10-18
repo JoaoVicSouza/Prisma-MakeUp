@@ -352,7 +352,7 @@ function adicionarMensagem(texto, tipo) {
 
     if (tipo === 'enviada') {
         msg = `
-            <div class="card bg-success bg-opacity-25 text-dark border-0 rounded-4 rounded-end-0 rounded-end-lg-4 p-3 shadow-sm ms-auto mb-3" style="max-width: 75%;">
+            <div class="card bg-success text-white border-0 rounded-4 rounded-end-0 rounded-end-lg-4 p-3 shadow-sm ms-auto mb-3" style="max-width: 75%;">
               <p class="mb-1 text-break">${texto}</p>
             </div>`;
 

@@ -10,7 +10,12 @@
 
 body {
     color: var(--text-dark);
+    background-image: url('../assets/backgrounds/1.png');
+    background-size: cover;
+    background-position: center;
 }
+
+main {}
 
 .admin-footer-brand {
     color: #000;
@@ -355,7 +360,7 @@ body {
     font-size: 0.85rem;
 }
 
-.activity-details > span,
+.activity-details>span,
 .activity-details small {
     overflow: hidden;
     color: #777;
@@ -559,6 +564,10 @@ body {
 }
 
 @media (max-width: 768px) {
+    .sidebar-logo {
+        text-align: center;
+    }
+
     .kpi-grid {
         grid-template-columns: 1fr;
     }

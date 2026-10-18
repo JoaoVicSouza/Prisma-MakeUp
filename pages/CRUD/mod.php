@@ -60,6 +60,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../styles/styleGeral.css">
+  <link rel="stylesheet" href="../../styles/styleCad.css">
   <style>
     body {
       min-height: 100vh;
@@ -115,7 +116,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
 
   <?php include '../../components/header.php' ?>
 
-  <main class="container">
+  <main class="container-fluid">
     <div class="form-card mx-auto position-relative">
       <a href="admin.php" class="position-absolute text-secondary text-decoration-none"
         style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;">

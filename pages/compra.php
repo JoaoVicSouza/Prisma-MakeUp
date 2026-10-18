@@ -32,6 +32,10 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
     <style>
         body {
             min-height: 100dvh;
+            background-image: url('../assets/backgrounds/5.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
         main {
