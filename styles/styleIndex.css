@@ -194,6 +194,18 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
     .carousel-track {
         animation-duration: 18s;
     }
+
+    .carousel-group {
+        gap: 2rem;
+    }
+
+    .carousel-group i {
+        font-size: 1.8rem !important;
+    }
+
+    .carousel-group h4 {
+        font-size: 1.1rem;
+    }
 }
 
 .section-title {
@@ -520,4 +532,16 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 .btn.border-purple2:hover {
     background-color: var(--roxo);
     color: #fff !important;
+}
+
+.secLink{
+    background-image: url("../assets/backgrounds/6.jpg");
+    background-size: cover;
+    background-position: center 60%;
+}
+
+@media (max-width: 576px) {
+    .secLink{
+        background: none;
+    }
 }

@@ -96,6 +96,10 @@ function classeStatus(string $status, array $classesStatus): string
         body {
             min-height: 100vh;
             background: var(--bege);
+            background-image: url('../assets/backgrounds/5.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
         main { padding-top: 130px; padding-bottom: 100px; }
         .orders-panel {

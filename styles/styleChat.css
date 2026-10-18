@@ -1,7 +1,10 @@
 body{
     padding-top: 20dvh;
     min-height: 100dvh;
-    background: var(--bege);
+    background-image: url('../assets/backgrounds/bgChat.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     display: flex;
     flex-direction: column;
 }
@@ -39,7 +42,8 @@ body{
 }
 
 #controles .btn-outline-success{
-    --bs-btn-color: var(--azul);
+    --bs-btn-color: #000;
+    --bs-btn-bg: var(--azul);
     --bs-btn-border-color: var(--azul);
     --bs-btn-hover-color: #000;
     --bs-btn-hover-bg: var(--azul);
@@ -47,7 +51,8 @@ body{
 }
 
 #controles .btn-outline-secondary{
-    --bs-btn-color: var(--roxo);
+    --bs-btn-color: #000;
+    --bs-btn-bg: var(--roxo);
     --bs-btn-border-color: var(--roxo);
     --bs-btn-hover-color: #000;
     --bs-btn-hover-bg: var(--roxo);

@@ -11,7 +11,10 @@
   justify-content: center;
   align-items: center; 
   padding: 2rem;
-  padding-top: 20dvh;
+  padding-top: 10dvh;
+  background-image: url('../assets/backgrounds/4.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
  .auth-card {

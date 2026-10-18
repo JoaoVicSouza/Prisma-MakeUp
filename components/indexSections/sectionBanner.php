@@ -1,7 +1,8 @@
 <style>
   .prisma-banner {
     font-family: "Figtree", system-ui, sans-serif;
-    background: var(--bege);
+    background-image: url("assets/backgrounds/3.png");
+    background-size: cover;
     overflow: hidden;
     width: 100%;
     height: 100vh;
@@ -66,12 +67,8 @@
     margin: 0 auto 20px;
     font-size: clamp(.95rem, 2.6vw, 1.05rem);
     line-height: 1.55;
-    color: var(--roxo);
+    color: var(--rosaChoque);
   }
-  @media (max-width: 639.98px) {
-    .prisma-banner { background: var(--rosa); }
-  }
-
   /* TABLET */
   @media (min-width: 640px) {
     .prisma-banner__texto { margin-top: -72px; padding: 32px 36px 36px; }
@@ -95,9 +92,9 @@
       width: auto;
       margin: 0;
       padding: 24px 16px;
-      background: transparent;
-      box-shadow: none;
-      border-radius: 0;
+      background: var(--bege);
+      box-shadow: 0 10px 30px color-mix(in srgb, var(--roxo) 18%, transparent);
+      border-radius: 22px;
     }
     .prisma-banner__titulo {
       margin-bottom: 48px;
@@ -108,7 +105,6 @@
 <section class="prisma-banner" aria-labelledby="prisma-banner-titulo">
   <div class="prisma-banner__inner">
 
-    <!-- TROQUE o src pelas suas fotos -->
     <figure class="prisma-banner__foto prisma-banner__foto--esq">
       <img src="assets/meninas/kayke3.png" alt="Modelo usando maquiagem Prisma" decoding="async">
     </figure>

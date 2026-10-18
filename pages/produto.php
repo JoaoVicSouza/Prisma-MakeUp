@@ -25,6 +25,9 @@ $produto = $stmt->fetch(PDO::FETCH_ASSOC);
     <style>
         body {
             background-attachment: fixed;
+            background-image: url('../assets/backgrounds/5.jpg');
+            background-size: cover;
+            background-position: center;
         }
 
         .produto-main {
