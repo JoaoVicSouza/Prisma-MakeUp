@@ -117,6 +117,10 @@ function classeStatus(string $status, array $classesStatus): string
 
     <main class="container">
         <section class="orders-panel mx-auto p-3 p-md-5" aria-labelledby="page-title">
+            <a href="admin.php" class="position-absolute text-secondary text-decoration-none"
+                style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;">
+                <i class="bi bi-arrow-left"></i>
+            </a>
             <div class="mb-4">
                 <h1 id="page-title" class="h3 fw-bold mb-1">Meus pedidos</h1>
                 <p class="text-secondary mb-0">Acompanhe suas compras e veja os itens de cada pedido.</p>

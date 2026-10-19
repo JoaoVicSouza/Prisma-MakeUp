@@ -194,6 +194,7 @@ curl_setopt_array($ch, [
     ],
     CURLOPT_CONNECTTIMEOUT => 10,
     CURLOPT_TIMEOUT => 90,
+    CURLOPT_CAINFO => __DIR__ . '/cacert.pem',
 ]);
 
 $respostaApi = curl_exec($ch);

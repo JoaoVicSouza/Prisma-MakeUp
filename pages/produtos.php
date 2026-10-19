@@ -22,11 +22,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
         .linha-lateral {
             height: 1px;
-            background-color: var(--verde);
+            background-color: var(--roxo);
         }
 
         .titulo-principal {
-            color: var(--roxo);
+            color: var(--azul);
             font-weight: 500;
             letter-spacing: 2px;
             text-transform: uppercase;

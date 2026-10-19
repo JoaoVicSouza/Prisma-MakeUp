@@ -28,7 +28,7 @@
                                         <h3 class="text-rosaChoque m-0">01</h3>
                                         <h3 class="m-0"><span class="text-rosaChoque">P</span>riorizar o cliente</h3>
                                     </div>
-                                    <p class="m-0">Colocamos o bem-estar das nossas clientes no centro de tudo,
+                                    <p class="m-0">Colocamos o bem-estar dos nossos clientes no centro de tudo,
                                         garantindo experiências únicas e produtos que cuidam de verdade da sua pele.</p>
                                 </div>
                             </div>

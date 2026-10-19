@@ -97,7 +97,7 @@ $kpis = [
           <div class="nav-section">
             <p class="nav-section-label">Plataforma</p>
             <button class="nav-item" onclick="goTo('cursos',this)"><i data-feather="play-circle"></i> Tutoriais</button>
-            <button class="nav-item" onclick="goTo('usuarios',this)"><i data-feather="users"></i> Usuárias</button>
+            <button class="nav-item" onclick="goTo('usuarios',this)"><i data-feather="users"></i> Usuários</button>
           </div>
         </nav>
         <div class="sidebar-footer">
