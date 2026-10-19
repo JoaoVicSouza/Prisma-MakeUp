@@ -36,29 +36,6 @@ if (session_status() === PHP_SESSION_NONE) {
             color: var(--roxo);
             font-size: 0.85rem;
         }
-
-        .produtos-banner-imagem {
-            width: 100%;
-            height: clamp(320px, 90vh, 680px);
-            object-fit: cover;
-            display: block;
-        }
-
-        .produtos-banner::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, .55), rgba(0, 0, 0, .05) 60%);
-        }
-
-        .produtos-banner-texto {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 8%;
-            z-index: 1;
-            padding: 0 20px;
-        }
     </style>
 </head>
 

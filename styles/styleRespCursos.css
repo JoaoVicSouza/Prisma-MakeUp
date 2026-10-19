@@ -1,0 +1,150 @@
+
+@media (min-width: 992px) {
+    #sidebarCursos {
+        position: sticky;
+        top: 7rem;
+        align-self: flex-start;
+        flex: 0 0 240px !important;
+        width: 240px !important;
+    }
+
+    .cursos-page .row > .col-lg-10 {
+        flex: 0 0 auto;
+        width: calc(100% - 240px);
+    }
+
+    #sidebarCursos .prisma-sidebar {
+        padding: 1rem;
+    }
+
+    #sidebarCursos .prisma-sidebar-title {
+        margin: 0.5rem 0 1rem 0.5rem !important;
+    }
+
+    #sidebarCursos .prisma-nav-link {
+        padding: 11px 14px;
+        font-size: 0.95rem;
+    }
+
+    #sidebarCursos .prisma-nav-link i {
+        margin-right: 10px;
+    }
+
+    #sidebarCursos .prisma-nav-link:hover {
+        transform: translateX(3px);
+    }
+}
+
+
+@media (max-width: 991.98px) {
+    #sidebarCursos {
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        margin: 0 !important;
+        width: min(300px, 85vw) !important;
+        background-color: var(--bege) !important;
+        z-index: 12000 !important; /* o header usa 11000 !important */
+        box-shadow: 0 0 40px color-mix(in srgb, var(--roxo) 25%, transparent);
+    }
+
+    .offcanvas-backdrop {
+        z-index: 11900;
+    }
+
+
+    #sidebarCursos {
+        height: 100vh !important;
+        height: 100dvh !important;
+        max-height: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    #sidebarCursos .offcanvas-header {
+        flex: 0 0 auto;
+    }
+
+
+    #sidebarCursos .offcanvas-body,
+    #sidebarCursos .prisma-sidebar {
+        flex: 1 1 auto !important;
+        min-height: 0;
+        overflow-y: auto;
+        margin: 0 1rem 1rem;
+        padding: 1rem;
+        box-shadow: none;
+    }
+
+    .prisma-nav-link {
+        padding: 14px 16px;
+    }
+
+    .prisma-nav-link:hover {
+        transform: none;
+    }
+}
+
+
+@media (min-width: 768px) and (max-aspect-ratio: 6/5),
+       (min-width: 768px) and (max-height: 520px) {
+    .banner-cursos {
+        height: auto;
+        aspect-ratio: 1342 / 760;
+    }
+}
+
+
+.container-titulo-linhas .titulo-principal {
+    font-size: clamp(1.6rem, 1.1rem + 2vw, 2.5rem);
+    line-height: 1.1;
+}
+
+.container-titulo-linhas .subtitulo {
+    display: block;
+    font-size: clamp(0.8rem, 0.7rem + 0.4vw, 1rem);
+}
+
+@media (max-width: 575.98px) {
+    .container-titulo-linhas {
+        margin-top: 2rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .container-titulo-linhas > .text-center {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+}
+
+
+.curso-card-titulo {
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 575.98px) {
+    .curso-card-conteudo .btn {
+        width: 100%;
+        padding-top: 0.55rem;
+        padding-bottom: 0.55rem;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+    .cursos-wave {
+        height: 48px;
+    }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .prisma-nav-link {
+        transition: none;
+    }
+}
