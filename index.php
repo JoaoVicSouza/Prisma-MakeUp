@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styleIndex.css">
     <link rel="stylesheet" href="styles/styleGeral.css">
+    <link rel="icon" href="assets/logo-icon.png" type="image/png">
 </head>
 <body class="bg-bege">
     <?php include 'components/header.php';

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../styles/styleGeral.css">
     <link rel="stylesheet" href="../styles/styleCad.css">
+    <link rel="icon" href="../assets/logo-icon.png" type="image/png">
     <style>
         .auth-card { max-width: 520px; }
 
