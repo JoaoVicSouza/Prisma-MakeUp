@@ -53,7 +53,7 @@
 
                 <section class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
                     <div class="mb-3 text-center">
-                        <h1 class="fs-4 fw-bold mb-1">Bem vinda de volta!</h1>
+                        <h1 class="fs-4 fw-bold mb-1">Bem vindo(a) de volta!</h1>
                         <p class="text-secondary mb-0">Entre com seu e-mail e senha</p>
                     </div>
                     <form method="post" id="loginForm" action="../scriptsPHP/entrar.php">

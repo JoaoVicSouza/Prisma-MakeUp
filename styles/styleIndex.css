@@ -545,3 +545,16 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
         background: none;
     }
 }
+
+.sticker-item img {
+    height: 80px;        /* ajuste conforme preferir (60px no mobile fica bom) */
+    width: auto;         /* mantém a proporção */
+    object-fit: contain;
+    display: block;
+}
+
+@media (max-width: 576px) {
+    .sticker-item img {
+        height: 60px;
+    }
+}

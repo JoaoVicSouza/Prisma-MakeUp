@@ -1,114 +1,116 @@
--- --------------------------------------------------------
--- Servidor:                     127.0.0.1
--- Versão do servidor:           8.4.3 - MySQL Community Server - GPL
--- OS do Servidor:               Win64
--- HeidiSQL Versão:              12.8.0.6908
--- --------------------------------------------------------
+-- ============================================================
+-- Banco: prisma  (versão corrigida e portátil)
+-- Compatível com MySQL 5.7+, MySQL 8.x e MariaDB 10.x
+-- ============================================================
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
-
--- Copiando estrutura do banco de dados para prisma
-CREATE DATABASE IF NOT EXISTS `prisma` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `prisma`
+  DEFAULT CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 USE `prisma`;
 
--- Copiando estrutura para tabela prisma.cursos
+-- Remove na ordem inversa das dependências
+DROP TABLE IF EXISTS `itenspedidos`;
+DROP TABLE IF EXISTS `pedidos`;
 DROP TABLE IF EXISTS `cursos`;
-CREATE TABLE IF NOT EXISTS `cursos` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(150) NOT NULL,
-  `nivel` varchar(50) NOT NULL,
-  `cargaH` int NOT NULL,
-  `preco` int NOT NULL,
-  `objetivo` varchar(255) DEFAULT NULL,
-  `conteudo` varchar(300) DEFAULT NULL,
-  `PublicoAlvo` varchar(100) DEFAULT NULL,
-  `id_produto` int NOT NULL,
+DROP TABLE IF EXISTS `produtos`;
+DROP TABLE IF EXISTS `usuarios`;
+
+-- ------------------------------------------------------------
+-- usuarios (sem dependências)
+-- ------------------------------------------------------------
+CREATE TABLE `usuarios` (
+  `id`    INT NOT NULL AUTO_INCREMENT,
+  `nome`  VARCHAR(100) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `senha` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_usuarios_email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ------------------------------------------------------------
+-- produtos (sem dependências)
+-- ------------------------------------------------------------
+CREATE TABLE `produtos` (
+  `id`          INT NOT NULL AUTO_INCREMENT,
+  `estoque`     INT DEFAULT 0,
+  `categoria`   VARCHAR(30)  NOT NULL,
+  `nome`        VARCHAR(40)  NOT NULL,
+  `descricao`   VARCHAR(500) DEFAULT NULL,
+  `conteudo`    VARCHAR(20)  NOT NULL,
+  `preco`       VARCHAR(20)  NOT NULL,
+  `Indicacao`   VARCHAR(40)  DEFAULT NULL,
+  `cuidados`    VARCHAR(200) DEFAULT NULL,
+  `validade`    VARCHAR(30)  NOT NULL,
+  `informacoes` VARCHAR(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ------------------------------------------------------------
+-- cursos (depende de produtos)
+-- ------------------------------------------------------------
+CREATE TABLE `cursos` (
+  `id`         INT NOT NULL AUTO_INCREMENT,
+  `nome`       VARCHAR(150) NOT NULL,
+  `nivel`      VARCHAR(50)  NOT NULL,
+  `cargaH`     INT NOT NULL,
+  `preco`      INT NOT NULL,
+  `objetivo`   VARCHAR(255) DEFAULT NULL,
+  `conteudo`   VARCHAR(300) DEFAULT NULL,
+  `PublicoAlvo` VARCHAR(100) DEFAULT NULL,
+  `id_produto` INT NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_cursos_produtos` (`id_produto`),
   CONSTRAINT `FK_cursos_produtos` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Copiando dados para a tabela prisma.cursos: ~0 rows (aproximadamente)
-
--- Copiando estrutura para tabela prisma.itenspedidos
-DROP TABLE IF EXISTS `itenspedidos`;
-CREATE TABLE IF NOT EXISTS `itenspedidos` (
-  `id` int NOT NULL,
-  `pedido_id` int DEFAULT NULL,
-  `produto_id` int DEFAULT NULL,
-  `quantidade` int DEFAULT NULL,
-  `precoUnidade` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_itenspedidos_pedidos` (`pedido_id`),
-  KEY `FK_itenspedidos_produtos` (`produto_id`),
-  CONSTRAINT `FK_itenspedidos_pedidos` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
-  CONSTRAINT `FK_itenspedidos_produtos` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela prisma.itenspedidos: ~0 rows (aproximadamente)
-
--- Copiando estrutura para tabela prisma.pedidos
-DROP TABLE IF EXISTS `pedidos`;
-CREATE TABLE IF NOT EXISTS `pedidos` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `dataHora` datetime NOT NULL,
-  `statusPag` varchar(50) NOT NULL,
-  `statusPedido` varchar(50) NOT NULL,
-  `valorTotal` int NOT NULL,
-  `usuario_id` int NOT NULL,
+-- ------------------------------------------------------------
+-- pedidos (depende de usuarios)
+-- ------------------------------------------------------------
+CREATE TABLE `pedidos` (
+  `id`           INT NOT NULL AUTO_INCREMENT,
+  `dataHora`     DATETIME NOT NULL,
+  `statusPag`    VARCHAR(50) NOT NULL,
+  `statusPedido` VARCHAR(50) NOT NULL,
+  `valorTotal`   INT NOT NULL,
+  `usuario_id`   INT NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_pedidos_usuarios` (`usuario_id`),
   CONSTRAINT `FK_pedidos_usuarios` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Copiando dados para a tabela prisma.pedidos: ~0 rows (aproximadamente)
+-- ------------------------------------------------------------
+-- itenspedidos (depende de pedidos e produtos)
+-- ------------------------------------------------------------
+CREATE TABLE `itenspedidos` (
+  `id`           INT NOT NULL AUTO_INCREMENT,
+  `pedido_id`    INT DEFAULT NULL,
+  `produto_id`   INT DEFAULT NULL,
+  `quantidade`   INT DEFAULT NULL,
+  `precoUnidade` INT DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_itenspedidos_pedidos` (`pedido_id`),
+  KEY `FK_itenspedidos_produtos` (`produto_id`),
+  CONSTRAINT `FK_itenspedidos_pedidos`  FOREIGN KEY (`pedido_id`)  REFERENCES `pedidos`  (`id`),
+  CONSTRAINT `FK_itenspedidos_produtos` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Copiando estrutura para tabela prisma.produtos
-DROP TABLE IF EXISTS `produtos`;
-CREATE TABLE IF NOT EXISTS `produtos` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `estoque` int DEFAULT (0),
-  `categoria` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `nome` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `descricao` varchar(500) DEFAULT NULL,
-  `conteudo` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `preco` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `Indicacao` varchar(40) DEFAULT NULL,
-  `cuidados` varchar(200) DEFAULT NULL,
-  `validade` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `informacoes` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- ------------------------------------------------------------
+-- Dados
+-- ------------------------------------------------------------
+INSERT IGNORE INTO `produtos`
+  (`id`, `estoque`, `categoria`, `nome`, `descricao`, `conteudo`, `preco`, `Indicacao`, `cuidados`, `validade`, `informacoes`)
+VALUES
+  (3, 1, 'Preparação de pele', 'nalu', '', '22 g',  '2', '', '', '12 dias', ''),
+  (4, 0, 'Pele', 'João Victor Souza Soares', '', '011 g', '2', '', '', '12 dias', '');
 
--- Copiando dados para a tabela prisma.produtos: ~2 rows (aproximadamente)
-INSERT IGNORE INTO `produtos` (`id`, `estoque`, `categoria`, `nome`, `descricao`, `conteudo`, `preco`, `Indicacao`, `cuidados`, `validade`, `informacoes`) VALUES
-	(3, 1, 'Preparação de pele', 'nalu', '', '22 g', '2', '', '', '12 dias', ''),
-	(4, 0, 'Pele', 'João Victor Souza Soares', '', '011 g', '2', '', '', '12 dias', '');
-
--- Copiando estrutura para tabela prisma.usuarios
-DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `senha` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Copiando dados para a tabela prisma.usuarios: ~0 rows (aproximadamente)
 INSERT IGNORE INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
-	(9, 'João Victor Souza Soares', 'soaresjoaovictor252@gmail.com', 'joao');
+  (9, 'João Victor Souza Soares', 'soaresjoaovictor252@gmail.com', 'joao');
 
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+-- Mantém o próximo AUTO_INCREMENT igual ao banco original
+ALTER TABLE `produtos` AUTO_INCREMENT = 5;
+ALTER TABLE `usuarios` AUTO_INCREMENT = 10;
+
+SET FOREIGN_KEY_CHECKS = 1;

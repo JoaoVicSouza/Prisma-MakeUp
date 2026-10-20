@@ -59,7 +59,7 @@
             </div>
 
             <div class="bottom-ui">
-                <div class="card-title-display" id="title-display">Helder</div>
+                <div class="card-title-display fs-2" id="title-display">Helder</div>
                 <div class="nav-row d-md-none">
                     <button class="nav-btn bg-rosaChoque" onclick="voltar()">‹</button>
                     <div class="dots-row" id="dots">
