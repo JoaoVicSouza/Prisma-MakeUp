@@ -71,6 +71,7 @@ $kpis = [
   <script src="https://unpkg.com/feather-icons"></script>
   <link rel="stylesheet" href="../../styles/styleAdmin.css">
   <link rel="stylesheet" href="../../styles/styleGeral.css">
+  <link rel="icon" href="../../assets/logo-icon.png" type="image/png">
 </head>
 
 <body>

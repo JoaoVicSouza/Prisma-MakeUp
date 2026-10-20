@@ -61,6 +61,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../styles/styleGeral.css">
   <link rel="stylesheet" href="../../styles/styleCad.css">
+  <link rel="icon" href="../../assets/logo-icon.png" type="image/png">
   <style>
     body {
       min-height: 100vh;

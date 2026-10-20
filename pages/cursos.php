@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../styles/styleGeral.css">
     <link rel="stylesheet" href="../styles/StyleCursos.css">
     <link rel="stylesheet" href="../styles/styleRespCursos.css">
+    <link rel="icon" href="../assets/logo-icon.png" type="image/png">
     <style>
         html {
             scroll-behavior: smooth;
