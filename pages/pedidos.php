@@ -116,12 +116,13 @@ function classeStatus(string $status, array $classesStatus): string
     <?php include '../components/header.php'; ?>
 
     <main class="container">
-        <section class="orders-panel mx-auto p-3 p-md-5" aria-labelledby="page-title">
-            <a href="admin.php" class="position-absolute text-secondary text-decoration-none"
-                style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;">
+        <section class="orders-panel mx-auto p-3 pt-5 p-md-5 position-relative" aria-labelledby="page-title">
+            <a href="perfil.php" class="position-absolute text-secondary text-decoration-none"
+                style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;"
+                aria-label="Voltar ao perfil">
                 <i class="bi bi-arrow-left"></i>
             </a>
-            <div class="mb-4">
+            <div class="mb-4 text-center">
                 <h1 id="page-title" class="h3 fw-bold mb-1">Meus pedidos</h1>
                 <p class="text-secondary mb-0">Acompanhe suas compras e veja os itens de cada pedido.</p>
             </div>

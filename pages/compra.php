@@ -151,7 +151,12 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
 <body class="bg-bege">
     <?php include '../components/header.php' ?>
     <main class="container d-flex align-items-center justify-content-center">
-        <div class="checkout-card mx-auto">
+        <div class="checkout-card mx-auto position-relative">
+            <a href="produtos.php" class="position-absolute text-secondary text-decoration-none"
+                style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;"
+                aria-label="Voltar para os produtos">
+                <i class="bi bi-arrow-left"></i>
+            </a>
             <h1 class="fs-4 fw-bold mb-4 text-center">Finalizar compra</h1>
 
             <?php if ($pedidoCriado): ?>
@@ -308,7 +313,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
     <?php if ($pedidoCriado): ?>
         <script>localStorage.removeItem('carrinhoPrisma');</script>
     <?php endif; ?>
-    <script src="../scripts/scrpitCarrinho.js"></script>
+    <script src="../scripts/scrpitCarrinho.js?v=<?= (int) @filemtime(__DIR__ . '/../scripts/scrpitCarrinho.js') ?>"></script>
     <script>
         const cepInput = document.getElementById('cep');
         const cepStatus = document.getElementById('cepStatus');
