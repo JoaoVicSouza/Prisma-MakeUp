@@ -26,11 +26,13 @@ function salvarCarrinho(carrinho) {
 
 let temporizadorNotificacaoCarrinho;
 
-function mostrarNotificacaoCarrinho(nomeProduto) {
+function mostrarNotificacaoCarrinho(mensagem, tipo = 'success') {
     const notificacao = document.getElementById('notificacaoCarrinho');
     if (!notificacao) return;
 
-    notificacao.textContent = `${nomeProduto} foi adicionado ao carrinho!`;
+    notificacao.classList.remove('alert-success', 'alert-warning', 'alert-danger');
+    notificacao.classList.add(`alert-${tipo}`);
+    notificacao.textContent = mensagem;
     notificacao.classList.remove('d-none');
 
     clearTimeout(temporizadorNotificacaoCarrinho);
@@ -45,8 +47,11 @@ function adicionarAoCarrinho(idProduto, nomeProduto, precoProduto, imagemProduto
         return String(item.id) === String(idProduto);
     });
 
+    let quantidade = 1;
+
     if (produtoExistente) {
-        produtoExistente.quantidade += 1;
+        quantidade = Number(produtoExistente.quantidade) + 1;
+        produtoExistente.quantidade = quantidade;
         if (imagemProduto) {
             produtoExistente.imagem = imagemProduto;
         }
@@ -61,11 +66,45 @@ function adicionarAoCarrinho(idProduto, nomeProduto, precoProduto, imagemProduto
     }
 
     salvarCarrinho(carrinho);
+
+    return { jaEstavaNoCarrinho: Boolean(produtoExistente), quantidade: quantidade };
 }
 
 function comprarAgora(idProduto, nomeProduto, precoProduto, imagemProduto) {
-    adicionarAoCarrinho(idProduto, nomeProduto, precoProduto, imagemProduto);
+    // Se o item já está no carrinho, não adiciona de novo: só segue para a compra.
+    const jaNoCarrinho = obterCarrinho().some(function (item) {
+        return String(item.id) === String(idProduto);
+    });
+
+    if (!jaNoCarrinho) {
+        adicionarAoCarrinho(idProduto, nomeProduto, precoProduto, imagemProduto);
+    }
+
     window.location.href = new URL('compra.php', window.location.href).href;
+}
+
+const temporizadoresBotaoCarrinho = new WeakMap();
+
+function indicarBotaoCarrinho(botao, jaEstavaNoCarrinho, quantidade) {
+    if (!('rotuloOriginal' in botao.dataset)) {
+        botao.dataset.rotuloOriginal = botao.innerHTML;
+    }
+
+    botao.innerHTML = jaEstavaNoCarrinho
+        ? `<i class="bi bi-bag-check-fill me-1"></i> NO CARRINHO (${quantidade})`
+        : '<i class="bi bi-check-lg me-1"></i> ADICIONADO!';
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && botao.animate) {
+        botao.animate(
+            [{ transform: 'scale(1)' }, { transform: 'scale(1.06)' }, { transform: 'scale(1)' }],
+            { duration: 250, easing: 'ease-out' }
+        );
+    }
+
+    clearTimeout(temporizadoresBotaoCarrinho.get(botao));
+    temporizadoresBotaoCarrinho.set(botao, setTimeout(function () {
+        botao.innerHTML = botao.dataset.rotuloOriginal;
+    }, 1800));
 }
 
 function formatarPreco(valor) {
@@ -228,12 +267,29 @@ document.querySelectorAll('[data-acao-carrinho]').forEach(function (botao) {
     botao.addEventListener('click', function () {
         const { acaoCarrinho, id, nome, preco, imagem } = botao.dataset;
 
-        if (acaoCarrinho === 'comprar') {
-            comprarAgora(id, nome, Number(preco), imagem);
-            return;
-        }
+        try {
+            if (acaoCarrinho === 'comprar') {
+                comprarAgora(id, nome, Number(preco), imagem);
+                return;
+            }
 
-        adicionarAoCarrinho(id, nome, Number(preco), imagem);
-        mostrarNotificacaoCarrinho(nome);
+            const resultado = adicionarAoCarrinho(id, nome, Number(preco), imagem);
+            indicarBotaoCarrinho(botao, resultado.jaEstavaNoCarrinho, resultado.quantidade);
+
+            if (resultado.jaEstavaNoCarrinho) {
+                mostrarNotificacaoCarrinho(
+                    `${nome} já estava no carrinho. Agora você tem ${resultado.quantidade} unidades.`,
+                    'warning'
+                );
+            } else {
+                mostrarNotificacaoCarrinho(`${nome} foi adicionado ao carrinho!`, 'success');
+            }
+        } catch (erro) {
+            console.error('Não foi possível atualizar o carrinho.', erro);
+            mostrarNotificacaoCarrinho(
+                'Não foi possível atualizar o carrinho. Recarregue a página e tente novamente.',
+                'danger'
+            );
+        }
     });
 });
