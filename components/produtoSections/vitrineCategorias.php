@@ -17,7 +17,7 @@ $categorias = [
     'sobrancelhas' => [
         'titulo'    => 'Sobrancelhas',
         'subtitulo' => 'definição e preenchimento para realçar o olhar',
-        'imagem'    => '../assets/maquiagens/blush2.jpg',
+        'imagem'    => '../assets/meninas/kayke5.jpg',
         'banco'     => ['Sobrancelhas'],
     ],
     'labios' => [
