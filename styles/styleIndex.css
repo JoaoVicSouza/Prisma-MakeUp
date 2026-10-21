@@ -156,7 +156,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 .carousel-track {
     display: flex;
     width: max-content; /* a largura é definida pelo conteúdo, não pela tela */
-    animation: scroll-patrocinadores 30s linear infinite;
+    /* velocidade dos stickers: quanto MAIOR o número, MAIS DEVAGAR (antes: 30s) */
+    animation: scroll-patrocinadores 120s linear infinite;
 }
 
 .carousel-group {
@@ -192,7 +193,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 
 @media (max-width: 576px) {
     .carousel-track {
-        animation-duration: 18s;
+        animation-duration: 80s; /* celular (antes: 18s) */
     }
 
     .carousel-group {

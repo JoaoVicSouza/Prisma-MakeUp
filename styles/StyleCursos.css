@@ -87,7 +87,10 @@ html { scroll-behavior: smooth; }
   height: calc(100svh - 5rem);
   overflow: hidden;
   background: #f7ecee;
-  font-family: 'Montserrat', sans-serif;
+  /* FONTES DO BANNER: troque aqui. 'Bainsley' é a fonte do resto do site (styleGeral.css). */
+  --bc-fonte-titulo: 'Bainsley', 'Montserrat', sans-serif;
+  --bc-fonte-texto: 'Bainsley', 'Montserrat', sans-serif;
+  font-family: var(--bc-fonte-texto);
 }
 
 .bc-topo,
@@ -141,8 +144,8 @@ html { scroll-behavior: smooth; }
 }
 .bc-titulo {
   top: calc(var(--uy) * 110);
-  font-family: 'Archivo Black', Impact, sans-serif;
-  font-weight: 400;
+  font-family: var(--bc-fonte-titulo);
+  font-weight: 700;
   font-size: calc(var(--uf) * 66);
   line-height: calc(var(--uy) * 76);
 }
@@ -184,21 +187,21 @@ html { scroll-behavior: smooth; }
   width: calc(var(--ux) * 443);
   background: #7ce6ff;
   clip-path: polygon(0 0, 100% 0, 70.9% 100%, 0 100%);
-  --nome-x: 214; --preco-x: 200; --img-x: 81;
+  --nome-x: 185; --preco-x: 170; --img-x: 81;
 }
 .bc-card--intermediario {
   left: calc(var(--ux) * 329);
   width: calc(var(--ux) * 586);
   background: #9778cf;
   clip-path: polygon(22% 0, 100% 0, 80.9% 100%, 0 100%);
-  --nome-x: 369; --preco-x: 336; --img-x: 207;
+  --nome-x: 300; --preco-x: 270; --img-x: 217;
 }
 .bc-card--avancado {
   left: calc(var(--ux) * 816);
   width: calc(var(--ux) * 526);
   background: #fbcb83;
   clip-path: polygon(21.1% 0, 100% 0, 100% 100%, 0 100%);
-  --nome-x: 337; --preco-x: 325; --img-x: 229; --nome-tam: 41;
+  --nome-x: 312; --preco-x: 300; --img-x: 229; --nome-tam: 41;
 }
 
 .bc-nome,
@@ -210,15 +213,15 @@ html { scroll-behavior: smooth; }
   transform: translateX(-50%);
 }
 .bc-nome {
-  top: calc(var(--uy) * 10);
+  top: calc(var(--uy) * 212);
   left: calc(var(--ux) * var(--nome-x));
-  font-family: 'Raleway', sans-serif;
-  font-weight: 600;
+  font-family: var(--bc-fonte-texto);
+  font-weight: 700;
   font-size: calc(var(--uf) * var(--nome-tam, 38));
   line-height: calc(var(--uy) * 48);
 }
 .bc-preco {
-  top: calc(var(--uy) * 67);
+  top: calc(var(--uy) * 268);
   left: calc(var(--ux) * var(--preco-x));
   font-weight: 400;
   font-size: calc(var(--uf) * 42);
@@ -228,7 +231,7 @@ html { scroll-behavior: smooth; }
 /* Ilustrações dos cursos */
 .bc-ilustracao {
   position: absolute;
-  top: calc(var(--uy) * 147);
+  top: calc(var(--uy) * 14);
   left: calc(var(--ux) * var(--img-x));
   width: calc(var(--ux) * 190);
   height: calc(var(--uy) * 190);
@@ -295,7 +298,7 @@ html { scroll-behavior: smooth; }
     height: auto;
     min-height: 0;
     grid-template-columns: 1fr;
-    grid-auto-rows: clamp(135px, 21svh, 170px);
+    grid-auto-rows: clamp(155px, 24svh, 190px);
   }
 
   .bc-card {
@@ -308,24 +311,24 @@ html { scroll-behavior: smooth; }
   }
 
   .bc-nome {
-    top: 5%;
+    top: 57%;
     left: 50%;
     font-size: clamp(1rem, 4cqw, 1.5rem);
     line-height: 1.3;
   }
 
   .bc-preco {
-    top: 26%;
+    top: 78%;
     left: 50%;
     font-size: clamp(1rem, 3.8cqw, 1.4rem);
     line-height: 1.3;
   }
 
   .bc-ilustracao {
-    top: 42%;
+    top: 6%;
     left: 50%;
     width: min(5rem, 36%);
-    height: 40%;
+    height: 46%;
     transform: translateX(-50%);
   }
 
