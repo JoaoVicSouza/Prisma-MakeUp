@@ -17,6 +17,13 @@
     <?php include '../components/header.php'; ?>
 
 
+
+    <div class="container mt-5 pt-4">
+        <a href="../index.php" class="btn btn-outline-secondary rounded-pill" onclick="if (history.length > 1) { history.back(); return false; }">
+            <i class="bi bi-arrow-left me-2"></i>Voltar
+        </a>
+    </div>
+
 <div id="chat-container" class="d-flex flex-column mb-4 w-100 p-0 p-lg-5"></div>
     <form id="resposta" action="" class="mb-3">
         <div id="controles" class="d-flex flex-column gap-2"></div>
