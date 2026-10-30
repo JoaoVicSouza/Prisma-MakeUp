@@ -1,3 +1,24 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: login.php?erro=acesso_negado');
+    exit;
+}
+
+$nome  = $_SESSION['usuario_nome'] ?? 'Usuário';
+$email = $_SESSION['usuario_email'] ?? '';
+$mensagensPerfil = [
+    'nome' => 'Informe seu nome completo, sem números.',
+    'email' => 'Informe um endereço de e-mail válido.',
+    'email_existente' => 'Este e-mail já está sendo utilizado por outra conta.',
+    'servidor' => 'Não foi possível atualizar seus dados. Tente novamente.',
+];
+$mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
+    ? 'Seus dados foram atualizados com sucesso!'
+    : ($mensagensPerfil[$_GET['erro'] ?? ''] ?? '');
+$tipoMensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil' ? 'success' : 'danger';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -70,27 +91,7 @@
     </style>
 </head>
 <body class="bg-bege">
-<?php
-session_start();
 
-if (!isset($_SESSION['usuario_id'])) {
-    header('Location: login.php?erro=acesso_negado');
-    exit;
-}
-
-$nome  = $_SESSION['usuario_nome'] ?? 'Usuário';
-$email = $_SESSION['usuario_email'] ?? '';
-$mensagensPerfil = [
-    'nome' => 'Informe seu nome completo, sem números.',
-    'email' => 'Informe um endereço de e-mail válido.',
-    'email_existente' => 'Este e-mail já está sendo utilizado por outra conta.',
-    'servidor' => 'Não foi possível atualizar seus dados. Tente novamente.',
-];
-$mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
-    ? 'Seus dados foram atualizados com sucesso!'
-    : ($mensagensPerfil[$_GET['erro'] ?? ''] ?? '');
-$tipoMensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil' ? 'success' : 'danger';
-?>
 
     <?php include '../components/header.php'; ?>
 
