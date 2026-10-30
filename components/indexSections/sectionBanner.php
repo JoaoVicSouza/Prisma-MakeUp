@@ -35,6 +35,12 @@
     object-fit: cover;
     object-position: center top;
   }
+  @media (max-width: 1023.98px) {
+    .prisma-banner__foto img {
+      object-fit: contain;
+      object-position: center center;
+    }
+  }
   .prisma-banner__foto--esq { grid-area: esq; clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%); }
   .prisma-banner__foto--dir { grid-area: dir; clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%); }
 
