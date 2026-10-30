@@ -20,12 +20,12 @@ $sufixoOrigem = $origemCheckout ? '&origem=checkout' : '';
 $nomeValido = preg_match('/\A[\p{L}\p{M}]+(?:[ \'-][\p{L}\p{M}]+)*\z/u', $nome) === 1
     && preg_match('/\s/u', $nome) === 1;
 
-if (!$nomeValido) {
+if (!$nomeValido || mb_strlen($nome) > 100) {
     header('Location: ../pages/login.php?aba=cadastro&erro=nome_invalido' . $sufixoOrigem);
     exit;
 }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 255) {
     header('Location: ../pages/login.php?aba=cadastro&erro=email_invalido' . $sufixoOrigem);
     exit;
 }
@@ -54,7 +54,7 @@ try {
     exit;
 } catch (PDOException $erro) {
     if ($erro->getCode() === '23000') {
-        header('Location: ../pages/login.php?aba=cadastro&erro=email_existente');
+        header('Location: ../pages/login.php?aba=cadastro&erro=email_existente' . $sufixoOrigem);
         exit;
     }
 
