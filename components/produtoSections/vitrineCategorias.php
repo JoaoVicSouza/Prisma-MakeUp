@@ -338,7 +338,7 @@ if (!function_exists('e')) {
                                         <div class="mt-auto">
                                             <div class="fw-bold mb-2 preco-produto text-roxo">R$ <?= number_format((float) $produto['preco'], 2, ',', '.') ?></div>
                                             <a class="btn btn-sm w-100 fw-bold rounded-pill text-white btn-comprar bg-rosaChoque"
-                                               href="produto.php?id=<?= urlencode((string) $produto['id']) ?>">COMPRAR</a>
+                                               href="produto.php?id=<?= urlencode((string) $produto['id']) ?>&categoria=<?= urlencode($slug) ?>">COMPRAR</a>
                                         </div>
                                     </div>
                                 </article>
