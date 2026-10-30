@@ -91,6 +91,7 @@
                         <p class="text-secondary mb-0">Preencha os dados abaixo</p>
                     </div>
                     <form method="post" id="signupForm" action="../scriptsPHP/cadastro.php">
+                        <input type="hidden" name="origem" value="<?= ($_GET['origem'] ?? '') === 'checkout' ? 'checkout' : 'menu' ?>">
                         <div class="mb-3">
                             <label for="nameSignup" class="form-label">Nome Completo</label>
                             <input type="text" class="form-control" name="name" id="nameSignup" placeholder="Seu nome completo" pattern="[A-Za-zÀ-ÿ]+([ '-][A-Za-zÀ-ÿ]+)+" title="Informe seu nome completo, sem números." maxlength="100" required>
