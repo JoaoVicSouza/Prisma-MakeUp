@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,12 +17,15 @@
     <?php
         $mensagem = '';
         $tipo = '';
+        $abaCadastro = ($_GET['aba'] ?? '') === 'cadastro';
         if (isset($_GET['sucesso']) && $_GET['sucesso'] === 'cadastro') {
             $mensagem = 'Conta criada com sucesso! Faça login.';
             $tipo = 'success';
         } elseif (isset($_GET['erro'])) {
             $mensagens_erro = [
                 'email_existente' => 'Este e-mail já está cadastrado.',
+                'nome_invalido' => 'Informe seu nome completo, utilizando apenas letras.',
+                'senha_invalida' => 'A senha deve ter pelo menos 8 caracteres.',
                 'servidor'        => 'Erro interno. Tente novamente.',
                 'credenciais' => 'Email ou senha inválidos.',
                 'email_invalido' => 'Digite um e-mail válido',
@@ -30,6 +33,9 @@
             ];
             $mensagem = $mensagens_erro[$_GET['erro']] ?? 'Ocorreu um erro.';
             $tipo = 'danger';
+        }
+        if (in_array($_GET['erro'] ?? '', ['email_existente', 'nome_invalido', 'senha_invalida'], true)) {
+            $abaCadastro = true;
         }
         if ($mensagem):
     ?>
@@ -41,26 +47,27 @@
     <div class="auth-card">
             <ul class="nav nav-pills nav-fill mb-4" id="authTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="login-tab" data-bs-toggle="pill" data-bs-target="#login"
-                        type="button" role="tab" aria-controls="login" aria-selected="true">Entrar</button>
+                    <button class="nav-link <?= $abaCadastro ? '' : 'active' ?>" id="login-tab" data-bs-toggle="pill" data-bs-target="#login"
+                        type="button" role="tab" aria-controls="login" aria-selected="<?= $abaCadastro ? 'false' : 'true' ?>">Entrar</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="signup-tab" data-bs-toggle="pill" data-bs-target="#signup"
-                        type="button" role="tab" aria-controls="signup" aria-selected="false">Criar conta</button>
+                    <button class="nav-link <?= $abaCadastro ? 'active' : '' ?>" id="signup-tab" data-bs-toggle="pill" data-bs-target="#signup"
+                        type="button" role="tab" aria-controls="signup" aria-selected="<?= $abaCadastro ? 'true' : 'false' ?>">Criar conta</button>
                 </li>
             </ul>
 
             <div class="tab-content" id="authTabContent">
 
-                <section class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                <section class="tab-pane fade <?= $abaCadastro ? '' : 'show active' ?>" id="login" role="tabpanel" aria-labelledby="login-tab">
                     <div class="mb-3 text-center">
                         <h1 class="fs-4 fw-bold mb-1">Bem vindo(a) de volta!</h1>
                         <p class="text-secondary mb-0">Entre com seu e-mail e senha</p>
                     </div>
                     <form method="post" id="loginForm" action="../scriptsPHP/entrar.php">
+                        <input type="hidden" name="origem" value="<?= ($_GET['origem'] ?? '') === 'checkout' ? 'checkout' : 'menu' ?>">
                         <div class="mb-3">
                             <label for="email" class="form-label">E-mail</label>
-                            <input type="text" class="form-control" name="email" id="email" placeholder="seu@email.com" required>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="seu@email.com" required>
                         </div>
                         <div class="mb-2">
                             <label for="password" class="form-label">Senha</label>
@@ -78,7 +85,7 @@
                     </form>
                 </section>
 
-                <section class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">
+                <section class="tab-pane fade <?= $abaCadastro ? 'show active' : '' ?>" id="signup" role="tabpanel" aria-labelledby="signup-tab">
                     <div class="mb-3 text-center">
                         <h1 class="fs-4 fw-bold mb-1">Crie sua conta</h1>
                         <p class="text-secondary mb-0">Preencha os dados abaixo</p>
@@ -86,18 +93,18 @@
                     <form method="post" id="signupForm" action="../scriptsPHP/cadastro.php">
                         <div class="mb-3">
                             <label for="nameSignup" class="form-label">Nome Completo</label>
-                            <input type="text" class="form-control" name="name" id="nameSignup" placeholder="Seu nome" required>
+                            <input type="text" class="form-control" name="name" id="nameSignup" placeholder="Seu nome completo" pattern="[A-Za-zÀ-ÿ]+([ '-][A-Za-zÀ-ÿ]+)+" title="Informe seu nome completo, sem números." maxlength="100" required>
                         </div>
                         <div class="mb-3">
                             <label for="emailSignup" class="form-label">E-mail</label>
-                            <input type="text" class="form-control" name="email" id="emailSignup"
+                            <input type="email" class="form-control" name="email" id="emailSignup"
                                 placeholder="seu@email.com" required>
                         </div>
                         <div class="mb-3">
                             <label for="passwordSignup" class="form-label">Senha</label>
                             <div class="input-group">
                                 <input type="password" class="form-control" name="password" id="passwordSignup"
-                                    placeholder="Sua senha" required>
+                                    placeholder="Sua senha" minlength="8" required>
                                 <button type="button" class="btn btn-outline-secondary toggle-password"
                                     aria-label="Mostrar senha">
                                     <i class="icon-eye bi bi-eye-fill"></i>
