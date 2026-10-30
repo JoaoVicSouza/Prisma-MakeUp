@@ -210,7 +210,7 @@ try {
 
     $pdo->commit();
     $_SESSION['pedido_criado'] = $pedidoId;
-    header('Location: ../pages/produtos.php');
+    header('Location: ../pages/compra.php');
     exit;
 } catch (DomainException $erro) {
     if ($pdo->inTransaction()) {
