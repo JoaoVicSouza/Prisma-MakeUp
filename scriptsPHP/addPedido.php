@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $usuarioId = filter_var($_SESSION['usuario_id'] ?? null, FILTER_VALIDATE_INT);
 if (!$usuarioId || $usuarioId < 1) {
-    header('Location: ../pages/login.php?erro=login_necessario');
+    header('Location: ../pages/login.php?erro=login_necessario&origem=checkout');
     exit;
 }
 
