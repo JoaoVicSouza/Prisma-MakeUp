@@ -33,7 +33,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 20%;
+    object-position: center top;
   }
   .prisma-banner__foto--esq { grid-area: esq; clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%); }
   .prisma-banner__foto--dir { grid-area: dir; clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%); }
