@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['usuario_id'])) {
-    header('Location: login.php?erro=login_necessario');
+    header('Location: login.php?erro=login_necessario&origem=checkout');
     exit;
 }
 
