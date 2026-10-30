@@ -10,6 +10,12 @@ $stmt = $pdo->prepare(
 );
 $stmt->execute([':id' => $id ?: 0]);
 $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+$categoriasPermitidas = ['pele', 'olhos', 'sobrancelhas', 'labios', 'kits'];
+$categoriaVolta = $_GET['categoria'] ?? '';
+if (!is_string($categoriaVolta) || !in_array($categoriaVolta, $categoriasPermitidas, true)) {
+    $categoriaVolta = '';
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -74,7 +80,7 @@ $produto = $stmt->fetch(PDO::FETCH_ASSOC);
         <div class="produto-card position-relative">
         <div id="notificacaoCarrinho" class="alert alert-success d-none position-fixed bottom-0 end-0 m-3 shadow"
             role="status" aria-live="polite" style="z-index: 1080;"></div>
-        <a href="produtos.php" class="position-absolute text-secondary text-decoration-none"
+        <a href="produtos.php<?= $categoriaVolta !== '' ? '#' . rawurlencode($categoriaVolta) : '' ?>" class="position-absolute text-secondary text-decoration-none"
             style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;"
             aria-label="Voltar para os produtos">
             <i class="bi bi-arrow-left"></i>
