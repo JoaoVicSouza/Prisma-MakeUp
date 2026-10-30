@@ -25,6 +25,13 @@ if ($usuario && password_verify($senha, $usuario['senha'])) {
     $_SESSION['usuario_nome'] = $usuario['nome'];
     $_SESSION['usuario_email'] = $email;
     $_SESSION['admin'] = $usuario['admin'];
+    $origem = $_POST['origem'] ?? 'menu';
+    if ($origem === 'checkout') {
+        header('Location: ../pages/compra.php');
+        exit;
+    }
+
+    $_SESSION['limpar_carrinho_apos_login'] = true;
     header('Location: ../index.php');
     exit;
 } else {
