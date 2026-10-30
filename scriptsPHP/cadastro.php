@@ -34,6 +34,13 @@ if (strlen($senha) < 8) {
 }
 
 try {
+    $consulta = $pdo->prepare('SELECT id FROM usuarios WHERE email = :email LIMIT 1');
+    $consulta->execute([':email' => $email]);
+    if ($consulta->fetch(PDO::FETCH_ASSOC)) {
+        header('Location: ../pages/login.php?aba=cadastro&erro=email_existente');
+        exit;
+    }
+
     $stmt = $pdo->prepare('INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)');
     $stmt->execute([
         ':nome' => $nome,
