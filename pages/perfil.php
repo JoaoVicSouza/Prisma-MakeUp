@@ -80,6 +80,16 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $nome  = $_SESSION['usuario_nome'] ?? 'Usuário';
 $email = $_SESSION['usuario_email'] ?? '';
+$mensagensPerfil = [
+    'nome' => 'Informe seu nome completo, sem números.',
+    'email' => 'Informe um endereço de e-mail válido.',
+    'email_existente' => 'Este e-mail já está sendo utilizado por outra conta.',
+    'servidor' => 'Não foi possível atualizar seus dados. Tente novamente.',
+];
+$mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
+    ? 'Seus dados foram atualizados com sucesso!'
+    : ($mensagensPerfil[$_GET['erro'] ?? ''] ?? '');
+$tipoMensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil' ? 'success' : 'danger';
 ?>
 
     <?php include '../components/header.php'; ?>
@@ -114,6 +124,32 @@ $email = $_SESSION['usuario_email'] ?? '';
                 </div>
 
             </div>
+
+            <div class="divider"></div>
+
+            <?php if ($mensagemPerfil !== ''): ?>
+                <div class="alert alert-<?= $tipoMensagemPerfil ?>" role="status">
+                    <?= htmlspecialchars($mensagemPerfil, ENT_QUOTES, 'UTF-8') ?>
+                </div>
+            <?php endif; ?>
+
+            <form method="post" action="../scriptsPHP/atualizarPerfil.php" class="mb-4">
+                <h2 class="fs-5 fw-bold mb-3">Alterar meus dados</h2>
+                <div class="mb-3">
+                    <label for="perfilNome" class="form-label">Nome completo</label>
+                    <input type="text" class="form-control" id="perfilNome" name="nome"
+                        value="<?= htmlspecialchars($nome, ENT_QUOTES, 'UTF-8') ?>"
+                        pattern="[A-Za-zÀ-ÿ]+([ '-][A-Za-zÀ-ÿ]+)+" maxlength="100" required>
+                </div>
+                <div class="mb-3">
+                    <label for="perfilEmail" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="perfilEmail" name="email"
+                        value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>" maxlength="150" required>
+                </div>
+                <button type="submit" class="btn btn-perfil w-100">
+                    <i class="bi bi-save me-2"></i>Salvar alterações
+                </button>
+            </form>
 
             <div class="divider"></div>
 
