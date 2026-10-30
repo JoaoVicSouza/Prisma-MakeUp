@@ -4,7 +4,8 @@ require 'conexao.php';
 
 $origem = ($_POST['origem'] ?? '') === 'checkout' ? 'checkout' : 'menu';
 $parametroOrigem = $origem === 'checkout' ? '&origem=checkout' : '';
-$email = trim($_POST['email'] ?? '');
+$email = $_POST['email'] ?? '';
+$email = is_string($email) ? trim($email) : '';
 $senha = $_POST['password'] ?? '';
 if (!is_string($senha)) {
     $senha = '';
