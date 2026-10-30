@@ -189,7 +189,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Frete</span>
-                            <span>Grátis</span>
+                            <span id="shippingValue">A calcular</span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between total-row">
