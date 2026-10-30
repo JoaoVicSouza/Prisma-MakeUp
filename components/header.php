@@ -61,3 +61,12 @@ if($arquivo_atual == "index.php"){ $isIndex = true; }else{ $isIndex = false; }
             </div>
         </nav>
     </header>
+
+<?php if (!empty($_SESSION['limpar_carrinho_apos_login'])): ?>
+    <?php unset($_SESSION['limpar_carrinho_apos_login']); ?>
+    <script>
+        try { localStorage.removeItem('carrinhoPrisma'); } catch (erro) {
+            console.error('Não foi possível limpar o carrinho após o login.', erro);
+        }
+    </script>
+<?php endif; ?>

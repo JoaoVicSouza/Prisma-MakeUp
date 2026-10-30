@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['usuario_id'])) {
-    header('Location: login.php?erro=login_necessario');
+    header('Location: login.php?erro=login_necessario&origem=checkout');
     exit;
 }
 
@@ -160,17 +160,13 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
             </a>
             <h1 class="fs-4 fw-bold mb-4 text-center">Finalizar compra</h1>
 
-            <?php if ($pedidoCriado): ?>
-                <div class="alert alert-success" role="status">
-                    Pedido #<?= (int) $pedidoCriado ?> registrado com sucesso.
-                </div>
-            <?php endif; ?>
             <?php if ($mensagemErro !== null): ?>
                 <div class="alert alert-danger" role="alert">
                     <?= htmlspecialchars($mensagemErro, ENT_QUOTES, 'UTF-8') ?>
                 </div>
             <?php endif; ?>
 
+            <?php if (!$pedidoCriado): ?>
             <div class="row g-4">
 
                 <!-- CARRINHO + RESUMO -->
@@ -189,7 +185,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Frete</span>
-                            <span>Grátis</span>
+                            <span id="shippingValue">A calcular</span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between total-row">
@@ -207,12 +203,12 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                             <div class="col-12">
                                 <label for="fullName" class="form-label">Nome completo</label>
                                 <input type="text" class="form-control" id="fullName" name="fullName"
-                                    placeholder="Seu nome completo" required>
+                                    placeholder="Seu nome completo" pattern="[A-Za-zÀ-ÿ]+([ '-][A-Za-zÀ-ÿ]+)+" maxlength="100" required>
                             </div>
                             <div class="col-12">
                                 <label for="phone" class="form-label">Telefone</label>
-                                <input type="text" class="form-control" id="phone" name="phone"
-                                    placeholder="(00) 00000-0000" required>
+                                <input type="tel" class="form-control" id="phone" name="phone" inputmode="tel" autocomplete="tel"
+                                    placeholder="(00) 00000-0000" pattern="[0-9() +.-]{10,20}" maxlength="20" required>
                             </div>
                         </div>
 
@@ -304,6 +300,18 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                 </div>
 
             </div>
+            <?php else: ?>
+                <section class="text-center py-4" aria-labelledby="pedidoFinalizadoTitulo">
+                    <div class="display-4 text-success mb-3"><i class="bi bi-check-circle-fill"></i></div>
+                    <h2 id="pedidoFinalizadoTitulo" class="fw-bold mb-3">Compra finalizada!</h2>
+                    <p class="text-secondary mb-2">Seu pedido <strong>#<?= (int) $pedidoCriado ?></strong> foi registrado com sucesso.</p>
+                    <p class="text-secondary mb-4">Você poderá acompanhar as informações do pedido na área "Meus pedidos".</p>
+                    <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+                        <a href="../index.php" class="btn btn-checkout">Voltar para a página principal</a>
+                        <a href="produtos.php" class="btn btn-outline-secondary">Voltar para produtos</a>
+                    </div>
+                </section>
+            <?php endif; ?>
         </div>
     </main>
     <?php include '../components/footer.php' ?>
@@ -319,6 +327,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
         const cepInput = document.getElementById('cep');
         const cepStatus = document.getElementById('cepStatus');
 
+        if (cepInput && cepStatus) {
         cepInput.addEventListener('input', function () {
             let digits = cepInput.value.replace(/\D/g, '').slice(0, 8);
             cepInput.value = digits.length > 5 ? digits.slice(0, 5) + '-' + digits.slice(5) : digits;
@@ -347,6 +356,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                     cepStatus.textContent = 'Não foi possível buscar o CEP. Preencha manualmente.';
                 });
         });
+        }
     </script>
 </body>
 

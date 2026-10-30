@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $usuarioId = filter_var($_SESSION['usuario_id'] ?? null, FILTER_VALIDATE_INT);
 if (!$usuarioId || $usuarioId < 1) {
-    header('Location: ../pages/login.php?erro=login_necessario');
+    header('Location: ../pages/login.php?erro=login_necessario&origem=checkout');
     exit;
 }
 
@@ -53,9 +53,32 @@ $cidade = campoPost('city');
 $estado = strtoupper(campoPost('state'));
 $pagamento = campoPost('payment');
 
+$nomeValido = preg_match('/\\A[\\p{L}\\p{M}]+(?:[ \'-][\\p{L}\\p{M}]+)*\\z/u', $nome) === 1
+    && preg_match('/\\s/u', $nome) === 1;
+$telefoneDigitos = preg_replace('/\\D/', '', $telefone);
+$dddsValidos = [
+    '11','12','13','14','15','16','17','18','19',
+    '21','22','24','27','28',
+    '31','32','33','34','35','37','38',
+    '41','42','43','44','45','46','47','48','49',
+    '51','53','54','55',
+    '61','62','63','64','65','66','67','68','69',
+    '71','73','74','75','77','79',
+    '81','82','83','84','85','86','87','88','89',
+    '91','92','93','94','95','96','97','98','99'
+];
+$ddd = substr($telefoneDigitos, 0, 2);
+$numeroLocal = substr($telefoneDigitos, 2);
+$telefoneValido = in_array(strlen($telefoneDigitos), [10, 11], true)
+    && in_array($ddd, $dddsValidos, true)
+    && (
+        (strlen($numeroLocal) === 8 && preg_match('/\\A[2-5][0-9]{7}\\z/', $numeroLocal) === 1)
+        || (strlen($numeroLocal) === 9 && preg_match('/\\A9[0-9]{8}\\z/', $numeroLocal) === 1)
+    );
+
 if (
-    $nome === '' || mb_strlen($nome) > 100 ||
-    $telefone === '' || mb_strlen($telefone) > 20 ||
+    !$nomeValido || mb_strlen($nome) > 100 ||
+    !$telefoneValido || mb_strlen($telefone) > 20 ||
     strlen($cep) !== 8 ||
     $rua === '' || mb_strlen($rua) > 150 ||
     $numero === '' || mb_strlen($numero) > 20 ||
@@ -187,7 +210,7 @@ try {
 
     $pdo->commit();
     $_SESSION['pedido_criado'] = $pedidoId;
-    header('Location: ../pages/produtos.php');
+    header('Location: ../pages/compra.php');
     exit;
 } catch (DomainException $erro) {
     if ($pdo->inTransaction()) {
