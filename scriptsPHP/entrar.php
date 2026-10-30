@@ -2,6 +2,8 @@
 session_start();
 require 'conexao.php';
 
+$origem = ($_POST['origem'] ?? '') === 'checkout' ? 'checkout' : 'menu';
+$parametroOrigem = $origem === 'checkout' ? '&origem=checkout' : '';
 $email = trim($_POST['email'] ?? '');
 $senha = $_POST['password'] ?? '';
 if (!is_string($senha)) {
@@ -9,7 +11,7 @@ if (!is_string($senha)) {
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header('Location: ../pages/login.php?erro=email_invalido');
+    header('Location: ../pages/login.php?erro=email_invalido' . $parametroOrigem);
     exit;
 }    
 
@@ -25,7 +27,6 @@ if ($usuario && password_verify($senha, $usuario['senha'])) {
     $_SESSION['usuario_nome'] = $usuario['nome'];
     $_SESSION['usuario_email'] = $email;
     $_SESSION['admin'] = $usuario['admin'];
-    $origem = $_POST['origem'] ?? 'menu';
     if ($origem === 'checkout') {
         header('Location: ../pages/compra.php');
         exit;
@@ -35,7 +36,7 @@ if ($usuario && password_verify($senha, $usuario['senha'])) {
     header('Location: ../index.php');
     exit;
 } else {
-    header('Location: ../pages/login.php?erro=credenciais');
+    header('Location: ../pages/login.php?erro=credenciais' . $parametroOrigem);
     exit;
 }
 ;
