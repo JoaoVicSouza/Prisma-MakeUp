@@ -13,6 +13,15 @@ unset($_SESSION['pedido_criado']);
 
 $mensagensErro = [
     'dados' => 'Confira os dados informados para entrega e pagamento.',
+    'dados_nome' => 'Informe o nome completo corretamente.',
+    'dados_telefone' => 'Informe um telefone válido com DDD. Se usar +55, confira o número.',
+    'dados_cep' => 'Informe um CEP válido com 8 dígitos.',
+    'dados_rua' => 'Informe uma rua válida.',
+    'dados_numero' => 'Informe o número do endereço.',
+    'dados_complemento' => 'O complemento deve ter no máximo 100 caracteres.',
+    'dados_cidade' => 'Informe uma cidade válida.',
+    'dados_estado' => 'Selecione uma UF válida.',
+    'dados_pagamento' => 'Selecione uma forma de pagamento válida.',
     'carrinho' => 'O carrinho está vazio ou contém dados inválidos. Volte à loja e tente novamente.',
     'estoque' => 'Não foi possível concluir o pedido. Um produto pode estar sem estoque; confira o carrinho.',
     'servidor' => 'Não foi possível registrar o pedido. Tente novamente.',
@@ -33,6 +42,8 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
     <style>
         body {
             min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
             background-image: url('../assets/backgrounds/5.jpg');
             background-size: cover;
             background-position: center;
@@ -40,8 +51,13 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
         }
 
         main {
+            flex: 1;
             padding-top: 150px;
             padding-bottom: 150px;
+        }
+
+        main.checkout-finalizado {
+            padding-bottom: 2rem;
         }
 
         .checkout-card {
@@ -151,7 +167,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
 
 <body class="bg-bege">
     <?php include '../components/header.php' ?>
-    <main class="container d-flex align-items-center justify-content-center">
+    <main class="container d-flex align-items-center justify-content-center<?= $pedidoCriado ? ' checkout-finalizado' : '' ?>">
         <div class="checkout-card mx-auto position-relative">
             <a href="produtos.php" class="position-absolute text-secondary text-decoration-none"
                 style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;"

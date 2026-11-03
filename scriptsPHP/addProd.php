@@ -47,6 +47,44 @@ if (!isset($tiposImagem[$tipoImagem])) {
     redirecionarErroProduto('imagem');
 }
 
+$variacoesPostadas = $_POST['variacoes'] ?? [];
+if (!is_array($variacoesPostadas) || count($variacoesPostadas) > 4) {
+    redirecionarErroProduto('variacoes');
+}
+
+$variacoesValidadas = [];
+foreach ($variacoesPostadas as $indice => $variacaoPostada) {
+    if (!is_array($variacaoPostada) || !is_string($variacaoPostada['rotulo'] ?? null)) {
+        redirecionarErroProduto('variacoes');
+    }
+
+    $rotulo = trim($variacaoPostada['rotulo']);
+    $erroArquivo = $_FILES['variacoes']['error'][$indice]['imagem'] ?? UPLOAD_ERR_NO_FILE;
+    $arquivoTemporario = $_FILES['variacoes']['tmp_name'][$indice]['imagem'] ?? '';
+    $tamanhoArquivo = $_FILES['variacoes']['size'][$indice]['imagem'] ?? 0;
+
+    if ($rotulo === '' && $erroArquivo === UPLOAD_ERR_NO_FILE) {
+        continue;
+    }
+    if ($rotulo === '' || mb_strlen($rotulo) > 80 || $erroArquivo !== UPLOAD_ERR_OK) {
+        redirecionarErroProduto('variacoes');
+    }
+    if (!is_string($arquivoTemporario) || !is_uploaded_file($arquivoTemporario) || $tamanhoArquivo > 5 * 1024 * 1024) {
+        redirecionarErroProduto('variacoes');
+    }
+
+    $tipoVariacao = $finfo->file($arquivoTemporario);
+    if (!isset($tiposImagem[$tipoVariacao])) {
+        redirecionarErroProduto('variacoes');
+    }
+
+    $variacoesValidadas[] = [
+        'rotulo' => $rotulo,
+        'temporario' => $arquivoTemporario,
+        'extensao' => $tiposImagem[$tipoVariacao],
+    ];
+}
+
 $check = $pdo->prepare("SELECT id FROM produtos WHERE nome = :nome");
 $check->execute([':nome' => $nome]);
 
@@ -63,13 +101,31 @@ if (!is_dir($diretorioImagens) && !mkdir($diretorioImagens, 0755, true) && !is_d
 $nomeImagem = bin2hex(random_bytes(16)) . '.' . $tiposImagem[$tipoImagem];
 $caminhoImagem = 'assets/produtos/' . $nomeImagem;
 $arquivoImagem = $diretorioImagens . '/' . $nomeImagem;
+$arquivosSalvos = [];
 
 if (!move_uploaded_file($_FILES['imagem']['tmp_name'], $arquivoImagem)) {
     error_log('Não foi possível salvar a imagem enviada para o produto.');
     redirecionarErroProduto('servidor');
 }
+$arquivosSalvos[] = $arquivoImagem;
+
+foreach ($variacoesValidadas as $indice => $variacao) {
+    $nomeImagemVariacao = bin2hex(random_bytes(16)) . '.' . $variacao['extensao'];
+    $arquivoImagemVariacao = $diretorioImagens . '/' . $nomeImagemVariacao;
+    if (!move_uploaded_file($variacao['temporario'], $arquivoImagemVariacao)) {
+        foreach ($arquivosSalvos as $arquivoSalvo) {
+            if (is_file($arquivoSalvo) && !unlink($arquivoSalvo)) {
+                error_log('Não foi possível remover uma imagem após falha no cadastro de variação.');
+            }
+        }
+        redirecionarErroProduto('servidor');
+    }
+    $arquivosSalvos[] = $arquivoImagemVariacao;
+    $variacoesValidadas[$indice]['imagem'] = 'assets/produtos/' . $nomeImagemVariacao;
+}
 
 try{
+    $pdo->beginTransaction();
     $sql = "INSERT INTO produtos (categoria, nome, descricao, conteudo, preco, estoque, indicacao, cuidados, validade, informacoes, imagem)
             VALUES (:categoria, :nome, :descricao, :conteudo, :preco, :estoque, :indicacao, :cuidados, :validade, :informacoes, :imagem)";
     $stmt = $pdo->prepare($sql);
@@ -87,11 +143,33 @@ try{
         ':informacoes' => $informacoes,
         ':imagem' => $caminhoImagem,
     ]);
+
+    $produtoId = (int) $pdo->lastInsertId();
+    if ($variacoesValidadas !== []) {
+        $stmtVariacao = $pdo->prepare(
+            'INSERT INTO produto_variacoes (produto_id, rotulo, imagem, ordem)
+             VALUES (:produto_id, :rotulo, :imagem, :ordem)'
+        );
+        foreach ($variacoesValidadas as $indice => $variacao) {
+            $stmtVariacao->execute([
+                ':produto_id' => $produtoId,
+                ':rotulo' => $variacao['rotulo'],
+                ':imagem' => $variacao['imagem'],
+                ':ordem' => $indice + 1,
+            ]);
+        }
+    }
+    $pdo->commit();
     header('Location: ../pages/CRUD/cadProd.php?sucesso=cadastro');
     exit;
 } catch(PDOException $erro){
-    if (is_file($arquivoImagem) && !unlink($arquivoImagem)) {
-        error_log('Não foi possível remover uma imagem após falha ao cadastrar o produto.');
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+    foreach ($arquivosSalvos as $arquivoSalvo) {
+        if (is_file($arquivoSalvo) && !unlink($arquivoSalvo)) {
+            error_log('Não foi possível remover uma imagem após falha ao cadastrar o produto.');
+        }
     }
     error_log('Erro ao cadastrar produto: ' . $erro->getMessage());
     header('Location: ../pages/CRUD/cadProd.php?erro=servidor');

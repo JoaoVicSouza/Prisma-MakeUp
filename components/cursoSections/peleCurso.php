@@ -24,7 +24,7 @@ $stmt->execute([
 $cursosLista = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<section id="pele" class="secao">
+<section id="pele" class="secao" data-categoria="pele">
     <div class="container-titulo-linhas d-flex align-items-center mb-5 my-5">
         <div class="linha-lateral flex-grow-1"></div>
         <div class="text-center px-4">

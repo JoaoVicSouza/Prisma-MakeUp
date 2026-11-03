@@ -41,6 +41,15 @@ body{
     --bs-btn-hover-border-color: color-mix(in srgb, var(--laranja) 75%, black);
 }
 
+#controles .btn-recarregar{
+    --bs-btn-color: #000;
+    --bs-btn-bg: var(--verde);
+    --bs-btn-border-color: var(--verde);
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: color-mix(in srgb, var(--verde) 75%, black);
+    --bs-btn-hover-border-color: color-mix(in srgb, var(--verde) 75%, black);
+}
+
 #controles .btn-outline-success{
     --bs-btn-color: #000;
     --bs-btn-bg: var(--azul);

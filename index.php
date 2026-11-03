@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/styleGeral.css">
     <link rel="icon" href="assets/logo-icon.png" type="image/png">
 </head>
-<body class="bg-bege">
+<body class="bg-bege home-page">
     <?php include 'components/header.php';
      include 'components/mainIndex.php';
      include 'components/footer.php'; ?>

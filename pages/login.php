@@ -17,30 +17,32 @@
     <?php
         $mensagem = '';
         $tipo = '';
-        $abaCadastro = ($_GET['aba'] ?? '') === 'cadastro';
-        if (isset($_GET['sucesso']) && $_GET['sucesso'] === 'cadastro') {
+        $erro = $_GET['erro'] ?? '';
+        $erro = is_string($erro) ? $erro : '';
+        $abaSolicitada = $_GET['aba'] ?? '';
+        $abaCadastro = is_string($abaSolicitada) && $abaSolicitada === 'cadastro';
+        $sucesso = $_GET['sucesso'] ?? '';
+        if (is_string($sucesso) && $sucesso === 'cadastro') {
             $mensagem = 'Conta criada com sucesso! Faça login.';
             $tipo = 'success';
-        } elseif (isset($_GET['erro'])) {
+        } elseif ($erro !== '') {
             $mensagens_erro = [
                 'email_existente' => 'Este e-mail já está cadastrado.',
                 'nome_invalido' => 'Informe seu nome completo, utilizando apenas letras.',
                 'senha_invalida' => 'A senha deve ter pelo menos 8 caracteres.',
-                'servidor'        => 'Erro interno. Tente novamente.',
-                'credenciais' => 'Email ou senha inválidos.',
-                'email_invalido' => 'Digite um e-mail válido',
-                'login_necessario' => 'Faça login para finalizar sua compra.'
+                'servidor' => 'Não foi possível concluir a operação. Tente novamente.',
+                'credenciais' => 'E-mail ou senha inválidos.',
+                'email_invalido' => 'Digite um endereço de e-mail válido.',
+                'login_necessario' => 'Faça login para continuar.',
+                'acesso_negado' => 'Faça login para acessar essa página.',
             ];
-            $mensagem = $mensagens_erro[$_GET['erro']] ?? 'Ocorreu um erro.';
+            $mensagem = $mensagens_erro[$erro] ?? 'Ocorreu um erro. Tente novamente.';
             $tipo = 'danger';
-        }
-        if (in_array($_GET['erro'] ?? '', ['email_existente', 'nome_invalido', 'senha_invalida'], true)) {
-            $abaCadastro = true;
         }
         if ($mensagem):
     ?>
-        <div class="alert alert-<?= $tipo ?> alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index:9999; min-width:300px;" role="alert">
-            <?= $mensagem ?>
+        <div class="alert alert-<?= $tipo ?> alert-dismissible fade show position-fixed start-50 translate-middle-x login-feedback" role="alert">
+            <?= htmlspecialchars($mensagem, ENT_QUOTES, 'UTF-8') ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     <?php endif; ?>

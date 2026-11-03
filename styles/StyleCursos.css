@@ -3,6 +3,112 @@
 html { scroll-behavior: smooth; }
 .secao { scroll-margin-top: 90px; }
 
+.cursos-page {
+    position: relative;
+}
+
+.cursos-filtros {
+    margin: 2rem auto 3rem;
+    padding: 1.5rem;
+    border: 1px solid color-mix(in srgb, var(--roxo) 22%, transparent);
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--rosa) 38%, white);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--roxo) 10%, transparent);
+}
+
+.cursos-filtros-campos {
+    display: grid;
+    grid-template-columns: minmax(240px, 2fr) minmax(170px, 1fr) minmax(170px, 1fr) auto;
+    align-items: end;
+    gap: 1rem;
+}
+
+.cursos-filtro {
+    display: grid;
+    min-width: 0;
+    gap: .45rem;
+}
+
+.cursos-filtro label {
+    color: var(--roxo);
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+.cursos-busca {
+    position: relative;
+}
+
+.cursos-busca i {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    color: var(--roxo);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.cursos-filtro input,
+.cursos-filtro select {
+    width: 100%;
+    min-height: 46px;
+    padding: .65rem .85rem;
+    border: 1px solid color-mix(in srgb, var(--roxo) 35%, transparent);
+    border-radius: 12px;
+    color: #24202a;
+    background-color: #fff;
+}
+
+.cursos-filtro input {
+    padding-left: 2.7rem;
+}
+
+.cursos-filtro input:focus,
+.cursos-filtro select:focus {
+    border-color: var(--roxo);
+    outline: 3px solid color-mix(in srgb, var(--roxo) 18%, transparent);
+}
+
+.cursos-limpar {
+    min-height: 46px;
+    padding: .65rem .9rem;
+    border: 1px solid var(--roxo);
+    border-radius: 12px;
+    color: var(--roxo);
+    font-weight: 700;
+    background: transparent;
+}
+
+.cursos-limpar:hover {
+    color: var(--bege);
+    background: var(--roxo);
+}
+
+.cursos-resultado {
+    margin: 1rem 0 0;
+    color: #51485a;
+    font-size: .95rem;
+}
+
+.cursos-sem-resultado {
+    margin: 3rem auto 5rem;
+    padding: 1.5rem;
+    border: 1px dashed color-mix(in srgb, var(--roxo) 45%, transparent);
+    border-radius: 16px;
+    color: var(--roxo);
+    text-align: center;
+}
+
+#listaCursos .curso-item[hidden],
+#listaCursos .secao[hidden],
+.cursos-sem-resultado[hidden] {
+    display: none !important;
+}
+
+#listaCursos .container-titulo-linhas {
+    margin-top: 3rem !important;
+}
+
 .titulo-principal,
 .subtitulo {
     color: var(--roxo);
@@ -413,101 +519,4 @@ html { scroll-behavior: smooth; }
 .curso-dificuldade--dificil {
     color: #000;
     background: var(--rosa);
-}
-
-/* ---------- SIDEBAR ---------- */
-.sidebar-prisma {
-    top: 2rem;
-    z-index: 1040;
-    background: transparent;
-    padding-right: 1.5rem;
-}
-
-.sidebar-card {
-    background: var(--bege);
-    border-radius: 24px;
-    padding: 1.25rem 1rem;
-    box-shadow: 0 10px 30px color-mix(in srgb, var(--roxo) 22%, transparent);
-    border: 1px solid var(--roxo);
-}
-
-.sidebar-topo {
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-    padding: .9rem 1rem;
-    margin-bottom: 1rem;
-    border-radius: 16px;
-    color: var(--bege);
-    background: linear-gradient(135deg, var(--roxo), var(--rosa));
-}
-.sidebar-topo > i { font-size: 1.5rem; }
-.sidebar-topo strong { display: block; font-size: 1.05rem; line-height: 1.1; }
-.sidebar-label {
-    display: block;
-    font-size: .65rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    opacity: .85;
-}
-
-.sidebar-lista { gap: .35rem; list-style: none; padding: 0; margin: 0; }
-
-.sidebar-link {
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-    padding: .6rem .75rem;
-    border-radius: 14px;
-    color: var(--roxo);
-    font-weight: 600;
-    font-size: .95rem;
-    text-decoration: none;
-    transition: background .2s, color .2s, transform .2s;
-}
-
-.sidebar-icone {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 11px;
-    background: var(--rosa);
-    color: var(--roxo);
-    transition: background .2s, color .2s;
-}
-
-.sidebar-link:hover {
-    background: var(--rosa);
-    color: var(--roxo);
-    transform: translateX(4px);
-}
-.sidebar-link:hover .sidebar-icone {
-    background: var(--roxo);
-    color: var(--bege);
-}
-
-.sidebar-link.active {
-    background: linear-gradient(135deg, var(--roxo), var(--rosa));
-    color: var(--bege);
-    box-shadow: 0 6px 16px color-mix(in srgb, var(--roxo) 35%, transparent);
-}
-.sidebar-link.active .sidebar-icone {
-    background: color-mix(in srgb, var(--bege) 25%, transparent);
-    color: var(--bege);
-}
-
-/* ---------- MOBILE (gaveta) ---------- */
-@media (max-width: 991.98px) {
-    .sidebar-prisma {
-        background: var(--bege);
-        padding-right: 0;
-        width: 290px;
-    }
-    .sidebar-prisma .offcanvas-header {
-        border-bottom: 1px solid var(--roxo);
-    }
-    .sidebar-prisma .offcanvas-title { color: var(--roxo); }
-    .sidebar-card { box-shadow: none; border: 0; background: transparent; }
 }

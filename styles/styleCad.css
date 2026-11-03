@@ -26,6 +26,12 @@
      padding: 2rem;
  }
 
+ .login-feedback {
+     top: 5rem;
+     z-index: 11001;
+     width: min(440px, calc(100vw - 2rem));
+ }
+
  .auth-card .nav-pills .nav-link:not(.active) {
      color: #555;
      border-radius: .65rem;

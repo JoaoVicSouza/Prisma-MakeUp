@@ -1,46 +1,81 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const linksMenu = document.querySelectorAll('.prisma-nav-link');
-    const wave = document.querySelector('.cursos-wave');
-    const conteudoCursos = document.querySelector('.cursos-page');
+    const formFiltros = document.querySelector("#filtrosCursos");
+    const busca = document.querySelector("#buscaCursos");
+    const categoria = document.querySelector("#categoriaCursos");
+    const nivel = document.querySelector("#nivelCursos");
+    const resultado = document.querySelector("#resultadoCursos");
+    const semResultado = document.querySelector("#semResultadoCursos");
+    const secoes = Array.from(document.querySelectorAll("#listaCursos .secao"));
+    const wave = document.querySelector(".cursos-wave");
+    const conteudoCursos = document.querySelector(".cursos-page");
     let frameAgendado = false;
 
-    linksMenu.forEach(link => {
-        link.addEventListener('click', function(e) {
-            
-            // 1. Remove a classe active de todos
-            linksMenu.forEach(l => l.classList.remove('active'));
-            
-            // 2. Adiciona apenas no link clicado
-            this.classList.add('active');
+    function normalizar(texto) {
+        return texto
+            .toLocaleLowerCase("pt-BR")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim();
+    }
 
-            // --- CORREÇÃO DO SCROLL (DESLIZAMENTO) ---
-            
-            // Pega o ID para onde o link quer ir (ex: "#pele" ou "#olhos")
-            const idAlvo = this.getAttribute('href');
-            
-            // Ignora se for o "#todos" que volta pro topo
-            if (idAlvo === "#" || idAlvo === "#todos") {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-            }
+    function filtrarCursos() {
+        const termoBusca = normalizar(busca.value);
+        const categoriaSelecionada = categoria.value;
+        const nivelSelecionado = nivel.value;
+        let totalEncontrado = 0;
 
-            // Procura a seção exata no seu HTML
-            const secao = document.querySelector(idAlvo);
-            
-            if (secao) {
-                // O setTimeout dá 200 milissegundos para o menu do celular fechar antes de começar a rolar a tela, deixando o efeito perfeito!
-                setTimeout(() => {
-                    secao.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 200);
-            }
+        secoes.forEach(secao => {
+            const categoriaCompativel =
+                categoriaSelecionada === "todos" ||
+                secao.dataset.categoria === categoriaSelecionada;
+            const cursos = Array.from(secao.querySelectorAll(".curso-item"));
+
+            cursos.forEach(item => {
+                const nivelCurso = normalizar(
+                    item.querySelector(".curso-dificuldade").dataset.nivel
+                );
+                const textoCurso = normalizar(item.textContent);
+                const nivelCompativel =
+                    nivelSelecionado === "todos" ||
+                    nivelCurso === nivelSelecionado;
+                const buscaCompativel =
+                    termoBusca === "" || textoCurso.includes(termoBusca);
+                const visivel =
+                    categoriaCompativel && nivelCompativel && buscaCompativel;
+
+                item.hidden = !visivel;
+                if (visivel) totalEncontrado++;
+            });
+
+            const secaoSemCursos = cursos.length === 0;
+            const exibirSecaoVazia =
+                secaoSemCursos &&
+                categoriaCompativel &&
+                termoBusca === "" &&
+                nivelSelecionado === "todos";
+
+            secao.hidden =
+                !categoriaCompativel ||
+                (secaoSemCursos ? !exibirSecaoVazia : !cursos.some(item => !item.hidden));
         });
-    });
+
+        resultado.textContent =
+            `${totalEncontrado} ${totalEncontrado === 1 ? "curso encontrado" : "cursos encontrados"}`;
+        semResultado.hidden = totalEncontrado > 0;
+        agendarPosicionamentoOnda();
+    }
+
+    formFiltros.addEventListener("submit", event => event.preventDefault());
+    formFiltros.addEventListener("input", filtrarCursos);
+    formFiltros.addEventListener("change", filtrarCursos);
+    formFiltros.addEventListener("reset", () => window.setTimeout(filtrarCursos));
+    filtrarCursos();
 
     function posicionarOnda() {
         if (!wave || !conteudoCursos) return;
 
         wave.classList.toggle(
-            'cursos-wave--at-end',
+            "cursos-wave--at-end",
             conteudoCursos.getBoundingClientRect().bottom <= window.innerHeight
         );
         frameAgendado = false;
@@ -53,6 +88,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     posicionarOnda();
-    window.addEventListener('scroll', agendarPosicionamentoOnda, { passive: true });
-    window.addEventListener('resize', agendarPosicionamentoOnda);
+    window.addEventListener("scroll", agendarPosicionamentoOnda, { passive: true });
+    window.addEventListener("resize", agendarPosicionamentoOnda);
 });

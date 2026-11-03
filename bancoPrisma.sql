@@ -15,6 +15,7 @@ USE `prisma`;
 DROP TABLE IF EXISTS `itenspedidos`;
 DROP TABLE IF EXISTS `pedidos`;
 DROP TABLE IF EXISTS `cursos`;
+DROP TABLE IF EXISTS `produto_variacoes`;
 DROP TABLE IF EXISTS `produtos`;
 DROP TABLE IF EXISTS `usuarios`;
 
@@ -38,6 +39,7 @@ CREATE TABLE `produtos` (
   `estoque`     INT DEFAULT 0,
   `categoria`   VARCHAR(30)  NOT NULL,
   `nome`        VARCHAR(40)  NOT NULL,
+  `imagem`      VARCHAR(255) DEFAULT NULL,
   `descricao`   VARCHAR(500) DEFAULT NULL,
   `conteudo`    VARCHAR(20)  NOT NULL,
   `preco`       VARCHAR(20)  NOT NULL,
@@ -46,6 +48,21 @@ CREATE TABLE `produtos` (
   `validade`    VARCHAR(30)  NOT NULL,
   `informacoes` VARCHAR(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ------------------------------------------------------------
+-- produto_variacoes (depende de produtos)
+-- ------------------------------------------------------------
+CREATE TABLE `produto_variacoes` (
+  `id`         INT NOT NULL AUTO_INCREMENT,
+  `produto_id` INT NOT NULL,
+  `rotulo`     VARCHAR(80) NOT NULL,
+  `imagem`     VARCHAR(255) NOT NULL,
+  `ordem`      TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_produto_variacoes_ordem` (`produto_id`, `ordem`),
+  CONSTRAINT `FK_produto_variacoes_produtos`
+    FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
@@ -88,6 +105,7 @@ CREATE TABLE `itenspedidos` (
   `id`           INT NOT NULL AUTO_INCREMENT,
   `pedido_id`    INT DEFAULT NULL,
   `produto_id`   INT DEFAULT NULL,
+  `variacao_nome` VARCHAR(80) DEFAULT NULL,
   `quantidade`   INT DEFAULT NULL,
   `precoUnidade` INT DEFAULT NULL,
   PRIMARY KEY (`id`),
