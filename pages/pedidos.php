@@ -42,7 +42,7 @@ try {
 
     if ($pedidos !== []) {
         $stmtItens = $pdo->prepare(
-            'SELECT i.pedido_id, i.quantidade, i.precoUnidade,
+            'SELECT i.pedido_id, i.quantidade, i.precoUnidade, i.variacao_nome,
                     COALESCE(p.nome, \'Produto indisponível\') AS item_nome,
                     \'Produto\' AS item_tipo
              FROM itenspedidos i
@@ -207,6 +207,9 @@ function classeStatus(string $status, array $classesStatus): string
                                                 <span>
                                                     <span class="badge text-bg-light me-1"><?= escapar((string) $item['item_tipo']) ?></span>
                                                     <?= escapar((string) $nomeProduto) ?>
+                                                    <?php if (!empty($item['variacao_nome'])): ?>
+                                                        <span class="text-secondary">— <?= escapar((string) $item['variacao_nome']) ?></span>
+                                                    <?php endif; ?>
                                                     <span class="text-secondary">× <?= (int) $item['quantidade'] ?></span>
                                                 </span>
                                                 <span class="text-nowrap">

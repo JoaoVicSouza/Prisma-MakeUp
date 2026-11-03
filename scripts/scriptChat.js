@@ -38,6 +38,10 @@ function mostrarControles() {
                 <div class="d-flex justify-content-evenly mt-2">
                     <button type="submit" class="btn btn-primary" onClick="fotoEnviada()">Enviar foto</button>
                     <button type="button" class="btn btn-secondary btn-pular">Pular</button>
+                    <button type="button" id="recarregar-pagina" class="btn btn-recarregar">
+                        <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                        Recarregar
+                    </button>
                 </div>`;
             break;
         case 2:
@@ -46,6 +50,10 @@ function mostrarControles() {
                 <div class="d-flex justify-content-evenly mt-2">
                     <button type="submit" class="btn btn-primary">Continuar</button>
                     <button type="button" class="btn btn-secondary btn-pular">Pular</button>
+                    <button type="button" id="recarregar-pagina" class="btn btn-recarregar">
+                        <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                        Recarregar
+                    </button>
                 </div>`;
             break;
         case 3:
@@ -54,6 +62,10 @@ function mostrarControles() {
                 <div class="d-flex justify-content-evenly mt-2">
                     <button type="submit" class="btn btn-primary">Continuar</button>
                     <button type="button" class="btn btn-secondary btn-pular">Pular</button>
+                    <button type="button" id="recarregar-pagina" class="btn btn-recarregar">
+                        <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                        Recarregar
+                    </button>
                 </div>`;
             break;
         case 4:
@@ -62,6 +74,10 @@ function mostrarControles() {
                 <div class="d-flex justify-content-evenly mt-2">
                     <button type="submit" class="btn btn-primary">Continuar</button>
                     <button type="button" class="btn btn-secondary btn-pular">Pular</button>
+                    <button type="button" id="recarregar-pagina" class="btn btn-recarregar">
+                        <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                        Recarregar
+                    </button>
                 </div>`;
             break;
         case 5:
@@ -70,6 +86,10 @@ function mostrarControles() {
                 <div class="d-flex justify-content-evenly mt-2">
                     <button type="submit" class="btn btn-primary">Continuar</button>
                     <button type="button" class="btn btn-secondary btn-pular">Pular</button>
+                    <button type="button" id="recarregar-pagina" class="btn btn-recarregar">
+                        <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                        Recarregar
+                    </button>
                 </div>`;
             break;
         case 6:
@@ -77,6 +97,10 @@ function mostrarControles() {
                 <div class="d-flex justify-content-evenly mt-2">
                     <button type="submit" class="btn btn-outline-success" data-resposta="Sim">Sim</button>
                     <button type="submit" class="btn btn-outline-secondary" data-resposta="Não">Não</button>
+                    <button type="button" id="recarregar-pagina" class="btn btn-recarregar">
+                        <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                        Recarregar
+                    </button>
                 </div>`;
             break;
         case 7:
@@ -121,6 +145,12 @@ function fotoEnviada() {
 }
 
 document.addEventListener('DOMContentLoaded', mostrarPergunta);
+
+document.getElementById('controles').addEventListener('click', function (event) {
+    if (event.target.closest('#recarregar-pagina')) {
+        window.location.reload();
+    }
+});
 
 document.getElementById('resposta').addEventListener('submit', async function (event) {
     event.preventDefault();

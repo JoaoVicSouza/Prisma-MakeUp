@@ -56,6 +56,9 @@ $pagamento = campoPost('payment');
 $nomeValido = preg_match('/\\A[\\p{L}\\p{M}]+(?:[ \'-][\\p{L}\\p{M}]+)*\\z/u', $nome) === 1
     && preg_match('/\\s/u', $nome) === 1;
 $telefoneDigitos = preg_replace('/\\D/', '', $telefone);
+if (in_array(strlen($telefoneDigitos), [12, 13], true) && str_starts_with($telefoneDigitos, '55')) {
+    $telefoneDigitos = substr($telefoneDigitos, 2);
+}
 $dddsValidos = [
     '11','12','13','14','15','16','17','18','19',
     '21','22','24','27','28',
@@ -76,18 +79,29 @@ $telefoneValido = in_array(strlen($telefoneDigitos), [10, 11], true)
         || (strlen($numeroLocal) === 9 && preg_match('/\\A9[0-9]{8}\\z/', $numeroLocal) === 1)
     );
 
-if (
-    !$nomeValido || mb_strlen($nome) > 100 ||
-    !$telefoneValido || mb_strlen($telefone) > 20 ||
-    strlen($cep) !== 8 ||
-    $rua === '' || mb_strlen($rua) > 150 ||
-    $numero === '' || mb_strlen($numero) > 20 ||
-    mb_strlen($complemento) > 100 ||
-    $cidade === '' || mb_strlen($cidade) > 100 ||
-    preg_match('/\A[A-Z]{2}\z/', $estado) !== 1 ||
-    !in_array($pagamento, ['pix', 'boleto'], true)
-) {
-    redirecionarCheckout('dados');
+$erroDados = null;
+if (!$nomeValido || mb_strlen($nome) > 100) {
+    $erroDados = 'nome';
+} elseif (!$telefoneValido || mb_strlen($telefone) > 20) {
+    $erroDados = 'telefone';
+} elseif (strlen($cep) !== 8) {
+    $erroDados = 'cep';
+} elseif ($rua === '' || mb_strlen($rua) > 150) {
+    $erroDados = 'rua';
+} elseif ($numero === '' || mb_strlen($numero) > 20) {
+    $erroDados = 'numero';
+} elseif (mb_strlen($complemento) > 100) {
+    $erroDados = 'complemento';
+} elseif ($cidade === '' || mb_strlen($cidade) > 100) {
+    $erroDados = 'cidade';
+} elseif (preg_match('/\A[A-Z]{2}\z/', $estado) !== 1) {
+    $erroDados = 'estado';
+} elseif (!in_array($pagamento, ['pix', 'boleto'], true)) {
+    $erroDados = 'pagamento';
+}
+
+if ($erroDados !== null) {
+    redirecionarCheckout('dados_' . $erroDados);
 }
 
 try {
@@ -105,6 +119,7 @@ if (!is_array($itensEnviados) || $itensEnviados === []) {
 }
 
 $quantidades = [];
+$itensPorVariacao = [];
 foreach ($itensEnviados as $item) {
     if (!is_array($item)) {
         redirecionarCheckout('carrinho');
@@ -116,10 +131,21 @@ foreach ($itensEnviados as $item) {
         redirecionarCheckout('carrinho');
     }
 
+    $variacaoId = null;
+    if (array_key_exists('variacaoId', $item) && $item['variacaoId'] !== null && $item['variacaoId'] !== '') {
+        $variacaoId = filter_var($item['variacaoId'], FILTER_VALIDATE_INT);
+        if (!$variacaoId || $variacaoId < 1) {
+            redirecionarCheckout('carrinho');
+        }
+    }
+
     $quantidades[$produtoId] = ($quantidades[$produtoId] ?? 0) + $quantidade;
     if ($quantidades[$produtoId] > 1000) {
         redirecionarCheckout('carrinho');
     }
+    $chaveVariacao = $variacaoId ?? 0;
+    $itensPorVariacao[$produtoId][$chaveVariacao] =
+        ($itensPorVariacao[$produtoId][$chaveVariacao] ?? 0) + $quantidade;
 }
 
 require 'conexao.php';
@@ -138,6 +164,33 @@ try {
         throw new DomainException('Um ou mais produtos do carrinho não existem mais.');
     }
 
+    $idsVariacoes = [];
+    foreach ($itensPorVariacao as $itensProduto) {
+        foreach (array_keys($itensProduto) as $variacaoId) {
+            if ($variacaoId !== 0) {
+                $idsVariacoes[] = (int) $variacaoId;
+            }
+        }
+    }
+
+    $variacoesPorId = [];
+    if ($idsVariacoes !== []) {
+        $placeholdersVariacoes = implode(',', array_fill(0, count($idsVariacoes), '?'));
+        $stmtVariacoes = $pdo->prepare(
+            "SELECT id, produto_id, rotulo
+             FROM produto_variacoes
+             WHERE id IN ($placeholdersVariacoes)
+             FOR UPDATE"
+        );
+        $stmtVariacoes->execute($idsVariacoes);
+        foreach ($stmtVariacoes->fetchAll(PDO::FETCH_ASSOC) as $variacao) {
+            $variacoesPorId[(int) $variacao['id']] = $variacao;
+        }
+        if (count($variacoesPorId) !== count(array_unique($idsVariacoes))) {
+            throw new DomainException('Uma ou mais opções do carrinho não existem mais.');
+        }
+    }
+
     $itens = [];
     $totalCentavos = 0;
     foreach ($produtos as $produto) {
@@ -147,18 +200,30 @@ try {
             throw new DomainException('Estoque insuficiente para um ou mais produtos.');
         }
 
-        $precoUnitario = precoEmReais((string) $produto['preco']);
-        $totalItem = (int) round($precoUnitario * 100) * $quantidade;
-        if ($totalItem > 2147483647 - $totalCentavos) {
-            throw new DomainException('O total do pedido excede o limite suportado.');
-        }
+        foreach ($itensPorVariacao[$produtoId] as $chaveVariacao => $quantidadeVariacao) {
+            $variacaoNome = null;
+            if ((int) $chaveVariacao > 0) {
+                $variacao = $variacoesPorId[(int) $chaveVariacao] ?? null;
+                if (!$variacao || (int) $variacao['produto_id'] !== $produtoId) {
+                    throw new DomainException('Uma opção selecionada não pertence ao produto.');
+                }
+                $variacaoNome = $variacao['rotulo'];
+            }
 
-        $totalCentavos += $totalItem;
-        $itens[] = [
-            'id' => $produtoId,
-            'quantidade' => $quantidade,
-            'preco' => $precoUnitario,
-        ];
+            $precoUnitario = precoEmReais((string) $produto['preco']);
+            $totalItem = (int) round($precoUnitario * 100) * $quantidadeVariacao;
+            if ($totalItem > 2147483647 - $totalCentavos) {
+                throw new DomainException('O total do pedido excede o limite suportado.');
+            }
+
+            $totalCentavos += $totalItem;
+            $itens[] = [
+                'id' => $produtoId,
+                'variacao_nome' => $variacaoNome,
+                'quantidade' => $quantidadeVariacao,
+                'preco' => $precoUnitario,
+            ];
+        }
     }
 
     $endereco = json_encode([
@@ -185,8 +250,8 @@ try {
     $pedidoId = (int) $pdo->lastInsertId();
 
     $stmtItem = $pdo->prepare(
-        'INSERT INTO itenspedidos (pedido_id, produto_id, quantidade, precoUnidade)
-         VALUES (:pedido_id, :produto_id, :quantidade, :preco)'
+        'INSERT INTO itenspedidos (pedido_id, produto_id, variacao_nome, quantidade, precoUnidade)
+         VALUES (:pedido_id, :produto_id, :variacao_nome, :quantidade, :preco)'
     );
     $stmtEstoque = $pdo->prepare(
         'UPDATE produtos SET estoque = estoque - :quantidade WHERE id = :id AND estoque >= :quantidade'
@@ -196,6 +261,7 @@ try {
         $stmtItem->execute([
             ':pedido_id' => $pedidoId,
             ':produto_id' => $item['id'],
+            ':variacao_nome' => $item['variacao_nome'],
             ':quantidade' => $item['quantidade'],
             ':preco' => $item['preco'],
         ]);

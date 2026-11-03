@@ -27,10 +27,10 @@ $categorias = [
         'banco'     => ['Lábios'],
     ],
     'kits' => [
-        'titulo'    => 'Kits',
+        'titulo'    => 'Acessórios e Kits',
         'subtitulo' => 'combinações práticas para completar sua maquiagem',
         'imagem'    => '../assets/kits.jpg',
-        'banco'     => ['kit', 'acessórios'],
+        'banco'     => ['kit', 'kits', 'acessórios', 'acessorios'],
     ],
 ];
 

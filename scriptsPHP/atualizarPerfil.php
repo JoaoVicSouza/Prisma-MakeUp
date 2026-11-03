@@ -23,12 +23,12 @@ $nomeValido = preg_match('/\A[\p{L}\p{M}]+(?:[ \'-][\p{L}\p{M}]+)*\z/u', $nome) 
     && preg_match('/\s/u', $nome) === 1;
 
 if (!$nomeValido || mb_strlen($nome) > 100) {
-    header('Location: ../pages/perfil.php?erro=nome');
+    header('Location: ../pages/editarPerfil.php?erro=nome');
     exit;
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 150) {
-    header('Location: ../pages/perfil.php?erro=email');
+    header('Location: ../pages/editarPerfil.php?erro=email');
     exit;
 }
 
@@ -42,7 +42,7 @@ try {
     ]);
 
     if ($stmt->fetch(PDO::FETCH_ASSOC)) {
-        header('Location: ../pages/perfil.php?erro=email_existente');
+        header('Location: ../pages/editarPerfil.php?erro=email_existente');
         exit;
     }
 
@@ -60,7 +60,7 @@ try {
     exit;
 } catch (PDOException $erro) {
     error_log('Erro ao atualizar perfil: ' . $erro->getMessage());
-    header('Location: ../pages/perfil.php?erro=servidor');
+    header('Location: ../pages/editarPerfil.php?erro=servidor');
     exit;
 }
 ?>

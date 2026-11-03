@@ -77,6 +77,13 @@ requireAdmin('../../index.php');
         .btn-cancel {
             color: #6c757d;
         }
+
+        .variacao-linha {
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: .75rem;
+            background: #fff;
+        }
     </style>
 </head>
 
@@ -92,6 +99,7 @@ requireAdmin('../../index.php');
             'produto_existente' => 'Já existe um produto com esse nome.',
             'servidor'          => 'Erro interno. Tente novamente.',
             'imagem'            => 'Envie uma imagem JPG, PNG ou WEBP de até 5 MB.',
+            'variacoes'         => 'Cada opção precisa de nome e imagem JPG, PNG ou WEBP de até 5 MB. São permitidas até 4 opções.',
         ];
         $mensagem = $mensagens_erro[$_GET['erro']] ?? 'Ocorreu um erro.';
         $tipo = 'danger';
@@ -143,6 +151,39 @@ requireAdmin('../../index.php');
                     <input type="file" class="form-control" id="imagem" name="imagem"
                         accept="image/jpeg,image/png,image/webp" required>
                     <div class="form-text">Formatos aceitos: JPG, PNG ou WEBP. Tamanho máximo: 5 MB.</div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
+                        <div>
+                            <label class="form-label fw-bold mb-0">Opções do produto</label>
+                            <div class="form-text">Adicione até 4 variações com imagem e nome próprios. Preço e estoque são compartilhados.</div>
+                        </div>
+                        <button class="btn btn-outline-secondary btn-sm flex-shrink-0" type="button" id="adicionarVariacao">
+                            <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Adicionar opção
+                        </button>
+                    </div>
+                    <div id="variacoesProduto" class="d-grid gap-2"></div>
+                    <template id="modeloVariacao">
+                        <div class="variacao-linha">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-semibold variacao-titulo"></span>
+                                <button class="btn btn-sm btn-outline-danger remover-variacao" type="button" aria-label="Remover opção">
+                                    <i class="bi bi-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col-12 col-sm-5">
+                                    <label class="form-label variacao-label"></label>
+                                    <input class="form-control variacao-rotulo" type="text" maxlength="80" placeholder="Ex.: Rosa claro">
+                                </div>
+                                <div class="col-12 col-sm-7">
+                                    <label class="form-label variacao-imagem-label"></label>
+                                    <input class="form-control variacao-imagem" type="file" accept="image/jpeg,image/png,image/webp">
+                                </div>
+                            </div>
+                        </div>
+                    </template>
                 </div>
 
                 <div class="row g-3 mb-3">
@@ -218,6 +259,41 @@ requireAdmin('../../index.php');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script>
+        const containerVariacoes = document.getElementById('variacoesProduto');
+        const botaoAdicionarVariacao = document.getElementById('adicionarVariacao');
+        const modeloVariacao = document.getElementById('modeloVariacao');
+
+        function atualizarVariacoes() {
+            const linhas = Array.from(containerVariacoes.children);
+            linhas.forEach(function (linha, indice) {
+                linha.querySelector('.variacao-titulo').textContent = `Opção ${indice + 1}`;
+                const rotulo = linha.querySelector('.variacao-rotulo');
+                const imagem = linha.querySelector('.variacao-imagem');
+                const labelRotulo = linha.querySelector('.variacao-label');
+                const labelImagem = linha.querySelector('.variacao-imagem-label');
+                rotulo.name = `variacoes[${indice}][rotulo]`;
+                imagem.name = `variacoes[${indice}][imagem]`;
+                rotulo.id = `variacaoRotulo${indice}`;
+                imagem.id = `variacaoImagem${indice}`;
+                labelRotulo.htmlFor = rotulo.id;
+                labelImagem.htmlFor = imagem.id;
+                labelRotulo.textContent = 'Nome da opção';
+                labelImagem.textContent = 'Imagem da opção';
+            });
+            botaoAdicionarVariacao.disabled = linhas.length >= 4;
+        }
+
+        botaoAdicionarVariacao.addEventListener('click', function () {
+            if (containerVariacoes.children.length >= 4) return;
+            const linha = modeloVariacao.content.firstElementChild.cloneNode(true);
+            linha.querySelector('.remover-variacao').addEventListener('click', function () {
+                linha.remove();
+                atualizarVariacoes();
+            });
+            containerVariacoes.appendChild(linha);
+            atualizarVariacoes();
+        });
+
         const priceInput = document.getElementById('price');
         priceInput.addEventListener('input', function() {
             let value = priceInput.value.replace(/[^0-9,]/g, '');
