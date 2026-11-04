@@ -334,7 +334,6 @@ function escaparHtml(valor) {
     })[caractere]);
 }
 
-// bolha temporária de "digitando..." exibida entre uma mensagem e outra
 function mostrarDigitando(container) {
     const el = document.createElement('div');
     el.id = 'digitando';
@@ -349,11 +348,9 @@ function removerDigitando(container) {
     document.getElementById('digitando')?.remove();
 }
 
-// envia as mensagens uma de cada vez, com uma pequena pausa entre elas
 async function enviarMensagensSequencial(mensagens, container) {
     for (const msg of mensagens) {
         mostrarDigitando(container);
-        await esperar(700 + Math.random() * 500); // 700–1200ms, parece mais natural
         removerDigitando(container);
         adicionarMensagem(criarConteudoMensagem(msg), 'recebida');
         rolarParaBaixo();
