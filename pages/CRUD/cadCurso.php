@@ -39,7 +39,7 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
         .form-card {
             width: 100%;
             max-width: 560px;
-            background: 
+            background: #fff;
             border-radius: 1rem;
             box-shadow: 0 1rem 3rem rgba(0, 0, 0, .12);
             padding: 2rem;
@@ -58,34 +58,34 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
 
         .input-group-text {
             background-color: var(--azul);
-            color: 
+            color: #000;
             font-weight: 600;
         }
 
         .char-counter {
             font-size: .8rem;
-            color: 
+            color: #6c757d;
         }
 
         .field-hint {
             font-size: .8rem;
-            color: 
+            color: #6c757d;
         }
 
         .btn-save {
             background-color: var(--roxo);
             border-color: var(--roxo);
-            color: 
+            color: #fff;
         }
 
         .btn-save:hover {
             background-color: var(--rosaChoque);
             border-color: var(--rosaChoque);
-            color: 
+            color: #fff;
         }
 
         .btn-cancel {
-            color: 
+            color: #6c757d;
         }
     </style>
 </head>

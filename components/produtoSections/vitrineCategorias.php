@@ -75,7 +75,7 @@ if (!function_exists('e')) {
 
 <style>
     
-    
+    #vitrineProdutos {
         --vt-rosa: var(--roxo);
         --vt-rosa-claro: var(--rosa);
         --vt-magenta: var(--roxo);
@@ -260,7 +260,7 @@ if (!function_exists('e')) {
     .vt-vazio {
         text-align: center;
         padding: 4rem 0;
-        color: 
+        color: #6c757d;
     }
 
     @media (max-width: 767.98px) {

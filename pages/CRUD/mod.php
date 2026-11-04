@@ -90,7 +90,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
     .form-card {
       width: 100%;
       max-width: 560px;
-      background: 
+      background: #fff;
       border-radius: 1rem;
       box-shadow: 0 1rem 3rem rgba(0, 0, 0, .12);
       padding: 2rem;
@@ -106,24 +106,24 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
     .btn-save {
       background-color: var(--roxo);
       border-color: var(--roxo);
-      color: 
+      color: #fff;
     }
 
     .btn-save:hover {
       background-color: var(--rosaChoque);
       border-color: var(--rosaChoque);
-      color: 
+      color: #fff;
     }
 
     .btn-cancel {
-      color: 
+      color: #6c757d;
     }
 
     .variacao-linha {
       padding: 1rem;
-      border: 1px solid 
+      border: 1px solid #dee2e6;
       border-radius: .75rem;
-      background: 
+      background: #fff;
     }
   </style>
 </head>
@@ -370,7 +370,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
         </form>
       <?php elseif ($tipo === 'pedido'): ?>
         <div class="mb-4">
-          <p class="mb-1"><strong>Pedido:</strong> 
+          <p class="mb-1"><strong>Pedido:</strong> #<?= (int) $item['id'] ?></p>
           <p class="mb-1"><strong>Cliente:</strong> <?= htmlspecialchars($item['nomeDest'], ENT_QUOTES, 'UTF-8') ?></p>
           <p class="mb-1"><strong>Telefone:</strong> <?= htmlspecialchars($item['telefoneDest'], ENT_QUOTES, 'UTF-8') ?></p>
           <p class="mb-1"><strong>Total:</strong> R$ <?= number_format(((int) $item['valorTotal']) / 100, 2, ',', '.') ?></p>

@@ -34,7 +34,7 @@ $mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
             margin: 0 auto 1rem;
             box-shadow: 0 6px 20px color-mix(in srgb, var(--roxo) 35%, transparent);
         }
-        .avatar-wrap i { font-size: 2.2rem; color: 
+        .avatar-wrap i { font-size: 2.2rem; color: #fff; }
 
         .profile-name {
             font-size: 1.3rem;
@@ -63,13 +63,13 @@ $mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
         .btn-perfil {
             background-color: var(--roxo);
             border-color: var(--roxo);
-            color: 
+            color: #fff;
             font-weight: 600;
         }
         .btn-perfil:hover {
             background-color: var(--rosaChoque);
             border-color: var(--rosaChoque);
-            color: 
+            color: #fff;
         }
         .btn-sair {
             background-color: transparent;

@@ -63,7 +63,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
         .checkout-card {
             width: 100%;
             max-width: 960px;
-            background: 
+            background: #fff;
             border-radius: 1rem;
             box-shadow: 0 1rem 3rem rgba(0, 0, 0, .12);
             padding: 2rem;
@@ -86,12 +86,12 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
         }
 
         .remove-item {
-            color: 
+            color: #adb5bd;
             padding: .25rem .5rem;
         }
 
         .remove-item:hover {
-            color: 
+            color: #dc3545;
         }
 
         .summary-box {
@@ -116,11 +116,11 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
             align-items: center;
             justify-content: center;
             gap: .5rem;
-            border: 1px solid 
+            border: 1px solid #ced4da;
             border-radius: .65rem;
             padding: .75rem;
             font-weight: 500;
-            color: 
+            color: #495057;
             cursor: pointer;
             transition: all .15s ease-in-out;
         }
@@ -134,7 +134,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
 
         .payment-info {
             font-size: .85rem;
-            color: 
+            color: #6c757d;
             background-color: var(--rosa);
             border-radius: .5rem;
             padding: .65rem .9rem;
@@ -144,13 +144,13 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
         .btn-checkout {
             background-color: var(--roxo);
             border-color: var(--roxo);
-            color: 
+            color: #fff;
         }
 
         .btn-checkout:hover {
             background-color: var(--rosaChoque);
             border-color: var(--rosaChoque);
-            color: 
+            color: #fff;
         }
 
         .btn-checkout:disabled {
@@ -160,7 +160,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
 
         .cep-hint {
             font-size: .8rem;
-            color: 
+            color: #6c757d;
         }
     </style>
 </head>
@@ -320,7 +320,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                 <section class="text-center py-4" aria-labelledby="pedidoFinalizadoTitulo">
                     <div class="display-4 text-success mb-3"><i class="bi bi-check-circle-fill"></i></div>
                     <h2 id="pedidoFinalizadoTitulo" class="fw-bold mb-3">Compra finalizada!</h2>
-                    <p class="text-secondary mb-2">Seu pedido <strong>
+                    <p class="text-secondary mb-2">Seu pedido <strong>#<?= (int) $pedidoCriado ?></strong> foi registrado com sucesso.</p>
                     <p class="text-secondary mb-4">Você poderá acompanhar as informações do pedido na área "Meus pedidos".</p>
                     <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
                         <a href="../index.php" class="btn btn-checkout">Voltar para a página principal</a>

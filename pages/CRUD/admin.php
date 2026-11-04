@@ -162,7 +162,7 @@ $kpis = [
                       <a class="activity-item" href="mod.php?tipo=pedido&id=<?= (int) $atividade['id'] ?>">
                         <span class="activity-icon"><i data-feather="shopping-bag"></i></span>
                         <span class="activity-details">
-                          <strong>Pedido 
+                          <strong>Pedido #<?= (int) $atividade['id'] ?></strong>
                           <span><?= htmlspecialchars($atividade['cliente'], ENT_QUOTES, 'UTF-8') ?></span>
                           <small>
                             <?= htmlspecialchars($atividade['status'], ENT_QUOTES, 'UTF-8') ?>
@@ -252,7 +252,7 @@ $kpis = [
                   <?php else: ?>
                     <?php foreach ($pedidos as $pedido): ?>
                       <tr>
-                        <td>
+                        <td>#<?= (int) $pedido['id'] ?></td>
                         <td><?= htmlspecialchars($pedido['cliente'], ENT_QUOTES, 'UTF-8') ?></td>
                         <td>R$ <?= number_format(((int) $pedido['total']) / 100, 2, ',', '.') ?></td>
                         <td>
@@ -387,7 +387,7 @@ $kpis = [
     }
 
     function filterTable(tableId, term) {
-      const rows = document.querySelectorAll(`
+      const rows = document.querySelectorAll(`#${tableId} tbody tr`);
       rows.forEach(r => {
         r.style.display = r.textContent.toLowerCase().includes(term.toLowerCase()) ? '' : 'none';
       });
