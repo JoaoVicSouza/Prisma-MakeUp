@@ -27,6 +27,7 @@ CREATE TABLE `usuarios` (
   `nome`  VARCHAR(100) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
+  `admin` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_usuarios_email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -91,8 +92,11 @@ CREATE TABLE `pedidos` (
   `dataHora`     DATETIME NOT NULL,
   `statusPag`    VARCHAR(50) NOT NULL,
   `statusPedido` VARCHAR(50) NOT NULL,
+  `telefoneDest` VARCHAR(20) NOT NULL DEFAULT '',
+  `nomeDest`     VARCHAR(100) NOT NULL DEFAULT '',
   `valorTotal`   INT NOT NULL,
   `usuario_id`   INT NOT NULL,
+  `endereco`     TEXT DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_pedidos_usuarios` (`usuario_id`),
   CONSTRAINT `FK_pedidos_usuarios` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
@@ -107,7 +111,7 @@ CREATE TABLE `itenspedidos` (
   `produto_id`   INT DEFAULT NULL,
   `variacao_nome` VARCHAR(80) DEFAULT NULL,
   `quantidade`   INT DEFAULT NULL,
-  `precoUnidade` INT DEFAULT NULL,
+  `precoUnidade` DECIMAL(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_itenspedidos_pedidos` (`pedido_id`),
   KEY `FK_itenspedidos_produtos` (`produto_id`),
