@@ -10,3 +10,7 @@ ALTER TABLE `pedidos`
 
 ALTER TABLE `itenspedidos`
   MODIFY COLUMN `precoUnidade` DECIMAL(10,2) DEFAULT NULL;
+
+UPDATE `usuarios`
+SET `senha` = '$2y$12$zPmq.MkRiQWIaYtk6L.Y7.pCyZyocT7gEzLhXm36BmTmEsT4gZgHS'
+WHERE `id` = 9 AND `senha` = 'joao';
