@@ -1,7 +1,7 @@
--- ============================================================
--- Banco: prisma  (versão corrigida e portátil)
--- Compatível com MySQL 5.7+, MySQL 8.x e MariaDB 10.x
--- ============================================================
+
+
+
+
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -11,7 +11,7 @@ CREATE DATABASE IF NOT EXISTS `prisma`
   COLLATE utf8mb4_unicode_ci;
 USE `prisma`;
 
--- Remove na ordem inversa das dependências
+
 DROP TABLE IF EXISTS `itenspedidos`;
 DROP TABLE IF EXISTS `pedidos`;
 DROP TABLE IF EXISTS `cursos`;
@@ -19,21 +19,22 @@ DROP TABLE IF EXISTS `produto_variacoes`;
 DROP TABLE IF EXISTS `produtos`;
 DROP TABLE IF EXISTS `usuarios`;
 
--- ------------------------------------------------------------
--- usuarios (sem dependências)
--- ------------------------------------------------------------
+
+
+
 CREATE TABLE `usuarios` (
   `id`    INT NOT NULL AUTO_INCREMENT,
   `nome`  VARCHAR(100) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
+  `admin` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UQ_usuarios_email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- produtos (sem dependências)
--- ------------------------------------------------------------
+
+
+
 CREATE TABLE `produtos` (
   `id`          INT NOT NULL AUTO_INCREMENT,
   `estoque`     INT DEFAULT 0,
@@ -50,9 +51,9 @@ CREATE TABLE `produtos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- produto_variacoes (depende de produtos)
--- ------------------------------------------------------------
+
+
+
 CREATE TABLE `produto_variacoes` (
   `id`         INT NOT NULL AUTO_INCREMENT,
   `produto_id` INT NOT NULL,
@@ -65,9 +66,9 @@ CREATE TABLE `produto_variacoes` (
     FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- cursos (depende de produtos)
--- ------------------------------------------------------------
+
+
+
 CREATE TABLE `cursos` (
   `id`         INT NOT NULL AUTO_INCREMENT,
   `nome`       VARCHAR(150) NOT NULL,
@@ -83,31 +84,34 @@ CREATE TABLE `cursos` (
   CONSTRAINT `FK_cursos_produtos` FOREIGN KEY (`id_produto`) REFERENCES `produtos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- pedidos (depende de usuarios)
--- ------------------------------------------------------------
+
+
+
 CREATE TABLE `pedidos` (
   `id`           INT NOT NULL AUTO_INCREMENT,
   `dataHora`     DATETIME NOT NULL,
   `statusPag`    VARCHAR(50) NOT NULL,
   `statusPedido` VARCHAR(50) NOT NULL,
+  `telefoneDest` VARCHAR(20) NOT NULL DEFAULT '',
+  `nomeDest`     VARCHAR(100) NOT NULL DEFAULT '',
   `valorTotal`   INT NOT NULL,
   `usuario_id`   INT NOT NULL,
+  `endereco`     TEXT DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_pedidos_usuarios` (`usuario_id`),
   CONSTRAINT `FK_pedidos_usuarios` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- itenspedidos (depende de pedidos e produtos)
--- ------------------------------------------------------------
+
+
+
 CREATE TABLE `itenspedidos` (
   `id`           INT NOT NULL AUTO_INCREMENT,
   `pedido_id`    INT DEFAULT NULL,
   `produto_id`   INT DEFAULT NULL,
   `variacao_nome` VARCHAR(80) DEFAULT NULL,
   `quantidade`   INT DEFAULT NULL,
-  `precoUnidade` INT DEFAULT NULL,
+  `precoUnidade` DECIMAL(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_itenspedidos_pedidos` (`pedido_id`),
   KEY `FK_itenspedidos_produtos` (`produto_id`),
@@ -115,9 +119,9 @@ CREATE TABLE `itenspedidos` (
   CONSTRAINT `FK_itenspedidos_produtos` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ------------------------------------------------------------
--- Dados
--- ------------------------------------------------------------
+
+
+
 INSERT IGNORE INTO `produtos`
   (`id`, `estoque`, `categoria`, `nome`, `descricao`, `conteudo`, `preco`, `Indicacao`, `cuidados`, `validade`, `informacoes`)
 VALUES
@@ -125,9 +129,9 @@ VALUES
   (4, 0, 'Pele', 'João Victor Souza Soares', '', '011 g', '2', '', '', '12 dias', '');
 
 INSERT IGNORE INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
-  (9, 'João Victor Souza Soares', 'soaresjoaovictor252@gmail.com', 'joao');
+  (9, 'João Victor Souza Soares', 'soaresjoaovictor252@gmail.com', '$2y$12$zPmq.MkRiQWIaYtk6L.Y7.pCyZyocT7gEzLhXm36BmTmEsT4gZgHS');
 
--- Mantém o próximo AUTO_INCREMENT igual ao banco original
+
 ALTER TABLE `produtos` AUTO_INCREMENT = 5;
 ALTER TABLE `usuarios` AUTO_INCREMENT = 10;
 

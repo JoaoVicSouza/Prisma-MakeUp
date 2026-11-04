@@ -104,7 +104,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
             font-weight: 700;
         }
 
-        /* Inputs */
+        
         .form-control:focus,
         .form-select:focus {
             border-color: var(--azul);
@@ -185,7 +185,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
             <?php if (!$pedidoCriado): ?>
             <div class="row g-4">
 
-                <!-- CARRINHO + RESUMO -->
+                
                 <div class="col-lg-7">
                     <p class="section-title">Seu carrinho</p>
 

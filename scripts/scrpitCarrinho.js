@@ -77,7 +77,7 @@ function adicionarAoCarrinho(idProduto, nomeProduto, precoProduto, imagemProduto
 }
 
 function comprarAgora(idProduto, nomeProduto, precoProduto, imagemProduto, variacaoId, variacaoRotulo) {
-    // Se o item já está no carrinho, não adiciona de novo: só segue para a compra.
+    
     const jaNoCarrinho = obterCarrinho().some(function (item) {
         return String(item.id) === String(idProduto) &&
             String(item.variacaoId ?? '') === String(variacaoId ?? '');

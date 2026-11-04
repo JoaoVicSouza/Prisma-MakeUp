@@ -106,7 +106,7 @@ $kpis = [
         </div>
       </aside>
 
-      <!-- MAIN -->
+      
       <div class="main">
         <div class="topbar">
           <div>
@@ -117,7 +117,7 @@ $kpis = [
         </div>
 
         <div class="content">
-          <!-- DASHBOARD -->
+          
           <div class="panel active" id="panel-dashboard">
             <div class="kpi-grid">
               <?php foreach ($kpis as $k): ?>
@@ -179,7 +179,7 @@ $kpis = [
             </div>
           </div>
 
-          <!-- PRODUTOS -->
+          
           <div class="panel" id="panel-produtos">
             <div class="table-toolbar">
               <div class="search-box">
@@ -223,7 +223,7 @@ $kpis = [
             </div>
           </div>
 
-          <!-- PEDIDOS -->
+          
           <div class="panel" id="panel-pedidos">
             <div class="table-toolbar">
               <div class="search-box">
@@ -274,7 +274,7 @@ $kpis = [
             </div>
           </div>
 
-          <!-- USUÁRIOS -->
+          
           <div class="panel" id="panel-usuarios">
             <div class="table-toolbar">
               <div class="search-box">
@@ -313,7 +313,7 @@ $kpis = [
             </div>
           </div>
 
-          <!-- TUTORIAIS -->
+          
           <div class="panel" id="panel-cursos">
             <div class="table-toolbar">
               <div class="search-box">

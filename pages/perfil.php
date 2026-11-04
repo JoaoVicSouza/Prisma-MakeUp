@@ -100,7 +100,7 @@ $mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
 
             <div class="divider"></div>
 
-            <!-- Informações -->
+            
             <div class="mb-3">
                 <div class="info-row">
                     <i class="bi bi-person"></i>
@@ -131,7 +131,7 @@ $mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
                 <i class="bi bi-pencil-square me-2"></i>Alterar nome e e-mail
             </a>
 
-            <!-- Ações -->
+            
             <div class="d-flex flex-column gap-2">
                 <a href="pedidos.php" class="btn btn-perfil w-100">
                     <i class="bi bi-box-seam me-2"></i>Meus pedidos

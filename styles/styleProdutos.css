@@ -1,7 +1,7 @@
 .container-vitrine {
     display: grid;
-    gap: 1.5rem; /* Espaço entre os cards */
-    justify-items: center; /* Centraliza os cards no espaço deles */
+    gap: 1.5rem; 
+    justify-items: center; 
 }
 
 .produtos-banner-imagem {
@@ -12,8 +12,8 @@
     object-position: center;
 }
 
-/* ---------- BANNER DA PÁGINA DE PRODUTOS ----------
-   O texto fica POR CIMA da foto (antes não havia regra e ele caía abaixo dela). */
+
+
 .produtos-banner {
     position: relative;
     overflow: hidden;
@@ -28,7 +28,7 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, .15), rgba(0, 0, 0, .45)); /* escurece a foto p/ o texto branco ler bem */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .15), rgba(0, 0, 0, .45)); 
     text-shadow: 0 2px 12px rgba(0, 0, 0, .45);
 }
 
@@ -44,13 +44,13 @@
 
 :root{
     --card-height: 400px;
-    --card-row-gap: 1.5rem; /* gap entre linhas quando houver */
+    --card-row-gap: 1.5rem; 
 }
 
 .container-vitrine .produtos-row {
     justify-content: center;
-    align-content: center; /* centraliza verticalmente as linhas quando houver wrap */
-    min-height: calc(var(--card-height) * 2 + 2 * 1rem); /* reserva espaço para duas linhas de cards */
+    align-content: center; 
+    min-height: calc(var(--card-height) * 2 + 2 * 1rem); 
 }
 
 .banner-lateral {
@@ -164,16 +164,16 @@
     }
 }
 
-/* 2. REGRA PARA A TELA PEQUENA (Menos de 1200px) */
+
 @media (max-width: 1200px) {
     
-    /* A foto grande some */
+    
     .imagem-produto {
         display: none !important;
     }
 
     
-    /* Opcional: Se a tela ficar muito pequena (celular), colocamos 1 por linha para não espremer */
+    
 
 }
 @media (max-width: 550px) {

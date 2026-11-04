@@ -159,8 +159,8 @@ body.home-page {
 
 .carousel-track {
     display: flex;
-    width: max-content; /* a largura é definida pelo conteúdo, não pela tela */
-    /* velocidade dos stickers: quanto MAIOR o número, MAIS DEVAGAR (antes: 30s) */
+    width: max-content; 
+    
     animation: scroll-patrocinadores 120s linear infinite;
 }
 
@@ -169,7 +169,7 @@ body.home-page {
     align-items: center;
     flex-shrink: 0;
     gap: clamp(2rem, 5vw, 4rem);
-    padding-inline-end: clamp(2rem, 5vw, 4rem); /* respiro antes de repetir */
+    padding-inline-end: clamp(2rem, 5vw, 4rem); 
 }
 
 .carousel-group i {
@@ -183,7 +183,7 @@ body.home-page {
 
 @keyframes scroll-patrocinadores {
     from { transform: translateX(0); }
-    to   { transform: translateX(-50%); } /* anda exatamente um grupo, não a tela toda */
+    to   { transform: translateX(-50%); } 
 }
 
 .carousel-patrocinadores:hover .carousel-track {
@@ -197,7 +197,7 @@ body.home-page {
 
 @media (max-width: 576px) {
     .carousel-track {
-        animation-duration: 80s; /* celular (antes: 18s) */
+        animation-duration: 80s; 
     }
 
     .carousel-group {
@@ -552,8 +552,8 @@ body.home-page {
 }
 
 .sticker-item img {
-    height: 80px;        /* ajuste conforme preferir (60px no mobile fica bom) */
-    width: auto;         /* mantém a proporção */
+    height: 80px;        
+    width: auto;         
     object-fit: contain;
     display: block;
 }

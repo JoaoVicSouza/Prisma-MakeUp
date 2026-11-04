@@ -52,7 +52,7 @@
      box-shadow: 0 0 0 .25rem rgba(255, 1, 152, .2);
  }
 
- /* Buttons */
+ 
  .btn-login {
      background-color: var(--rosaChoque);
      border-color: var(--rosaChoque);

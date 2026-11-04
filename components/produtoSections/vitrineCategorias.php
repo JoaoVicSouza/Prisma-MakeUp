@@ -34,7 +34,7 @@ $categorias = [
     ],
 ];
 
-/* Mapa "nome no banco (minúsculo)" => slug, para distribuir os produtos nas abas */
+
 $mapaBanco = [];
 $valoresBanco = [];
 foreach ($categorias as $slug => $cat) {
@@ -44,7 +44,7 @@ foreach ($categorias as $slug => $cat) {
     }
 }
 
-/* Uma única consulta traz todos os produtos de todas as categorias */
+
 $placeholders = implode(', ', array_fill(0, count($valoresBanco), '?'));
 $stmt = $pdo->prepare(
     "SELECT id, nome, descricao, preco, imagem, categoria
@@ -74,7 +74,7 @@ if (!function_exists('e')) {
 ?>
 
 <style>
-    /* ===== Sub navbar de categorias ===== */
+    
     #vitrineProdutos {
         --vt-rosa: var(--roxo);
         --vt-rosa-claro: var(--rosa);
@@ -106,7 +106,7 @@ if (!function_exists('e')) {
         display: none;
     }
 
-    /* centraliza quando cabe e deixa rolar quando não cabe (sem cortar o primeiro item) */
+    
     .vt-cat:first-child {
         margin-left: auto;
     }
@@ -181,7 +181,7 @@ if (!function_exists('e')) {
         outline-color: var(--vt-azul);
     }
 
-    /* ===== Painel da categoria ===== */
+    
     .vt-container {
         width: min(92%, 1200px);
         margin: 0 auto;
@@ -196,13 +196,13 @@ if (!function_exists('e')) {
         to   { opacity: 1; }
     }
 
-    /* reaproveita .linha-lateral / .titulo-principal / .subtitulo do styleProdutos */
+    
     .vt-titulo {
         width: 100%;
         margin: 2.2rem auto 1.8rem;
     }
 
-    /* ===== Cards ===== */
+    
     .vt-card {
         border-radius: 13px;
         overflow: hidden;
@@ -279,7 +279,7 @@ if (!function_exists('e')) {
 
 <main id="vitrineProdutos" class="pb-5">
 
-    <!-- SUB NAVBAR: categorias em bolinhas -->
+    
     <nav class="vt-subnav" aria-label="Categorias de produtos">
         <div class="vt-subnav-scroll" role="tablist">
             <?php foreach ($categorias as $slug => $cat): ?>
@@ -301,7 +301,7 @@ if (!function_exists('e')) {
         </div>
     </nav>
 
-    <!-- PAINÉIS: um por categoria, só o ativo aparece -->
+    
     <?php foreach ($categorias as $slug => $cat): ?>
         <?php $produtos = $produtosPorCategoria[$slug]; ?>
         <section class="vt-painel"
@@ -376,7 +376,7 @@ if (!function_exists('e')) {
 
             paineis.forEach(p => { p.hidden = (p.id !== 'painel-' + slug); });
 
-            // centraliza a bolinha escolhida na barra (rolagem só horizontal, a página não pula)
+            
             barra.scrollTo({
                 left: aba.offsetLeft - (barra.clientWidth - aba.clientWidth) / 2,
                 behavior: o.suave ? 'smooth' : 'auto'
@@ -388,7 +388,7 @@ if (!function_exists('e')) {
         abas.forEach((aba, i) => {
             aba.addEventListener('click', () => selecionar(aba.dataset.categoria));
 
-            // setas esquerda/direita trocam de categoria
+            
             aba.addEventListener('keydown', (ev) => {
                 if (ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft') return;
                 const passo = ev.key === 'ArrowRight' ? 1 : -1;
@@ -398,7 +398,7 @@ if (!function_exists('e')) {
             });
         });
 
-        // abre direto na categoria do link (ex.: produtos.php#olhos)
+        
         const hash = location.hash.slice(1);
         const abaAtiva = abas.find(a => a.classList.contains('ativo'));
         const categoriaInicial = abas.some(a => a.dataset.categoria === hash)

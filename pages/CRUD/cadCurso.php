@@ -119,7 +119,7 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
             <?php endif; ?>
 
             <form method="post" id="courseForm" action="../../scriptsPHP/addCurso.php">
-                <!-- Nome -->
+                
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome do curso</label>
                     <input type="text" class="form-control" id="name" name="name"
@@ -144,7 +144,7 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                 </div>
 
-                <!-- Nível e Carga horária -->
+                
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label for="level" class="form-label">Nível</label>

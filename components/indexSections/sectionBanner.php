@@ -9,7 +9,7 @@
     height: calc(100svh - 5rem);
   }
 
-  /* CELULAR (padrão): duas fotos lado a lado, cartão de texto sobreposto embaixo */
+  
   .prisma-banner__inner {
     display: grid;
     width: 100%;
@@ -69,12 +69,12 @@
     line-height: 1.55;
     color: var(--rosaChoque);
   }
-  /* TABLET */
+  
   @media (min-width: 640px) {
     .prisma-banner__texto { margin-top: -72px; padding: 32px 36px 36px; }
   }
 
-  /* DESKTOP: foto | texto | foto */
+  
   @media (min-width: 1024px) {
     .prisma-banner__inner {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr);

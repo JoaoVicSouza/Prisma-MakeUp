@@ -303,7 +303,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
             <input type="email" class="form-control" name="email" value="<?= htmlspecialchars($item['email']) ?>" required>
           </div>
           <div class="form-check mb-3">
-            <!-- O value="1" só é enviado no $_POST se o checkbox for marcado -->
+            
             <input class="form-check-input" type="checkbox" name="admin" id="admin" value="1" <?php echo ($item['admin'] == 1) ? 'checked' : ''; ?>>
             <label class="form-check-label" for="admin">
               Privilégios de Administrador
