@@ -112,7 +112,7 @@ function mostrarControles() {
             break;
     }
 
-    // listener do botão Pular (type="button", não dispara com Enter)
+    
     const btnPular = controles.querySelector('.btn-pular');
     if (btnPular) {
         btnPular.addEventListener('click', function () {
@@ -216,24 +216,24 @@ async function enviarParaIa() {
             await new Promise(resolve => setTimeout(resolve, tempoRestante));
         }
 
-        // tenta converter a resposta da API (texto) em objeto JSON
-        // tenta converter a resposta da API (texto) em objeto JSON
+        
+        
         let data;
         try {
             let respostaParseada = JSON.parse(textoIa);
 
-            // Verifica se a resposta está no formato bruto da API do Gemini
+            
             if (respostaParseada.candidates && respostaParseada.candidates[0].content.parts[0].text) {
-                // Extrai a string JSON que está dentro do campo 'text'
+                
                 let textoReal = respostaParseada.candidates[0].content.parts[0].text;
 
-                // Limpa possíveis formatações de markdown (ex: ```json ... ```) que a IA costuma colocar
+                
                 textoReal = textoReal.replace(/```json/g, '').replace(/```/g, '').trim();
 
-                // Converte a string extraída para o objeto JSON final da maquiagem
+                
                 data = JSON.parse(textoReal);
             } else {
-                // Se o PHP já tiver retornado o JSON limpo
+                
                 data = respostaParseada;
             }
 
@@ -246,7 +246,7 @@ async function enviarParaIa() {
             return;
         }
 
-        // o upload.php pode devolver { erro: "..." } em vez do look completo
+        
         if (data.erro) {
             console.error('Erro retornado pelo upload.php:', data.erro);
             adicionarMensagem('Não foi possível obter a recomendação agora.', 'recebida');
@@ -255,7 +255,7 @@ async function enviarParaIa() {
             return;
         }
 
-        // quebra o JSON em mensagens e envia uma por vez
+        
         const mensagens = jsonParaMensagens(data);
         await enviarMensagensSequencial(mensagens, document.getElementById('chat-container'));
 
@@ -300,7 +300,7 @@ function jsonParaMensagens(data) {
     return mensagens;
 }
 
-// monta o HTML interno de cada bolha, de acordo com o tipo da mensagem
+
 function criarConteudoMensagem(msg) {
     if (msg.tipo === 'intro') {
         return `<strong>${escaparHtml(msg.lookName)}</strong><p class="mb-0 mt-1">${escaparHtml(msg.texto)}</p>`;

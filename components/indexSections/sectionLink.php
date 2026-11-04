@@ -26,7 +26,7 @@
 
         <div class="row align-items-center justify-content-center g-4 bg-white rounded-4 shadow-sm p-4 p-lg-5 mx-lg-4">
 
-    <!-- Coluna de texto: alterada para empilhar até MD e centralizar texto responsivamente -->
+    
     <div class="col-12 col-md-8 text-center text-md-start m-0">
         <h3 class="fs-3 fw-bold text-rosaChoque mb-2">Não sabe qual look combina com você?</h3>
         <p class="fs-5 text-secondary m-0">
@@ -34,7 +34,7 @@
         </p>
     </div>
 
-    <!-- Coluna do botão: alterada para empilhar até MD e adicionar margem quando empilhada -->
+    
     <div class="col-12 col-md-4 text-center mt-4 mt-md-0">
         <a href="./pages/chat.php"
             class="bg-rosaChoque text-white fw-bold rounded-pill px-4 py-3 fs-5 shadow-sm d-inline-block text-decoration-none">

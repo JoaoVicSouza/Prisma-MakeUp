@@ -60,12 +60,12 @@ $temCarrossel = count($produtos) > 4;
     </div>
 
     <div class="row align-items-center justify-content-center m-0">
-        <!-- 1º FOTO BANNER (Esquerda) -->
+        
         <div class="imagem-produto col-12 col-lg-4 text-center text-lg-end mb-4 mb-lg-0">
             <img src="../assets/meninas/kayke1.jpg" alt="Banner da Loja" class="banner-lateral img-fluid rounded shadow d-none d-lg-block" style="max-width: 90%; height: 650px; object-fit: cover;">
         </div>
 
-        <!-- 2º VITRINE COM CARROSSEL (Direita) -->
+        
         <div class="col-12 col-xl-5 col-lg-10 col-md-10 col-sm-11 p-4 mx-lg-5 container-vitrine">
 
             <div id="carrosselOlhos" class="<?= $temCarrossel ? 'carousel slide position-relative' : '' ?>" <?= $temCarrossel ? 'data-bs-ride="carousel"' : '' ?>>

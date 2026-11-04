@@ -34,7 +34,7 @@ $mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
             margin: 0 auto 1rem;
             box-shadow: 0 6px 20px color-mix(in srgb, var(--roxo) 35%, transparent);
         }
-        .avatar-wrap i { font-size: 2.2rem; color: #fff; }
+        .avatar-wrap i { font-size: 2.2rem; color: 
 
         .profile-name {
             font-size: 1.3rem;
@@ -63,13 +63,13 @@ $mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
         .btn-perfil {
             background-color: var(--roxo);
             border-color: var(--roxo);
-            color: #fff;
+            color: 
             font-weight: 600;
         }
         .btn-perfil:hover {
             background-color: var(--rosaChoque);
             border-color: var(--rosaChoque);
-            color: #fff;
+            color: 
         }
         .btn-sair {
             background-color: transparent;
@@ -100,7 +100,7 @@ $mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
 
             <div class="divider"></div>
 
-            <!-- Informações -->
+            
             <div class="mb-3">
                 <div class="info-row">
                     <i class="bi bi-person"></i>
@@ -131,7 +131,7 @@ $mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
                 <i class="bi bi-pencil-square me-2"></i>Alterar nome e e-mail
             </a>
 
-            <!-- Ações -->
+            
             <div class="d-flex flex-column gap-2">
                 <a href="pedidos.php" class="btn btn-perfil w-100">
                     <i class="bi bi-box-seam me-2"></i>Meus pedidos

@@ -39,7 +39,7 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
         .form-card {
             width: 100%;
             max-width: 560px;
-            background: #fff;
+            background: 
             border-radius: 1rem;
             box-shadow: 0 1rem 3rem rgba(0, 0, 0, .12);
             padding: 2rem;
@@ -58,34 +58,34 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
 
         .input-group-text {
             background-color: var(--azul);
-            color: #000;
+            color: 
             font-weight: 600;
         }
 
         .char-counter {
             font-size: .8rem;
-            color: #6c757d;
+            color: 
         }
 
         .field-hint {
             font-size: .8rem;
-            color: #6c757d;
+            color: 
         }
 
         .btn-save {
             background-color: var(--roxo);
             border-color: var(--roxo);
-            color: #fff;
+            color: 
         }
 
         .btn-save:hover {
             background-color: var(--rosaChoque);
             border-color: var(--rosaChoque);
-            color: #fff;
+            color: 
         }
 
         .btn-cancel {
-            color: #6c757d;
+            color: 
         }
     </style>
 </head>
@@ -119,7 +119,7 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
             <?php endif; ?>
 
             <form method="post" id="courseForm" action="../../scriptsPHP/addCurso.php">
-                <!-- Nome -->
+                
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome do curso</label>
                     <input type="text" class="form-control" id="name" name="name"
@@ -144,7 +144,7 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                 </div>
 
-                <!-- Nível e Carga horária -->
+                
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label for="level" class="form-label">Nível</label>

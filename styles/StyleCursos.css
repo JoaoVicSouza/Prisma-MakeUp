@@ -178,12 +178,12 @@ html { scroll-behavior: smooth; }
     }
 }
 
-/* =========================================================
-   BANNER "CURSOS DE MAQUIAGEM"
-   Tudo é medido em "u": 1u = 1px do desenho original (1342px de largura).
-   Assim o banner inteiro escala junto com a largura do espaço onde estiver,
-   igual a uma imagem. As classes começam com bc- para não brigar com o Bootstrap.
-   ========================================================= */
+
+
+
+
+
+
 .banner-cursos {
   container-type: size;
   position: relative;
@@ -193,7 +193,7 @@ html { scroll-behavior: smooth; }
   height: calc(100svh - 5rem);
   overflow: hidden;
   background: #f7ecee;
-  /* FONTES DO BANNER: troque aqui. 'Bainsley' é a fonte do resto do site (styleGeral.css). */
+  
   --bc-fonte-titulo: 'Bainsley', 'Montserrat', sans-serif;
   --bc-fonte-texto: 'Bainsley', 'Montserrat', sans-serif;
   font-family: var(--bc-fonte-texto);
@@ -206,7 +206,7 @@ html { scroll-behavior: smooth; }
   --uf: min(var(--ux), var(--uy));
 }
 
-/* ---------- TOPO ---------- */
+
 .bc-topo {
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -214,12 +214,12 @@ html { scroll-behavior: smooth; }
   background: linear-gradient(180deg, #f9c3d6 0%, #f8dfe6 50%, #f7e8eb 78%, #f7ecee 100%);
 }
 
-/* losangos rosa dos cantos (SVG no HTML) */
+
 .bc-losangos { position: absolute; }
 .bc-losangos--esq { top: 0; left: 0; width: calc(var(--ux) * 156); height: calc(var(--uy) * 302); }
 .bc-losangos--dir { top: calc(var(--uy) * 63); right: 0; width: calc(var(--ux) * 158); height: calc(var(--uy) * 216); }
 
-/* IMAGENS: beijos roxos. --giro é a inclinação; coloque 0deg se a sua imagem já vier inclinada */
+
 .bc-beijo {
   position: absolute;
   width: calc(var(--ux) * 64);
@@ -230,7 +230,7 @@ html { scroll-behavior: smooth; }
 .bc-beijo--esq { top: calc(var(--uy) * 71); left: calc(var(--ux) * 188); --giro: -18deg; }
 .bc-beijo--dir { top: calc(var(--uy) * 70); left: calc(var(--ux) * 1074); --giro: 18deg; }
 
-/* textos e botão (centralizados no mesmo eixo do desenho original) */
+
 .bc-conteudo {
   position: absolute;
   top: 0; left: 0;
@@ -276,16 +276,16 @@ html { scroll-behavior: smooth; }
   white-space: nowrap;
 }
 
-/* ---------- PLANOS ---------- */
+
 .bc-planos {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: calc(var(--uy) * 372);
 }
 
-/* cada card é uma caixa recortada em paralelogramo (clip-path).
-   Variáveis de cada card (em u, dentro da caixa dele):
-   --nome-x / --preco-x = centro horizontal do texto, --img-x = canto esquerdo da imagem */
+
+
+
 .bc-card { position: absolute; top: 0; height: 100%; }
 
 .bc-card--basico {
@@ -334,7 +334,7 @@ html { scroll-behavior: smooth; }
   line-height: calc(var(--uy) * 56);
 }
 
-/* Ilustrações dos cursos */
+
 .bc-ilustracao {
   position: absolute;
   top: calc(var(--uy) * 14);
@@ -444,7 +444,7 @@ html { scroll-behavior: smooth; }
   }
 }
 
-/* ---------- CARDS DE CURSOS ---------- */
+
 .curso-card {
     display: flex;
     flex-direction: column;

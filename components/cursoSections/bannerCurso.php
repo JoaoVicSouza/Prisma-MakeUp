@@ -2,7 +2,7 @@
 
   <div class="bc-topo">
 
-    <!-- losangos rosa dos cantos: já estão desenhados, nada para colocar -->
+    
     <svg class="bc-losangos bc-losangos--esq" viewBox="0 0 156 302" aria-hidden="true">
       <defs>
         <linearGradient id="bc-rosa-e" x1="0" y1="0" x2="0" y2="1">

@@ -106,7 +106,7 @@ $kpis = [
         </div>
       </aside>
 
-      <!-- MAIN -->
+      
       <div class="main">
         <div class="topbar">
           <div>
@@ -117,7 +117,7 @@ $kpis = [
         </div>
 
         <div class="content">
-          <!-- DASHBOARD -->
+          
           <div class="panel active" id="panel-dashboard">
             <div class="kpi-grid">
               <?php foreach ($kpis as $k): ?>
@@ -162,7 +162,7 @@ $kpis = [
                       <a class="activity-item" href="mod.php?tipo=pedido&id=<?= (int) $atividade['id'] ?>">
                         <span class="activity-icon"><i data-feather="shopping-bag"></i></span>
                         <span class="activity-details">
-                          <strong>Pedido #<?= (int) $atividade['id'] ?></strong>
+                          <strong>Pedido 
                           <span><?= htmlspecialchars($atividade['cliente'], ENT_QUOTES, 'UTF-8') ?></span>
                           <small>
                             <?= htmlspecialchars($atividade['status'], ENT_QUOTES, 'UTF-8') ?>
@@ -179,7 +179,7 @@ $kpis = [
             </div>
           </div>
 
-          <!-- PRODUTOS -->
+          
           <div class="panel" id="panel-produtos">
             <div class="table-toolbar">
               <div class="search-box">
@@ -223,7 +223,7 @@ $kpis = [
             </div>
           </div>
 
-          <!-- PEDIDOS -->
+          
           <div class="panel" id="panel-pedidos">
             <div class="table-toolbar">
               <div class="search-box">
@@ -252,7 +252,7 @@ $kpis = [
                   <?php else: ?>
                     <?php foreach ($pedidos as $pedido): ?>
                       <tr>
-                        <td>#<?= (int) $pedido['id'] ?></td>
+                        <td>
                         <td><?= htmlspecialchars($pedido['cliente'], ENT_QUOTES, 'UTF-8') ?></td>
                         <td>R$ <?= number_format(((int) $pedido['total']) / 100, 2, ',', '.') ?></td>
                         <td>
@@ -274,7 +274,7 @@ $kpis = [
             </div>
           </div>
 
-          <!-- USUÁRIOS -->
+          
           <div class="panel" id="panel-usuarios">
             <div class="table-toolbar">
               <div class="search-box">
@@ -313,7 +313,7 @@ $kpis = [
             </div>
           </div>
 
-          <!-- TUTORIAIS -->
+          
           <div class="panel" id="panel-cursos">
             <div class="table-toolbar">
               <div class="search-box">
@@ -387,7 +387,7 @@ $kpis = [
     }
 
     function filterTable(tableId, term) {
-      const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+      const rows = document.querySelectorAll(`
       rows.forEach(r => {
         r.style.display = r.textContent.toLowerCase().includes(term.toLowerCase()) ? '' : 'none';
       });
