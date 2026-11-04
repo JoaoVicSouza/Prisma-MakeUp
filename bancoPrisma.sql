@@ -129,7 +129,7 @@ VALUES
   (4, 0, 'Pele', 'João Victor Souza Soares', '', '011 g', '2', '', '', '12 dias', '');
 
 INSERT IGNORE INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
-  (9, 'João Victor Souza Soares', 'soaresjoaovictor252@gmail.com', 'joao');
+  (9, 'João Victor Souza Soares', 'soaresjoaovictor252@gmail.com', '$2y$12$zPmq.MkRiQWIaYtk6L.Y7.pCyZyocT7gEzLhXm36BmTmEsT4gZgHS');
 
 
 ALTER TABLE `produtos` AUTO_INCREMENT = 5;
