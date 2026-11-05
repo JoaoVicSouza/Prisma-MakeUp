@@ -12,6 +12,36 @@
     object-position: center;
 }
 
+/* ---------- BANNER DA PÁGINA DE PRODUTOS ----------
+   O texto fica POR CIMA da foto (antes não havia regra e ele caía abaixo dela). */
+.produtos-banner {
+    position: relative;
+    overflow: hidden;
+}
+
+.produtos-banner-texto {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .15), rgba(0, 0, 0, .45)); /* escurece a foto p/ o texto branco ler bem */
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .45);
+}
+
+.produtos-banner-texto .btn {
+    text-shadow: none;
+}
+
+@media (max-width: 575.98px) {
+    .produtos-banner-imagem {
+        height: 70dvh;
+    }
+}
+
 :root{
     --card-height: 400px;
     --card-row-gap: 1.5rem; /* gap entre linhas quando houver */
@@ -150,4 +180,4 @@
     .container-vitrine {
         grid-template-columns: 1fr !important;
     }
-}   
+}

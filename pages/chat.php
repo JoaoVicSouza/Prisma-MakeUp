@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../styles/styleGeral.css">
     <link rel="stylesheet" href="../styles/styleChat.css">
+    <link rel="icon" href="../assets/logo-icon.png" type="image/png">
 </head>
 
 <body class="bg-bege">
     <?php include '../components/header.php'; ?>
-
 
 <div id="chat-container" class="d-flex flex-column mb-4 w-100 p-0 p-lg-5"></div>
     <form id="resposta" action="" class="mb-3">

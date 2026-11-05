@@ -14,6 +14,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../styles/styleGeral.css">
     <link rel="stylesheet" href="../styles/styleProdutos.css">
+    <link rel="icon" href="../assets/logo-icon.png" type="image/png">
     <style>
         .container-titulo-linhas {
             width: 71.8dvw;
@@ -22,11 +23,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
         .linha-lateral {
             height: 1px;
-            background-color: var(--verde);
+            background-color: var(--roxo);
         }
 
         .titulo-principal {
-            color: var(--roxo);
+            color: var(--azul);
             font-weight: 500;
             letter-spacing: 2px;
             text-transform: uppercase;

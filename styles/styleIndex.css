@@ -27,6 +27,10 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
     display: none;
 }   
 
+body.home-page {
+    padding-top: 5rem;
+}
+
 .rounded-pill {
     transition: transform 0.3s ease-in-out 0s, box-shadow 0.3s ease-in-out 0s;
 }
@@ -156,7 +160,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 .carousel-track {
     display: flex;
     width: max-content; /* a largura é definida pelo conteúdo, não pela tela */
-    animation: scroll-patrocinadores 30s linear infinite;
+    /* velocidade dos stickers: quanto MAIOR o número, MAIS DEVAGAR (antes: 30s) */
+    animation: scroll-patrocinadores 120s linear infinite;
 }
 
 .carousel-group {
@@ -192,7 +197,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 
 @media (max-width: 576px) {
     .carousel-track {
-        animation-duration: 18s;
+        animation-duration: 80s; /* celular (antes: 18s) */
     }
 
     .carousel-group {
@@ -543,5 +548,18 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 @media (max-width: 576px) {
     .secLink{
         background: none;
+    }
+}
+
+.sticker-item img {
+    height: 80px;        /* ajuste conforme preferir (60px no mobile fica bom) */
+    width: auto;         /* mantém a proporção */
+    object-fit: contain;
+    display: block;
+}
+
+@media (max-width: 576px) {
+    .sticker-item img {
+        height: 60px;
     }
 }

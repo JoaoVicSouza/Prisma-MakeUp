@@ -2,7 +2,7 @@
             <div class="row gx-lg-5">
                 <div class="col-lg-4 d-none d-lg-block">
                     <div class="sticky-image-wrapper">
-                        <img src="assets/meninas/lucas2edit.png" class="sobre-img" alt="Sobre a Prisma MakeUp">
+                        <img src="assets/meninas/lucas2edit.jpg" class="sobre-img" alt="Sobre a Prisma MakeUp">
                     </div>
                 </div>
                 <div class="col-lg-7 offset-lg-1">
@@ -28,7 +28,7 @@
                                         <h3 class="text-rosaChoque m-0">01</h3>
                                         <h3 class="m-0"><span class="text-rosaChoque">P</span>riorizar o cliente</h3>
                                     </div>
-                                    <p class="m-0">Colocamos o bem-estar das nossas clientes no centro de tudo,
+                                    <p class="m-0">Colocamos o bem-estar dos nossos clientes no centro de tudo,
                                         garantindo experiências únicas e produtos que cuidam de verdade da sua pele.</p>
                                 </div>
                             </div>

@@ -14,11 +14,19 @@ if (!in_array($tipo, $tiposValidos) || !$id) {
 
 $produtos = $pdo->query('SELECT id, nome FROM produtos ORDER BY nome')->fetchAll(PDO::FETCH_ASSOC);
 $item = null;
+$variacoesProduto = [];
 
 if ($tipo === 'produto') {
   $stmt = $pdo->prepare("SELECT id, nome, categoria, descricao, preco, estoque, conteudo, validade, indicacao, cuidados, informacoes, imagem FROM produtos WHERE id = :id");
   $stmt->execute([':id' => $id]);
   $item = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($item) {
+    $stmtVariacoes = $pdo->prepare(
+      'SELECT id, rotulo, imagem FROM produto_variacoes WHERE produto_id = :produto_id ORDER BY ordem, id'
+    );
+    $stmtVariacoes->execute([':produto_id' => $id]);
+    $variacoesProduto = $stmtVariacoes->fetchAll(PDO::FETCH_ASSOC);
+  }
 } elseif ($tipo === 'usuario') {
   $stmt = $pdo->prepare("SELECT id, nome, email, admin FROM usuarios WHERE id = :id");
   $stmt->execute([':id' => $id]);
@@ -61,6 +69,7 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../styles/styleGeral.css">
   <link rel="stylesheet" href="../../styles/styleCad.css">
+  <link rel="icon" href="../../assets/logo-icon.png" type="image/png">
   <style>
     body {
       min-height: 100vh;
@@ -109,6 +118,13 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
     .btn-cancel {
       color: #6c757d;
     }
+
+    .variacao-linha {
+      padding: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: .75rem;
+      background: #fff;
+    }
   </style>
 </head>
 
@@ -134,6 +150,10 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
       <?php elseif (isset($_GET['erro']) && $_GET['erro'] === 'servidor'): ?>
         <div class="alert alert-danger" role="alert">
           Não foi possível salvar as alterações. Tente novamente.
+        </div>
+      <?php elseif (isset($_GET['erro']) && $_GET['erro'] === 'variacoes'): ?>
+        <div class="alert alert-danger" role="alert">
+          Cada opção precisa de um nome e, nas novas opções, uma imagem JPG, PNG ou WEBP de até 5 MB. São permitidas até 4 opções.
         </div>
       <?php endif; ?>
 
@@ -166,6 +186,67 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
             <input type="file" class="form-control" id="imagem" name="imagem"
               accept="image/jpeg,image/png,image/webp">
             <div class="form-text">Opcional. Envie JPG, PNG ou WEBP de até 5 MB para substituir a imagem atual.</div>
+          </div>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
+              <div>
+                <label class="form-label fw-bold mb-0">Opções do produto</label>
+                <div class="form-text">Edite, remova ou adicione até 4 opções. Preço e estoque são compartilhados.</div>
+              </div>
+              <button class="btn btn-outline-secondary btn-sm flex-shrink-0" type="button" id="adicionarVariacao">
+                <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Adicionar opção
+              </button>
+            </div>
+            <div id="variacoesProduto" class="d-grid gap-2">
+              <?php foreach ($variacoesProduto as $indiceVariacao => $variacao): ?>
+                <div class="variacao-linha">
+                  <input type="hidden" class="variacao-id" name="variacoes[<?= (int) $indiceVariacao ?>][id]" value="<?= (int) $variacao['id'] ?>">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-semibold variacao-titulo"></span>
+                    <button class="btn btn-sm btn-outline-danger remover-variacao" type="button" aria-label="Remover opção">
+                      <i class="bi bi-trash" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-12 col-sm-5">
+                      <label class="form-label variacao-label"></label>
+                      <input class="form-control variacao-rotulo" type="text" name="variacoes[<?= (int) $indiceVariacao ?>][rotulo]" maxlength="80" value="<?= htmlspecialchars($variacao['rotulo'], ENT_QUOTES, 'UTF-8') ?>" required>
+                    </div>
+                    <div class="col-12 col-sm-7">
+                      <label class="form-label variacao-imagem-label"></label>
+                      <input class="form-control variacao-imagem" type="file" name="variacoes[<?= (int) $indiceVariacao ?>][imagem]" accept="image/jpeg,image/png,image/webp">
+                      <div class="variacao-preview mt-2">
+                        <img src="../../<?= htmlspecialchars($variacao['imagem'], ENT_QUOTES, 'UTF-8') ?>"
+                          alt="Imagem atual da opção <?= htmlspecialchars($variacao['rotulo'], ENT_QUOTES, 'UTF-8') ?>"
+                          class="img-thumbnail" style="max-width: 120px; max-height: 120px; object-fit: contain;">
+                        <span class="form-text d-block">Opcional. Selecione uma imagem para substituir.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+            </div>
+            <template id="modeloVariacao">
+              <div class="variacao-linha">
+                <input type="hidden" class="variacao-id" value="">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="fw-semibold variacao-titulo"></span>
+                  <button class="btn btn-sm btn-outline-danger remover-variacao" type="button" aria-label="Remover opção">
+                    <i class="bi bi-trash" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="row g-2">
+                  <div class="col-12 col-sm-5">
+                    <label class="form-label variacao-label"></label>
+                    <input class="form-control variacao-rotulo" type="text" maxlength="80" placeholder="Ex.: Rosa claro" required>
+                  </div>
+                  <div class="col-12 col-sm-7">
+                    <label class="form-label variacao-imagem-label"></label>
+                    <input class="form-control variacao-imagem" type="file" accept="image/jpeg,image/png,image/webp">
+                  </div>
+                </div>
+              </div>
+            </template>
           </div>
           <div class="row g-3 mb-3">
             <div class="col-6">
@@ -339,6 +420,52 @@ $endereco = $tipo === 'pedido' ? json_decode($item['endereco'], true) : null;
   </main>
   <?php include '../../components/footer.php' ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <?php if ($tipo === 'produto'): ?>
+    <script>
+      const containerVariacoes = document.getElementById('variacoesProduto');
+      const botaoAdicionarVariacao = document.getElementById('adicionarVariacao');
+      const modeloVariacao = document.getElementById('modeloVariacao');
+
+      function atualizarVariacoes() {
+        const linhas = Array.from(containerVariacoes.children);
+        linhas.forEach(function (linha, indice) {
+          const prefixo = `variacoes[${indice}]`;
+          const rotulo = linha.querySelector('.variacao-rotulo');
+          const imagem = linha.querySelector('.variacao-imagem');
+          const id = linha.querySelector('.variacao-id');
+          rotulo.name = `${prefixo}[rotulo]`;
+          imagem.name = `${prefixo}[imagem]`;
+          id.name = `${prefixo}[id]`;
+          rotulo.id = `variacaoRotulo${indice}`;
+          imagem.id = `variacaoImagem${indice}`;
+          linha.querySelector('.variacao-titulo').textContent = `Opção ${indice + 1}`;
+          const labelRotulo = linha.querySelector('.variacao-label');
+          labelRotulo.htmlFor = rotulo.id;
+          labelRotulo.textContent = 'Nome da opção';
+          const labelImagem = linha.querySelector('.variacao-imagem-label');
+          labelImagem.htmlFor = imagem.id;
+          labelImagem.textContent = id.value ? 'Substituir imagem da opção' : 'Imagem da opção';
+          imagem.required = !id.value;
+        });
+        botaoAdicionarVariacao.disabled = linhas.length >= 4;
+      }
+
+      containerVariacoes.addEventListener('click', function (evento) {
+        const botaoRemover = evento.target.closest('.remover-variacao');
+        if (!botaoRemover) return;
+        botaoRemover.closest('.variacao-linha').remove();
+        atualizarVariacoes();
+      });
+
+      botaoAdicionarVariacao.addEventListener('click', function () {
+        if (containerVariacoes.children.length >= 4) return;
+        containerVariacoes.appendChild(modeloVariacao.content.firstElementChild.cloneNode(true));
+        atualizarVariacoes();
+      });
+
+      atualizarVariacoes();
+    </script>
+  <?php endif; ?>
   <script src="../../scripts/scriptGeral.js"></script>
 </body>
 

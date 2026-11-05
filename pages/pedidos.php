@@ -42,7 +42,7 @@ try {
 
     if ($pedidos !== []) {
         $stmtItens = $pdo->prepare(
-            'SELECT i.pedido_id, i.quantidade, i.precoUnidade,
+            'SELECT i.pedido_id, i.quantidade, i.precoUnidade, i.variacao_nome,
                     COALESCE(p.nome, \'Produto indisponível\') AS item_nome,
                     \'Produto\' AS item_tipo
              FROM itenspedidos i
@@ -92,6 +92,7 @@ function classeStatus(string $status, array $classesStatus): string
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../styles/styleGeral.css">
+    <link rel="icon" href="../assets/logo-icon.png" type="image/png">
     <style>
         body {
             min-height: 100vh;
@@ -116,8 +117,13 @@ function classeStatus(string $status, array $classesStatus): string
     <?php include '../components/header.php'; ?>
 
     <main class="container">
-        <section class="orders-panel mx-auto p-3 p-md-5" aria-labelledby="page-title">
-            <div class="mb-4">
+        <section class="orders-panel mx-auto p-3 pt-5 p-md-5 position-relative" aria-labelledby="page-title">
+            <a href="perfil.php" class="position-absolute text-secondary text-decoration-none"
+                style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;"
+                aria-label="Voltar ao perfil">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <div class="mb-4 text-center">
                 <h1 id="page-title" class="h3 fw-bold mb-1">Meus pedidos</h1>
                 <p class="text-secondary mb-0">Acompanhe suas compras e veja os itens de cada pedido.</p>
             </div>
@@ -201,6 +207,9 @@ function classeStatus(string $status, array $classesStatus): string
                                                 <span>
                                                     <span class="badge text-bg-light me-1"><?= escapar((string) $item['item_tipo']) ?></span>
                                                     <?= escapar((string) $nomeProduto) ?>
+                                                    <?php if (!empty($item['variacao_nome'])): ?>
+                                                        <span class="text-secondary">— <?= escapar((string) $item['variacao_nome']) ?></span>
+                                                    <?php endif; ?>
                                                     <span class="text-secondary">× <?= (int) $item['quantidade'] ?></span>
                                                 </span>
                                                 <span class="text-nowrap">

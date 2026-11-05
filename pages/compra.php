@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['usuario_id'])) {
-    header('Location: login.php?erro=login_necessario');
+    header('Location: login.php?erro=login_necessario&origem=checkout');
     exit;
 }
 
@@ -13,6 +13,15 @@ unset($_SESSION['pedido_criado']);
 
 $mensagensErro = [
     'dados' => 'Confira os dados informados para entrega e pagamento.',
+    'dados_nome' => 'Informe o nome completo corretamente.',
+    'dados_telefone' => 'Informe um telefone válido com DDD. Se usar +55, confira o número.',
+    'dados_cep' => 'Informe um CEP válido com 8 dígitos.',
+    'dados_rua' => 'Informe uma rua válida.',
+    'dados_numero' => 'Informe o número do endereço.',
+    'dados_complemento' => 'O complemento deve ter no máximo 100 caracteres.',
+    'dados_cidade' => 'Informe uma cidade válida.',
+    'dados_estado' => 'Selecione uma UF válida.',
+    'dados_pagamento' => 'Selecione uma forma de pagamento válida.',
     'carrinho' => 'O carrinho está vazio ou contém dados inválidos. Volte à loja e tente novamente.',
     'estoque' => 'Não foi possível concluir o pedido. Um produto pode estar sem estoque; confira o carrinho.',
     'servidor' => 'Não foi possível registrar o pedido. Tente novamente.',
@@ -29,9 +38,12 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/styleGeral.css">
+    <link rel="icon" href="../assets/logo-icon.png" type="image/png">
     <style>
         body {
             min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
             background-image: url('../assets/backgrounds/5.jpg');
             background-size: cover;
             background-position: center;
@@ -39,8 +51,13 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
         }
 
         main {
+            flex: 1;
             padding-top: 150px;
             padding-bottom: 150px;
+        }
+
+        main.checkout-finalizado {
+            padding-bottom: 2rem;
         }
 
         .checkout-card {
@@ -150,21 +167,22 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
 
 <body class="bg-bege">
     <?php include '../components/header.php' ?>
-    <main class="container d-flex align-items-center justify-content-center">
-        <div class="checkout-card mx-auto">
+    <main class="container d-flex align-items-center justify-content-center<?= $pedidoCriado ? ' checkout-finalizado' : '' ?>">
+        <div class="checkout-card mx-auto position-relative">
+            <a href="produtos.php" class="position-absolute text-secondary text-decoration-none"
+                style="top: 1.5rem; left: 1.5rem; font-size: 1.8rem; z-index: 10;"
+                aria-label="Voltar para os produtos">
+                <i class="bi bi-arrow-left"></i>
+            </a>
             <h1 class="fs-4 fw-bold mb-4 text-center">Finalizar compra</h1>
 
-            <?php if ($pedidoCriado): ?>
-                <div class="alert alert-success" role="status">
-                    Pedido #<?= (int) $pedidoCriado ?> registrado com sucesso.
-                </div>
-            <?php endif; ?>
             <?php if ($mensagemErro !== null): ?>
                 <div class="alert alert-danger" role="alert">
                     <?= htmlspecialchars($mensagemErro, ENT_QUOTES, 'UTF-8') ?>
                 </div>
             <?php endif; ?>
 
+            <?php if (!$pedidoCriado): ?>
             <div class="row g-4">
 
                 <!-- CARRINHO + RESUMO -->
@@ -183,7 +201,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Frete</span>
-                            <span>Grátis</span>
+                            <span id="shippingValue">A calcular</span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between total-row">
@@ -201,12 +219,12 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                             <div class="col-12">
                                 <label for="fullName" class="form-label">Nome completo</label>
                                 <input type="text" class="form-control" id="fullName" name="fullName"
-                                    placeholder="Seu nome completo" required>
+                                    placeholder="Seu nome completo" pattern="[A-Za-zÀ-ÿ]+([ '-][A-Za-zÀ-ÿ]+)+" maxlength="100" required>
                             </div>
                             <div class="col-12">
                                 <label for="phone" class="form-label">Telefone</label>
-                                <input type="text" class="form-control" id="phone" name="phone"
-                                    placeholder="(00) 00000-0000" required>
+                                <input type="tel" class="form-control" id="phone" name="phone" inputmode="tel" autocomplete="tel"
+                                    placeholder="(00) 00000-0000" pattern="[0-9() +.-]{10,20}" maxlength="20" required>
                             </div>
                         </div>
 
@@ -298,6 +316,18 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                 </div>
 
             </div>
+            <?php else: ?>
+                <section class="text-center py-4" aria-labelledby="pedidoFinalizadoTitulo">
+                    <div class="display-4 text-success mb-3"><i class="bi bi-check-circle-fill"></i></div>
+                    <h2 id="pedidoFinalizadoTitulo" class="fw-bold mb-3">Compra finalizada!</h2>
+                    <p class="text-secondary mb-2">Seu pedido <strong>#<?= (int) $pedidoCriado ?></strong> foi registrado com sucesso.</p>
+                    <p class="text-secondary mb-4">Você poderá acompanhar as informações do pedido na área "Meus pedidos".</p>
+                    <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+                        <a href="../index.php" class="btn btn-checkout">Voltar para a página principal</a>
+                        <a href="produtos.php" class="btn btn-outline-secondary">Voltar para produtos</a>
+                    </div>
+                </section>
+            <?php endif; ?>
         </div>
     </main>
     <?php include '../components/footer.php' ?>
@@ -308,11 +338,12 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
     <?php if ($pedidoCriado): ?>
         <script>localStorage.removeItem('carrinhoPrisma');</script>
     <?php endif; ?>
-    <script src="../scripts/scrpitCarrinho.js"></script>
+    <script src="../scripts/scrpitCarrinho.js?v=<?= (int) @filemtime(__DIR__ . '/../scripts/scrpitCarrinho.js') ?>"></script>
     <script>
         const cepInput = document.getElementById('cep');
         const cepStatus = document.getElementById('cepStatus');
 
+        if (cepInput && cepStatus) {
         cepInput.addEventListener('input', function () {
             let digits = cepInput.value.replace(/\D/g, '').slice(0, 8);
             cepInput.value = digits.length > 5 ? digits.slice(0, 5) + '-' + digits.slice(5) : digits;
@@ -341,6 +372,7 @@ $mensagemErro = $mensagensErro[$_GET['erro'] ?? ''] ?? null;
                     cepStatus.textContent = 'Não foi possível buscar o CEP. Preencha manualmente.';
                 });
         });
+        }
     </script>
 </body>
 

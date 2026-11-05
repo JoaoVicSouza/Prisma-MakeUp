@@ -43,19 +43,19 @@
     <article class="bc-card bc-card--basico">
       <h3 class="bc-nome">Curso Básico</h3>
       <p class="bc-preco">$5,00</p>
-      <span class="bc-ilustracao" aria-hidden="true"><img src="../assets/stickers/scBanner1edit.png" alt=""></span>
+      <span class="bc-ilustracao" aria-hidden="true"><img src="../assets/stickers/sticker1.svg" alt=""></span>
     </article>
 
     <article class="bc-card bc-card--intermediario">
       <h3 class="bc-nome">Curso Intermediário</h3>
       <p class="bc-preco">$13,00</p>
-      <span class="bc-ilustracao" aria-hidden="true"><img src="../assets/stickers/scBanner2edit.png" alt=""></span>
+      <span class="bc-ilustracao" aria-hidden="true"><img src="../assets/stickers/sticker4.svg" alt=""></span>
     </article>
 
     <article class="bc-card bc-card--avancado">
       <h3 class="bc-nome">Curso Avançado</h3>
       <p class="bc-preco">$20,00</p>
-      <span class="bc-ilustracao" aria-hidden="true"><img src="../assets/stickers/scBanner3.png" alt=""></span>
+      <span class="bc-ilustracao" aria-hidden="true"><img src="../assets/stickers/sticker26.svg" alt=""></span>
     </article>
 
   </div>

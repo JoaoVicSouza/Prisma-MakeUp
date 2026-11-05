@@ -18,6 +18,7 @@ $produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="../../styles/styleGeral.css">
     <link rel="stylesheet" href="../../styles/styleCad.css">
+    <link rel="icon" href="../../assets/logo-icon.png" type="image/png">
     <style>
         body {
             min-height: 100vh;

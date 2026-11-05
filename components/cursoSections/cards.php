@@ -9,7 +9,7 @@
                 default => 'curso-dificuldade--medio',
             };
             ?>
-            <div class="col">
+            <div class="col curso-item">
                 <article class="curso-card h-100">
                     <div class="curso-card-conteudo">
                         <h3 class="curso-card-titulo">
@@ -17,7 +17,7 @@
                         </h3>
                         <div class="curso-card-detalhes">
                             <span class="curso-card-carga"><?= (int) $curso['cargaH'] ?> horas</span>
-                            <span class="curso-dificuldade <?= $classeNivel ?>">
+                            <span class="curso-dificuldade <?= $classeNivel ?>" data-nivel="<?= htmlspecialchars($nivel, ENT_QUOTES, 'UTF-8') ?>">
                                 <?= htmlspecialchars($nivel, ENT_QUOTES, 'UTF-8') ?>
                             </span>
                         </div>

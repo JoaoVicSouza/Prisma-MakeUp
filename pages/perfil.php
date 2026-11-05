@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: login.php?erro=acesso_negado');
+    exit;
+}
+
+$nome  = $_SESSION['usuario_nome'] ?? 'Usuário';
+$email = $_SESSION['usuario_email'] ?? '';
+$mensagemPerfil = ($_GET['sucesso'] ?? '') === 'perfil'
+    ? 'Seus dados foram atualizados com sucesso!'
+    : '';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,6 +22,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../styles/styleGeral.css">
     <link rel="stylesheet" href="../styles/styleCad.css">
+    <link rel="icon" href="../assets/logo-icon.png" type="image/png">
     <style>
         .auth-card { max-width: 520px; }
 
@@ -69,17 +84,7 @@
     </style>
 </head>
 <body class="bg-bege">
-<?php
-session_start();
 
-if (!isset($_SESSION['usuario_id'])) {
-    header('Location: login.php?erro=acesso_negado');
-    exit;
-}
-
-$nome  = $_SESSION['usuario_nome'] ?? 'Usuário';
-$email = $_SESSION['usuario_email'] ?? '';
-?>
 
     <?php include '../components/header.php'; ?>
 
@@ -115,6 +120,16 @@ $email = $_SESSION['usuario_email'] ?? '';
             </div>
 
             <div class="divider"></div>
+
+            <?php if ($mensagemPerfil !== ''): ?>
+                <div class="alert alert-success" role="status">
+                    <?= htmlspecialchars($mensagemPerfil, ENT_QUOTES, 'UTF-8') ?>
+                </div>
+            <?php endif; ?>
+
+            <a href="editarPerfil.php" class="btn btn-perfil w-100 mb-4">
+                <i class="bi bi-pencil-square me-2"></i>Alterar nome e e-mail
+            </a>
 
             <!-- Ações -->
             <div class="d-flex flex-column gap-2">

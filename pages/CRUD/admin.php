@@ -71,6 +71,7 @@ $kpis = [
   <script src="https://unpkg.com/feather-icons"></script>
   <link rel="stylesheet" href="../../styles/styleAdmin.css">
   <link rel="stylesheet" href="../../styles/styleGeral.css">
+  <link rel="icon" href="../../assets/logo-icon.png" type="image/png">
 </head>
 
 <body>
@@ -97,7 +98,7 @@ $kpis = [
           <div class="nav-section">
             <p class="nav-section-label">Plataforma</p>
             <button class="nav-item" onclick="goTo('cursos',this)"><i data-feather="play-circle"></i> Tutoriais</button>
-            <button class="nav-item" onclick="goTo('usuarios',this)"><i data-feather="users"></i> Usuárias</button>
+            <button class="nav-item" onclick="goTo('usuarios',this)"><i data-feather="users"></i> Usuários</button>
           </div>
         </nav>
         <div class="sidebar-footer">
